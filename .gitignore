@@ -1,0 +1,32 @@
+# 编译产物
+target/
+build/
+out/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# 日志
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 环境配置
+application-local.yml
+application-dev-local.yml
+
+# Maven
+*.versionsBackup
+
+# 工作目录元数据（保留 .workbuddy/memory 但忽略其余）
+.workbuddy/*
+!.workbuddy/memory/

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.iwantjob</groupId>
+        <artifactId>iwantjob-backend</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>iwantjob-modules</artifactId>
+    <packaging>pom</packaging>
+    <name>iwantjob-modules</name>
+    <description>业务模块聚合</description>
+
+    <modules>
+        <module>iwantjob-user</module>
+        <module>iwantjob-job</module>
+        <module>iwantjob-resume</module>
+        <module>iwantjob-interview</module>
+        <module>iwantjob-salary</module>
+        <module>iwantjob-simulator</module>
+        <module>iwantjob-badge</module>
+        <module>iwantjob-community</module>
+        <module>iwantjob-helpgroup</module>
+    </modules>
+</project>

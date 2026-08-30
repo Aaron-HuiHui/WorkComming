@@ -1,0 +1,151 @@
+# =============================================================================
+# 我要工作 平台 - 本地中间件编排
+# 文档参考：开发文档 v2.0 第3章
+# 一键启动：docker compose up -d
+# 一键停止：docker compose down
+# 一键清空（含数据）：docker compose down -v
+# ==============================================================================
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # MySQL 8.0 - 主数据库
+  # ---------------------------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    container_name: iwantjob-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: iwantjob
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+      - --lower_case_table_names=1
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./02-init-data.sql:/docker-entrypoint-initdb.d/02-init-data.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - iwantjob-net
+
+  # ---------------------------------------------------------------------------
+  # Redis 7 - 缓存/会话/限流/幂等键
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: iwantjob-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass iwantjob
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "iwantjob", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iwantjob-net
+
+  # ---------------------------------------------------------------------------
+  # RabbitMQ 3.13 - 消息队列（[v2.0] 第七周起启用，可选增强）
+  # 含 management 控制台
+  # ---------------------------------------------------------------------------
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: iwantjob-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: iwantjob
+      RABBITMQ_DEFAULT_PASS: iwantjob
+    ports:
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # 管理控制台
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    networks:
+      - iwantjob-net
+
+  # ---------------------------------------------------------------------------
+  # MinIO - 简历/身份证等文件存储（S3 兼容）
+  # ---------------------------------------------------------------------------
+  minio:
+    image: minio/minio
+    container_name: iwantjob-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"  # S3 API
+      - "9001:9001"  # 控制台
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    networks:
+      - iwantjob-net
+
+  # ---------------------------------------------------------------------------
+  # Elasticsearch 8.12 - 搜索引擎（[v2.0] 第七周起启用，可选增强）
+  # 单节点模式，关闭 xpack 安全（仅本地开发用）
+  # ---------------------------------------------------------------------------
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: iwantjob-es
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - cluster.name=iwantjob-es-cluster
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    networks:
+      - iwantjob-net
+
+# =============================================================================
+# 持久化卷
+# =============================================================================
+volumes:
+  mysql_data:
+  redis_data:
+  rabbitmq_data:
+  minio_data:
+  es_data:
+
+# =============================================================================
+# 网络
+# =============================================================================
+networks:
+  iwantjob-net:
+    driver: bridge
