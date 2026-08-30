@@ -60,15 +60,46 @@
 
 ---
 
-## 下一阶段待办（第二阶段 — 职位模块）
+## 第二阶段待办（就绪评估后更新 23:50）
 
-| ID | 任务名称 | 负责人 | 状态 | 简要说明 |
-|----|----------|--------|------|----------|
-| T8 | 编译验证与修复 | team-lead | ⏳ 待开始 | mvn compile 验证全项目可编译 |
-| T9 | iwantjob-job 职位模块 | 待分派 | ⏳ 待开始 | 职位CRUD/搜索(FULLTEXT兜底)/投递/内推 |
-| T10 | iwantjob-resume 简历模块 | 待分派 | ⏳ 待开始 | 简历CRUD/AI优化/评分/匹配 |
-| T11 | 文件上传服务(MinIO) | 待分派 | ⏳ 待开始 | 通用文件上传接口 |
+> 详细评估见 `迭代状态报告.md`
+
+### 前置串行（team-lead，约1-2h）
+
+| ID | 任务 | 状态 | 优先级 | 依赖 | 说明 |
+|----|------|:----:|:------:|------|------|
+| T8 | 编译验证与修复 | ⏳ | P0 | 无 | mvn compile，修复编译错误 |
+| T11 | 文件上传服务(MinIO) | ⏳ | P1 | T8 | 解除 job/resume 阻塞 |
+| T12 | BadgeTriggerEvent 事件基类 | ⏳ | P1 | T8 | common/event 定义，解除 badge 阻塞 |
+
+### 并行开发（T8/T11/T12 完成后同步启动）
+
+| ID | 任务 | 负责人 | 状态 | 优先级 | 依赖 | 就绪 |
+|----|------|--------|:----:|:------:|------|:----:|
+| T9 | iwantjob-job 职位模块 | agent-job | ⏳ | P2 | T8 | ✅ |
+| T10 | iwantjob-resume 简历模块 | agent-resume | ⏳ | P2 | T8,T11 | ⚠️待T11 |
+| T13 | iwantjob-interview 面试模块 | agent-interview | ⏳ | P2 | T8 | ✅ |
+| T14 | iwantjob-community 社区模块 | agent-community | ⏳ | P3 | T8 | ✅ |
+| T15 | iwantjob-helpgroup 帮帮团 | agent-helpgroup | ⏳ | P3 | T8 | ✅ |
+| T16 | iwantjob-salary 薪资白皮书(创新1) | agent-salary | ⏳ | P3 | T8 | ✅ |
+| T17 | iwantjob-simulator 模拟舱(创新2) | agent-simulator | ⏳ | P3 | T8 | ✅ |
+| T18 | iwantjob-badge 徽章(创新3) | agent-badge | ⏳ | P3 | T8,T12 | ⚠️待T12 |
+
+### 当前阻塞问题
+
+| # | 问题 | 等级 | 解决方案 | 负责人 |
+|---|------|:----:|----------|--------|
+| B1 | 编译验证未执行 | P0 | 本地 mvn compile | team-lead |
+| B2 | 文件上传未实现 | P1 | T11 实现 | team-lead/agent-file |
+| B3 | 事件基类未定义 | P1 | T12 定义 | team-lead |
+| B4 | 千问key未配置 | P2 | Mock已可用，配key后联调 | 用户 |
+| B6 | @DataScope未实现 | P2 | 第二阶段按需实现 | team-lead |
+
+### 就绪度结论
+- 6 模块可直接编码：job/interview/salary/simulator/community/helpgroup
+- 3 模块需补前置：resume(待T11)、badge(待T12)、文件上传本身
+- 全部 9 模块的表结构与 API 定义均已就位，无遗漏
 
 ---
 
-_最后更新：team-lead (2026-08-30 23:35)_
+_最后更新：team-lead (2026-08-30 23:50) | 详细报告：迭代状态报告.md_
