@@ -21,9 +21,4 @@ public enum PointReasonEnum {
 
     private final String desc;
     private final int defaultPoints; // 正数增加，负数扣减
-
-    PointReasonEnum(String desc, int defaultPoints) {
-        this.desc = desc;
-        this.defaultPoints = defaultPoints;
-    }
 }

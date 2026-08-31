@@ -24,7 +24,7 @@ public interface MutualPointsMapper extends BaseMapper<MutualPoints> {
      * @return 影响行数（1成功，0失败）
      */
     @Update("UPDATE mutual_points SET balance = balance - #{points}, " +
-            "total_earned = total_earned - #{points}, version = version + 1, updated_at = NOW() " +
+            "version = version + 1, updated_at = NOW() " +
             "WHERE user_id = #{userId} AND version = #{version} AND balance >= #{points}")
     int deductPoints(@Param("userId") Long userId,
                      @Param("points") int points,

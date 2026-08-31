@@ -28,7 +28,47 @@
             <artifactId>iwantjob-user</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- 后续阶段按需引入其他业务模块 -->
+        <!-- 第二阶段业务模块 -->
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-resume</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-interview</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-salary</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-simulator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-badge</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-community</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iwantjob</groupId>
+            <artifactId>iwantjob-helpgroup</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
