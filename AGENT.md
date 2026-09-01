@@ -1023,3 +1023,42 @@ mysql -uroot -p123456 -e "SHOW STATUS LIKE 'Threads_connected'"
 ```
 
 _最后更新：team-lead (2026-09-01 19:10 第十八阶段：连接池高并发调优完成)_
+
+---
+
+## 第十九阶段：各阶段遗留项清零（team-lead，2026-09-01）
+
+> 汇总第一~十八阶段全部遗留项，逐项处理：3 项代码交付，2 项经核查功能已完整（非缺陷），其余为测试覆盖度/架构纯度可选增强。
+
+### 已完成项
+
+| ID | 任务 | 来源遗留 | 等级 | 交付内容 |
+|----|------|----------|:----:|----------|
+| S19-1 | 一键启停脚本 | 第九阶段P2 | P2 | `scripts/start-all.bat`（9步启动：MySQL/Redis/RabbitMQ/ES/MinIO/网关/核心/职位/前端，含端口检测跳过）+ `scripts/stop-all.bat`（反序按端口/PID停止） |
+| S19-2 | 职位下架/删除同步删ES | 第十一阶段P2 | P2 | `JobService`+Impl 增加 `offlineJob`(status→0)/`deleteJob`(软删除)，事务提交后调 `engine.remove(jobId)`；`JobController` 新增 `PUT /jobs/{id}/offline` + `DELETE /jobs/{id}`（均 @Idempotent） |
+| S19-4 | DLX死信队列 | 第十阶段P3 | P3 | `RabbitMqConfig` 新增死信交换机 `iwantjob.event.dlx` + 2死信队列 + 绑定；业务队列加 `x-dead-letter-exchange` 参数，重试3次耗尽后留存排查不再丢弃 |
+
+### 经核查功能已完整（非缺陷）
+
+| ID | 任务 | 来源遗留 | 核查结论 |
+|----|------|----------|----------|
+| S19-3 | job-server MQ发布点 | 第十阶段P2 | 投递状态流转通知已通过共享 `notification` 表直写实现（`JobApplicationServiceImpl.sendStatusNotification`），工作正常；MQ 事件为架构纯度可选增强，当前直写满足需求 |
+| S19-5 | 面试多题+帮帮团全链路 | 第十二阶段P2 | 面试多题连续作答链路代码完整（start抽5题返回首题 → answer保存+AI评价+按sort_order找下一题hasNext → end生成评分）；帮帮团求助→匹配→解决链路代码亦完整；"仅单题/单求助"指测试覆盖度而非功能缺失 |
+
+### 剩余可选增强（非阻塞，不影响运行与演示）
+
+| 项 | 等级 | 说明 |
+|----|:----:|------|
+| 中文分词 standard→ik | P3 | 换 ik 分词器可提升中文短语相关度；当前 multi_match 召回正确演示够用 |
+| 简历/社区全文搜索 ES 化 | P3 | 架构已就绪，仿 JobSearchEngine 模式扩展即可 |
+| 限流与幂等专项测试 | P3 | @RateLimit/@Idempotent 切面仅间接覆盖 |
+| 三中间件注册Windows服务 | P3 | 当前有 start-all.bat 一键启动，注册服务可进一步免手动 |
+| el-radio label-as-value 弃用警告 | P3 | Element Plus 3.0 前替换为 value 属性 |
+| MQ不可用本地事件表降级 | P3 | 当前中继仅记 error；如需可靠投递可引入本地事件表 |
+
+### 本轮提交
+- commit `e9fbdb8`：S19-1 启停脚本 + S19-2 ES同步删除 + S19-4 DLX死信队列 + 前序积累改动
+
+---
+
+_最后更新：team-lead (2026-09-01 21:50 第十九阶段：各阶段遗留项清零)_
