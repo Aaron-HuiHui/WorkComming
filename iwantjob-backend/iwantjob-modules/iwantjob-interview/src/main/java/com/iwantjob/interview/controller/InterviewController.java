@@ -89,4 +89,23 @@ public class InterviewController {
         InterviewEndVO vo = interviewService.end(userId, mockId);
         return Result.success(vo);
     }
-}
+
+    @GetMapping("/questions")
+    @Operation(summary = "题库分页浏览（学生学习中心，可按分类过滤）")
+    public Result<PageResult<com.iwantjob.interview.dto.QuestionBankVO>> questions(
+            @RequestParam(defaultValue = "1") long page,
+            @RequestParam(defaultValue = "10") long size,
+            @RequestParam(required = false) Integer category,
+            @RequestParam(required = false) String subCategory) {
+        SecurityUtils.requireCurrentUserId();
+        PageResult<com.iwantjob.interview.dto.QuestionBankVO> result = interviewService.listQuestions(page, size, category, subCategory);
+        return Result.success(result);
+    }
+
+    @GetMapping("/questions/{id}")
+    @Operation(summary = "题目详情（含考点关键词）")
+    public Result<com.iwantjob.interview.dto.QuestionBankVO> questionDetail(@PathVariable Long id) {
+        SecurityUtils.requireCurrentUserId();
+        com.iwantjob.interview.dto.QuestionBankVO vo = interviewService.questionDetail(id);
+        return Result.success(vo);
+    }}

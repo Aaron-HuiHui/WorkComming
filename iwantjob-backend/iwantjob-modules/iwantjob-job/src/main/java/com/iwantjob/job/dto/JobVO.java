@@ -22,6 +22,12 @@ public class JobVO implements Serializable {
     @Schema(description = "公司名称")
     private String companyName;
 
+    @Schema(description = "关联企业ID")
+    private Long companyId;
+
+    @Schema(description = "招聘批次：0日常/1春招/2秋招/3实习批")
+    private Integer recruitmentBatch;
+
     @Schema(description = "职位类型：0实习/1校招/2社招")
     private Integer jobType;
 

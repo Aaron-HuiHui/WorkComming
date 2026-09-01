@@ -34,6 +34,15 @@ public class JobApplicationVO implements Serializable {
     @Schema(description = "HR备注")
     private String hrRemark;
 
+    @Schema(description = "面试时间")
+    private java.time.LocalDateTime interviewTime;
+
+    @Schema(description = "面试地点")
+    private String interviewLocation;
+
+    @Schema(description = "面试备注")
+    private String interviewNote;
+
     @Schema(description = "投递时间")
     private LocalDateTime appliedAt;
 

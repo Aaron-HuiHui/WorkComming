@@ -23,4 +23,10 @@ public class JobSearchDTO extends PageParam implements Serializable {
 
     @Schema(description = "工作城市", example = "北京")
     private String city;
+
+    @Schema(description = "招聘批次：0日常/1春招/2秋招/3实习批")
+    private Integer batch;
+
+    @Schema(description = "企业ID（企业主页职位过滤）")
+    private Long companyId;
 }

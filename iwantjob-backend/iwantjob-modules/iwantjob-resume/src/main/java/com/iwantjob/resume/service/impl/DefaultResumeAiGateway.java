@@ -2,17 +2,20 @@ package com.iwantjob.resume.service.impl;
 
 import com.iwantjob.resume.service.ResumeAiGateway;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
  * 简历 AI 网关默认实现（模拟）
  * <p>
  * 不依赖 iwantjob-ai 模块，保证 resume 模块可独立编译运行。
- * team-lead 后续可在 api 聚合模块提供 @Primary 的真实桥接实现
- * （内部包装 AiChatService），覆盖本默认 Bean。
+ * 仅在 ai.qwen.enabled=false（或缺失）时装配；
+ * ai.qwen.enabled=true 时由 api 聚合模块的 QwenResumeAiGateway 接管。
+ * </p>
  */
 @Slf4j
 @Component
+@ConditionalOnProperty(name = "ai.qwen.enabled", havingValue = "false", matchIfMissing = true)
 public class DefaultResumeAiGateway implements ResumeAiGateway {
 
     @Override

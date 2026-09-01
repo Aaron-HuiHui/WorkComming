@@ -55,6 +55,26 @@ public class GlobalExceptionHandler {
         return Result.fail(ErrorCode.FORBIDDEN);
     }
 
+    @ExceptionHandler(org.springframework.web.bind.MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result<Void> handleMissingParam(org.springframework.web.bind.MissingServletRequestParameterException e) {
+        log.warn("缺少请求参数: {}", e.getParameterName());
+        return Result.fail(ErrorCode.PARAM_ERROR.getCode(), e.getParameterName() + "不能为空");
+    }
+
+    @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result<Void> handleTypeMismatch(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException e) {
+        log.warn("参数类型错误: {}={}", e.getName(), e.getValue());
+        return Result.fail(ErrorCode.PARAM_ERROR.getCode(), "参数" + e.getName() + "格式错误");
+    }
+
+    @ExceptionHandler(org.springframework.web.servlet.resource.NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Result<Void> handleNoResource(org.springframework.web.servlet.resource.NoResourceFoundException e) {
+        return Result.fail(ErrorCode.NOT_FOUND.getCode(), "接口不存在: " + e.getResourcePath());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Void> handleException(Exception e, HttpServletRequest req) {

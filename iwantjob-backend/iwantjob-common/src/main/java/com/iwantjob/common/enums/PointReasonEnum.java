@@ -21,4 +21,16 @@ public enum PointReasonEnum {
 
     private final String desc;
     private final int defaultPoints; // 正数增加，负数扣减
+
+    /**
+     * 按中文描述反查枚举（MQ 事件消息中 reason 以 desc 文案传输）
+     */
+    public static PointReasonEnum fromDesc(String desc) {
+        for (PointReasonEnum e : values()) {
+            if (e.desc.equals(desc)) {
+                return e;
+            }
+        }
+        throw new IllegalArgumentException("未知积分原因: " + desc);
+    }
 }

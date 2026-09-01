@@ -40,6 +40,10 @@ public enum ErrorCode {
     JOB_NOT_FOUND(30001, "职位不存在"),
     JOB_EXPIRED(30002, "职位已过期"),
     APPLY_DUPLICATE(30003, "已投递过该职位"),
+    APPLICATION_NOT_FOUND(30004, "投递记录不存在"),
+    NOT_JOB_OWNER(30005, "无权操作他人职位的投递记录"),
+    APPLICATION_STATUS_INVALID(30006, "投递状态不合法"),
+    QUESTION_NOT_FOUND(50003, "题目不存在"),
 
     // 4xxxx 简历
     RESUME_NOT_FOUND(40001, "简历不存在"),

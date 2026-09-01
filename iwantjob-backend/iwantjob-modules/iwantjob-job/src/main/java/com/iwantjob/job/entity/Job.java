@@ -25,6 +25,16 @@ public class Job implements Serializable {
     private String companyName;
 
     /**
+     * 关联企业ID（无匹配企业时为空）
+     */
+    private Long companyId;
+
+    /**
+     * 招聘批次 JobBatchEnum: 0-日常,1-春招,2-秋招,3-实习批
+     */
+    private Integer recruitmentBatch;
+
+    /**
      * 职位类型 JobTypeEnum: 0-实习,1-校招,2-社招
      */
     private Integer jobType;

@@ -19,6 +19,7 @@ import com.iwantjob.interview.dto.InterviewEndVO;
 import com.iwantjob.interview.dto.InterviewHistoryVO;
 import com.iwantjob.interview.dto.InterviewStartDTO;
 import com.iwantjob.interview.dto.InterviewStartVO;
+import com.iwantjob.interview.dto.QuestionBankVO;
 import com.iwantjob.interview.dto.QuestionDetailVO;
 import com.iwantjob.interview.dto.QuestionVO;
 import com.iwantjob.interview.dto.ScoreSummaryVO;
@@ -300,4 +301,40 @@ public class InterviewServiceImpl implements InterviewService {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "评分序列化失败");
         }
     }
-}
+
+    // ==================== 题库浏览（学生学习中心） ====================
+
+    @Override
+    public PageResult<QuestionBankVO> listQuestions(long page, long size, Integer category, String subCategory) {
+        Page<QuestionBank> p = new Page<>(page, size);
+        LambdaQueryWrapper<QuestionBank> wrapper = new LambdaQueryWrapper<QuestionBank>()
+                .eq(category != null, QuestionBank::getCategory, category)
+                .eq(subCategory != null && !subCategory.isBlank(), QuestionBank::getSubCategory, subCategory)
+                .orderByAsc(QuestionBank::getCategory)
+                .orderByAsc(QuestionBank::getId);
+        IPage<QuestionBank> result = questionBankMapper.selectPage(p, wrapper);
+        List<QuestionBankVO> vos = result.getRecords().stream()
+                .map(this::toBankVO)
+                .toList();
+        return PageResult.of(vos, result.getTotal(), result.getCurrent(), result.getSize());
+    }
+
+    @Override
+    public QuestionBankVO questionDetail(Long id) {
+        QuestionBank qb = questionBankMapper.selectById(id);
+        if (qb == null) {
+            throw new BusinessException(ErrorCode.QUESTION_NOT_FOUND);
+        }
+        return toBankVO(qb);
+    }
+
+    private QuestionBankVO toBankVO(QuestionBank qb) {
+        QuestionBankVO vo = new QuestionBankVO();
+        vo.setId(qb.getId());
+        vo.setCategory(qb.getCategory());
+        vo.setSubCategory(qb.getSubCategory());
+        vo.setQuestionText(qb.getQuestionText());
+        vo.setDifficulty(qb.getDifficulty());
+        vo.setExpectedKeywords(qb.getExpectedKeywords());
+        return vo;
+    }}

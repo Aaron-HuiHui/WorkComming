@@ -27,6 +27,12 @@ public class JobCreateDTO implements Serializable {
     @Size(max = 100, message = "公司名称长度不能超过100")
     private String companyName;
 
+    @Schema(description = "关联企业ID（可选，用于企业主页聚合）")
+    private Long companyId;
+
+    @Schema(description = "招聘批次：0日常/1春招/2秋招/3实习批（可选）", example = "2")
+    private Integer recruitmentBatch;
+
     @Schema(description = "职位类型：0实习/1校招/2社招", example = "1")
     @NotNull(message = "职位类型不能为空")
     private Integer jobType;

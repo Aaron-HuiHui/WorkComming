@@ -35,6 +35,15 @@ public class JobApplication implements Serializable {
 
     private String hrRemark;
 
+    /** 面试时间 */
+    private LocalDateTime interviewTime;
+
+    /** 面试地点 */
+    private String interviewLocation;
+
+    /** 面试备注 */
+    private String interviewNote;
+
     /**
      * 投递时间：依赖 DB DEFAULT CURRENT_TIMESTAMP，插入时不传
      */

@@ -2,6 +2,7 @@ package com.iwantjob.interview.ai;
 
 import com.iwantjob.interview.entity.InterviewQuestion;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -12,11 +13,13 @@ import java.util.Map;
  * 面试 AI 网关默认实现：返回模拟数据。
  * <p>
  * 不依赖任何外部大模型，保证模块可独立编译与本地演示。
- * 真实接入千问时替换为调用 iwantjob-ai 的实现即可。
+ * 仅在 ai.qwen.enabled=false（或缺失）时装配；
+ * ai.qwen.enabled=true 时由 api 聚合模块的 QwenInterviewAiGateway 接管。
  * </p>
  */
 @Slf4j
 @Component
+@ConditionalOnProperty(name = "ai.qwen.enabled", havingValue = "false", matchIfMissing = true)
 public class DefaultInterviewAiGateway implements InterviewAiGateway {
 
     private static final int QUESTION_COUNT = 5;

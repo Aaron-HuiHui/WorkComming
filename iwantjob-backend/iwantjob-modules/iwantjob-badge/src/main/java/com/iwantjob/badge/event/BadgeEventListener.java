@@ -1,19 +1,18 @@
 package com.iwantjob.badge.event;
 
 import com.iwantjob.badge.service.BadgeService;
-import com.iwantjob.common.event.BadgeTriggerEvent;
+import com.iwantjob.common.event.BadgeTriggerMessage;
+import com.iwantjob.framework.config.RabbitMqConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 /**
- * 徽章触发事件监听器
+ * 徽章触发事件监听器（RabbitMQ 消费者）
  * <p>
- * 使用 {@link TransactionalEventListener} 的 {@link TransactionPhase#AFTER_COMMIT} 阶段消费，
- * 确保业务模块（community/salary/simulator/helpgroup）的事务成功提交后再触发徽章铸造，
- * 避免业务回滚但徽章已铸造的数据不一致问题。
+ * 从 iwantjob.badge.trigger 队列消费（发布方为 MqEventRelay 或职位服务等跨进程发布者）。
+ * 事件在发布方事务提交后才进入队列，天然规避「业务回滚但徽章已铸造」的不一致。
  * <p>
  * 铸造流程：
  * 1. Redis INCR 计数器 key=badge:count:{userId}:{conditionType}
@@ -29,19 +28,19 @@ public class BadgeEventListener {
 
     private final BadgeService badgeService;
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onBadgeTrigger(BadgeTriggerEvent event) {
-        if (event == null) {
+    @RabbitListener(queues = RabbitMqConfig.QUEUE_BADGE)
+    public void onBadgeTrigger(BadgeTriggerMessage message) {
+        if (message == null || message.getUserId() == null) {
             return;
         }
-        log.info("收到徽章触发事件: userId={}, conditionType={}, refId={}, occurredAt={}",
-                event.getUserId(), event.getConditionType(), event.getRefId(), event.getOccurredAt());
+        log.info("消费徽章触发事件(MQ): userId={}, conditionType={}, refId={}",
+                message.getUserId(), message.getConditionType(), message.getRefId());
         try {
-            badgeService.handleTriggerEvent(event.getUserId(), event.getConditionType(), event.getRefId());
+            badgeService.handleTriggerEvent(message.getUserId(), message.getConditionType(), message.getRefId());
         } catch (Exception e) {
-            // 监听器异常不应影响发布方，仅记录日志
+            // 消费异常仅记录日志，配合 yml 的 retry(3次)+不重回队列，避免毒消息死循环
             log.error("处理徽章触发事件异常: userId={}, conditionType={}, refId={}, err={}",
-                    event.getUserId(), event.getConditionType(), event.getRefId(), e.getMessage(), e);
+                    message.getUserId(), message.getConditionType(), message.getRefId(), e.getMessage(), e);
         }
     }
 }

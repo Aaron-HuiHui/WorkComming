@@ -24,6 +24,8 @@
         <module>iwantjob-ai</module>
         <module>iwantjob-modules</module>
         <module>iwantjob-api</module>
+        <module>iwantjob-job-server</module>
+        <module>iwantjob-gateway</module>
     </modules>
 
     <properties>
@@ -36,10 +38,14 @@
         <knife4j.version>4.5.0</knife4j.version>
         <hutool.version>5.8.27</hutool.version>
         <mapstruct.version>1.6.0</mapstruct.version>
-        <lombok.version>1.18.34</lombok.version>
+        <lombok.version>1.18.46</lombok.version>
         <jjwt.version>0.12.6</jjwt.version>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
         <minio.version>8.5.12</minio.version>
         <dashscope-sdk.version>2.16.4</dashscope-sdk.version>
+        <!-- 测试栈：升级以兼容 JDK 26（Mockito inline 依赖新版 ByteBuddy） -->
+        <mockito.version>5.23.0</mockito.version>
+        <byte-buddy.version>1.18.12</byte-buddy.version>
     </properties>
 
     <dependencyManagement>
@@ -124,6 +130,14 @@
                 <artifactId>dashscope-sdk-java</artifactId>
                 <version>${dashscope-sdk.version}</version>
             </dependency>
+            <!-- Spring Cloud BOM（网关模块使用） -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -133,6 +147,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <!-- 单元测试（JUnit5 + Mockito + AssertJ，全模块共享） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

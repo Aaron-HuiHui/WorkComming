@@ -1,0 +1,25 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: iwantjob-gateway
+  cloud:
+    gateway:
+      routes:
+        # 职位服务：职位/投递/候选人/企业/收藏/统计/内推
+        - id: job-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/jobs/**,/api/companies/**,/api/favorites/**,/api/referrals/**
+          order: 1
+        # 核心服务：其余全部（认证/用户/简历/面试/模拟舱/薪资/徽章/社区/帮帮团/作品集/通知/管理）
+        - id: core-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+          order: 2
+
+logging:
+  level:
+    org.springframework.cloud.gateway: info

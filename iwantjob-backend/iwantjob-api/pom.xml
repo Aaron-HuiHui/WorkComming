@@ -31,7 +31,7 @@
         <!-- 第二阶段业务模块 -->
         <dependency>
             <groupId>com.iwantjob</groupId>
-            <artifactId>iwantjob-job</artifactId>
+            <artifactId>iwantjob-portfolio</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -1,0 +1,68 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: iwantjob-job-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/iwantjob?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: iwantjob
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 2000
+        default-requeue-rejected: false
+  elasticsearch:
+    uris: http://localhost:9200
+    connection-timeout: 5s
+    socket-timeout: 30s
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# JWT（与核心服务一致密钥，保证网关透传 token 双服务可验）
+jwt:
+  secret: iwantjob-dev-secret-key-must-be-at-least-32-characters-long
+  access-expiration: 7200
+  refresh-expiration: 604800
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# MinIO（framework FileController 依赖，本服务虽不使用文件上传但需可实例化）
+minio:
+  endpoint: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: iwantjob
+
+logging:
+  level:
+    com.iwantjob: debug

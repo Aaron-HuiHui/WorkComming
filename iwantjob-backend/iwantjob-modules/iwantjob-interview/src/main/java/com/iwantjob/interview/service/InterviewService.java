@@ -38,4 +38,13 @@ public interface InterviewService {
      * 结束面试：生成评分汇总
      */
     InterviewEndVO end(Long userId, Long mockId);
-}
+
+    /**
+     * 题库分页浏览（学生学习中心，可按分类/子分类过滤）
+     */
+    PageResult<com.iwantjob.interview.dto.QuestionBankVO> listQuestions(long page, long size, Integer category, String subCategory);
+
+    /**
+     * 题目详情（含考点关键词）
+     */
+    com.iwantjob.interview.dto.QuestionBankVO questionDetail(Long id);}

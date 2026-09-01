@@ -4,10 +4,15 @@ import com.iwantjob.common.result.PageResult;
 import com.iwantjob.common.result.Result;
 import com.iwantjob.framework.idempotent.Idempotent;
 import com.iwantjob.framework.security.SecurityUtils;
+import com.iwantjob.job.dto.ApplicationStatusDTO;
+import com.iwantjob.job.dto.CandidateDetailVO;
+import com.iwantjob.job.dto.CandidateVO;
+import com.iwantjob.job.dto.HrJobVO;
 import com.iwantjob.job.dto.JobApplicationVO;
 import com.iwantjob.job.dto.JobApplyDTO;
 import com.iwantjob.job.dto.JobCreateDTO;
 import com.iwantjob.job.dto.JobSearchDTO;
+import com.iwantjob.job.dto.JobStatsVO;
 import com.iwantjob.job.dto.JobVO;
 import com.iwantjob.job.service.JobApplicationService;
 import com.iwantjob.job.service.JobService;
@@ -20,8 +25,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/jobs")
 @RequiredArgsConstructor
-@Tag(name = "职位服务", description = "职位搜索、详情、发布、投递")
+@Tag(name = "职位服务", description = "职位搜索、详情、发布、投递、HR候选人管理、岗位统计")
 public class JobController {
 
     private final JobService jobService;
@@ -78,10 +85,66 @@ public class JobController {
     @Operation(summary = "我投递的职位列表")
     @PreAuthorize("hasAnyRole('0','1')")  // [S]学生 [A]校友
     public Result<PageResult<JobApplicationVO>> myApplied(
-            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "1") long page,
-            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "10") long size) {
+            @RequestParam(defaultValue = "1") long page,
+            @RequestParam(defaultValue = "10") long size) {
         Long userId = SecurityUtils.requireCurrentUserId();
         PageResult<JobApplicationVO> result = jobApplicationService.getMyApplied(userId, page, size);
         return Result.success(result);
+    }
+
+    // ==================== 岗位市场统计（学生可视化） ====================
+
+    @GetMapping("/stats/overview")
+    @Operation(summary = "岗位市场统计总览（城市/类型/薪资分布 + 热门职位）")
+    public Result<JobStatsVO> statsOverview() {
+        SecurityUtils.requireCurrentUserId();
+        JobStatsVO vo = jobService.getStatsOverview();
+        return Result.success(vo);
+    }
+
+    // ==================== HR 候选人管理 ====================
+
+    @GetMapping("/me/published")
+    @Operation(summary = "我发布的职位列表（含投递数统计，HR 工作台）")
+    @PreAuthorize("hasAnyRole('1','2','9')")  // [A]校友 [H]HR [Admin]管理员
+    public Result<PageResult<HrJobVO>> myPublished(
+            @RequestParam(defaultValue = "1") long page,
+            @RequestParam(defaultValue = "10") long size) {
+        Long posterId = SecurityUtils.requireCurrentUserId();
+        PageResult<HrJobVO> result = jobService.getMyPublishedJobs(posterId, page, size);
+        return Result.success(result);
+    }
+
+    @GetMapping("/{jobId}/applications")
+    @Operation(summary = "某职位的投递者列表（HR 视角，校验职位归属）")
+    @PreAuthorize("hasAnyRole('1','2','9')")  // [A]校友 [H]HR [Admin]管理员
+    public Result<PageResult<CandidateVO>> jobApplications(
+            @PathVariable Long jobId,
+            @RequestParam(defaultValue = "1") long page,
+            @RequestParam(defaultValue = "10") long size) {
+        Long hrUserId = SecurityUtils.requireCurrentUserId();
+        PageResult<CandidateVO> result = jobApplicationService.getJobCandidates(hrUserId, jobId, page, size);
+        return Result.success(result);
+    }
+
+    @GetMapping("/applications/{appId}/candidate")
+    @Operation(summary = "候选人详情（基本资料+徽章+简历，校验职位归属）")
+    @PreAuthorize("hasAnyRole('1','2','9')")  // [A]校友 [H]HR [Admin]管理员
+    public Result<CandidateDetailVO> candidateDetail(@PathVariable Long appId) {
+        Long hrUserId = SecurityUtils.requireCurrentUserId();
+        CandidateDetailVO vo = jobApplicationService.getCandidateDetail(hrUserId, appId);
+        return Result.success(vo);
+    }
+
+    @PutMapping("/applications/{appId}/status")
+    @Operation(summary = "更新投递状态（初筛/面试/录用/拒绝 + HR备注）")
+    @PreAuthorize("hasAnyRole('1','2','9')")  // [A]校友 [H]HR [Admin]管理员
+    @Idempotent(prefix = "job:appstatus", expireSeconds = 5)
+    public Result<Void> updateApplicationStatus(
+            @PathVariable Long appId,
+            @Valid @RequestBody ApplicationStatusDTO dto) {
+        Long hrUserId = SecurityUtils.requireCurrentUserId();
+        jobApplicationService.updateApplicationStatus(hrUserId, appId, dto);
+        return Result.success();
     }
 }

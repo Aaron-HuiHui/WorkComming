@@ -24,5 +24,6 @@
         <module>iwantjob-badge</module>
         <module>iwantjob-community</module>
         <module>iwantjob-helpgroup</module>
+        <module>iwantjob-portfolio</module>
     </modules>
 </project>
