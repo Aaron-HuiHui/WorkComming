@@ -3,7 +3,7 @@
     <!-- 招聘批次 Tab -->
     <el-card shadow="never" style="margin-bottom:16px">
       <el-radio-group v-model="query.batch" @change="load(1)">
-        <el-radio-button :value="null">全部批次</el-radio-button>
+        <el-radio-button value="">全部批次</el-radio-button>
         <el-radio-button :value="1">🌱 春招</el-radio-button>
         <el-radio-button :value="2">🍂 秋招</el-radio-button>
         <el-radio-button :value="3">🧪 实习批</el-radio-button>
@@ -91,7 +91,7 @@
           <el-descriptions-item label="城市">{{ current.location }}</el-descriptions-item>
           <el-descriptions-item label="薪资">{{ current.salaryRange || '面议' }}</el-descriptions-item>
           <el-descriptions-item label="类型">{{ ['实习', '校招', '社招'][current.jobType] }}</el-descriptions-item>
-          <el-descriptions-item label="联系邮箱">{{ current.contactEmail || '-' }}</el-descriptions-item>
+          <el-descriptions-item v-if="current.contactEmail" label="联系邮箱">{{ current.contactEmail }}</el-descriptions-item>
         </el-descriptions>
 
         <h4 style="margin:16px 0 8px">职位描述</h4>
@@ -128,7 +128,7 @@ const canFav = computed(() => [0, 1].includes(auth.user?.role))
 const list = ref([])
 const total = ref(0)
 const loading = ref(false)
-const query = reactive({ keyword: '', type: null, city: '', batch: null, page: 1, size: 10 })
+const query = reactive({ keyword: '', type: null, city: '', batch: '', page: 1, size: 10 })
 const favSet = ref(new Set())
 
 const drawer = ref(false)
@@ -144,7 +144,11 @@ async function load(page = query.page) {
   query.page = page
   loading.value = true
   try {
-    const res = await jobApi.search(query)
+    const params = { ...query }
+    if (params.batch === '') delete params.batch
+    if (params.city === '') delete params.city
+    if (!params.keyword) delete params.keyword
+    const res = await jobApi.search(params)
     list.value = res.data.records || []
     total.value = res.data.total || 0
   } finally {
@@ -182,6 +186,8 @@ async function handleApply() {
     ElMessage.success('投递成功！可在「我的投递」查看进度')
     drawer.value = false
     coverLetter.value = ''
+  } catch (e) {
+    // 业务错误（如重复投递）已由拦截器统一弹出提示
   } finally {
     applying.value = false
   }

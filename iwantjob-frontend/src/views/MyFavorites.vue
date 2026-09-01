@@ -67,7 +67,7 @@ async function load() {
     const res = await jobApi.myFavorites({ page: page.value, size: size.value })
     list.value = res.data?.records || []
     total.value = res.data?.total || 0
-  } finally { loading.value = false }
+  } catch (e) { /* 静默：保持空态 */ } finally { loading.value = false }
 }
 
 async function unfav(row) {

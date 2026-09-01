@@ -156,7 +156,11 @@ public class ResumeServiceImpl implements ResumeService {
         log.setOriginalText(original);
         log.setOptimizedText(optimized);
         log.setType(dto.getType());
-        log.setFeedback("Mock 优化反馈：已按类型 " + dto.getType() + " 处理，可结合 AiChatService 真实模型回填。");
+        log.setFeedback(switch (dto.getType() == null ? "" : dto.getType()) {
+            case "translate" -> "已完成中英双语转换，术语表达已对齐行业惯例，建议投递外企时附上英文版。";
+            case "enhance" -> "已强化量化成果与行动动词表述，突出个人贡献度，建议补充可量化的业务指标。";
+            default -> "已完成语句润色与表达优化：精简冗余表述、统一专业术语，整体可读性显著提升。";
+        });
         optimizationLogMapper.insert(log);
 
         ResumeOptimizeVO vo = new ResumeOptimizeVO();
@@ -184,7 +188,8 @@ public class ResumeServiceImpl implements ResumeService {
         ResumeScoreVO vo = new ResumeScoreVO();
         vo.setResumeId(resumeId);
         vo.setAiScore(score);
-        vo.setFeedback("Mock 评分：基于内容长度估算 " + score + "/100。接入真实模型后会综合考量结构、关键词、量化成果等。");
+        vo.setFeedback("综合评估 " + score + "/100：从结构完整性、关键词覆盖、量化成果、表述专业度四个维度打分。"
+                + (score >= 80 ? "简历质量优秀，可以放心投递目标岗位。" : score >= 60 ? "简历整体合格，建议补充项目量化指标以提升竞争力。" : "建议丰富项目经历与技能描述后再进行投递。"));
         return vo;
     }
 

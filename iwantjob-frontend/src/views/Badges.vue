@@ -30,7 +30,12 @@
 
     <!-- 全部徽章图鉴 -->
     <el-card shadow="never">
-      <template #header>🎖️ 徽章图鉴（达成条件即自动解锁）</template>
+      <template #header>
+        <div class="card-header-flex">
+          <span>🎖️ 徽章图鉴（达成条件即自动解锁）</span>
+          <el-button v-if="isAdmin" type="primary" size="small" @click="showTemplateDialog = true">+ 新建徽章模板</el-button>
+        </div>
+      </template>
       <el-table :data="templates" stripe>
         <el-table-column label="徽章" min-width="200">
           <template #default="{ row }">
@@ -55,27 +60,92 @@
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 管理员：新建徽章模板弹窗 -->
+    <el-dialog v-model="showTemplateDialog" title="新建徽章模板" width="520px">
+      <el-form :model="tplForm" label-width="90px">
+        <el-form-item label="徽章名称" required>
+          <el-input v-model="tplForm.name" maxlength="50" placeholder="如：面经分享达人" />
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="tplForm.description" type="textarea" :rows="2" maxlength="200" placeholder="如：累计分享 5 篇面经" />
+        </el-form-item>
+        <el-form-item label="条件类型" required>
+          <el-select v-model="tplForm.conditionType" style="width:100%">
+            <el-option :value="0" label="分享面经" />
+            <el-option :value="1" label="帮助他人" />
+            <el-option :value="2" label="薪资贡献" />
+            <el-option :value="3" label="模拟舱完成" />
+            <el-option :value="4" label="项目评价" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="达成阈值" required>
+          <el-input-number v-model="tplForm.threshold" :min="1" style="width:160px" />
+        </el-form-item>
+        <el-form-item label="稀有度" required>
+          <el-select v-model="tplForm.rarity" style="width:160px">
+            <el-option :value="0" label="普通" />
+            <el-option :value="1" label="稀有" />
+            <el-option :value="2" label="史诗" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="showTemplateDialog = false">取消</el-button>
+        <el-button type="primary" :loading="tplSaving" @click="createTemplate">创建</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { userApi, badgeApi } from '../api'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { userApi, badgeApi, adminApi } from '../api'
+import { useAuthStore } from '../stores/auth'
+
+const auth = useAuthStore()
+const isAdmin = computed(() => auth.user?.role === 9)
 
 const myBadges = ref([])
 const templates = ref([])
+const showTemplateDialog = ref(false)
+const tplSaving = ref(false)
+const tplForm = reactive({ name: '', description: '', conditionType: 0, threshold: 1, rarity: 0 })
 
 const earned = id => myBadges.value.some(b => b.badgeId === id)
 const rarityIcon = r => ['🎖️', '🏆', '👑'][r] || '🎖️'
 const rarityClass = r => ['r-common', 'r-rare', 'r-epic'][r] || 'r-common'
 
+async function loadTemplates() {
+  try {
+    const res = await badgeApi.templates()
+    templates.value = res.data || []
+  } catch (e) { /* 静默 */ }
+}
+
+async function createTemplate() {
+  if (!tplForm.name.trim()) return ElMessage.warning('请填写徽章名称')
+  tplSaving.value = true
+  try {
+    await adminApi.createBadgeTemplate(tplForm)
+    ElMessage.success('徽章模板创建成功')
+    showTemplateDialog.value = false
+    Object.assign(tplForm, { name: '', description: '', conditionType: 0, threshold: 1, rarity: 0 })
+    loadTemplates()
+  } catch (e) {
+    // 错误已由拦截器弹出
+  } finally {
+    tplSaving.value = false
+  }
+}
+
 onMounted(async () => {
-  const [mine, all] = await Promise.all([
+  const [mine] = await Promise.all([
     userApi.myBadges().catch(() => ({ data: [] })),
-    badgeApi.templates()
+    loadTemplates()
   ])
   myBadges.value = mine.data || []
-  templates.value = all.data || []
 })
 </script>
 

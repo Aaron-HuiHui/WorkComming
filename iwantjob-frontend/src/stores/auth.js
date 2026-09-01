@@ -34,6 +34,7 @@ export const useAuthStore = defineStore('auth', {
         userApi.points().catch(() => null)
       ])
       this.user = userRes.data
+      localStorage.setItem('userInfo', JSON.stringify(this.user))
       if (pointsRes) this.points = pointsRes.data
     },
 
@@ -49,6 +50,7 @@ export const useAuthStore = defineStore('auth', {
       this.points = null
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
+      localStorage.removeItem('userInfo')
     }
   }
 })

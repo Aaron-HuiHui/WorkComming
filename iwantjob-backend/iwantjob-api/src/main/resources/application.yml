@@ -9,10 +9,21 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/iwantjob?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/iwantjob?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048&rewriteBatchedStatements=true&connectTimeout=10000&socketTimeout=60000
     username: root
-    password: root
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # ===== HikariCP 高并发连接池 =====
+    hikari:
+      pool-name: IwantJobCoreHikari        # 池名（日志/监控可辨识）
+      maximum-pool-size: 20                # 池上限：6核12线程机器，核心20 + 职位服务15 = 35 < MySQL max_connections(151)
+      minimum-idle: 5                      # 常驻空闲连接，兼顾响应速度与资源占用
+      connection-timeout: 8000             # 池耗尽时最多等 8s，快速失败不拖垮线程
+      validation-timeout: 3000             # 连接有效性校验超时 3s
+      idle-timeout: 300000                 # 超出 min-idle 的空闲连接 5 分钟后回收
+      max-lifetime: 1740000               # 连接最长存活 29 分钟（必须 < MySQL wait_timeout 8h）
+      keepalive-time: 60000                # 每 60s 对空闲连接保活探测，防中间设备静默断连
+      leak-detection-threshold: 60000      # 连接借出 60s 未归还打告警，便于定位连接泄漏
   data:
     redis:
       host: localhost
@@ -41,7 +52,8 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-fetch-size: 100              # 流式取数批大小，避免大结果集一次性拉全量
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl  # SQL 日志走 logback（stdout 逐条打印是高并发吞吐瓶颈）
   global-config:
     db-config:
       logic-delete-field: isDeleted

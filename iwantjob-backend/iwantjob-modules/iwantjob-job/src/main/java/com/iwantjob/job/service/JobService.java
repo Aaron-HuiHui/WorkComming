@@ -36,4 +36,16 @@ public interface JobService {
      * 岗位市场统计总览（学生可视化）
      */
     JobStatsVO getStatsOverview();
+
+    /**
+     * 下架职位（status → 0），同步删除 ES 索引
+     * 仅职位发布者或管理员可操作
+     */
+    void offlineJob(Long operatorId, Long jobId);
+
+    /**
+     * 删除职位（软删除 is_deleted=1），同步删除 ES 索引
+     * 仅职位发布者或管理员可操作
+     */
+    void deleteJob(Long operatorId, Long jobId);
 }

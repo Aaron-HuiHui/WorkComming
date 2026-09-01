@@ -55,6 +55,8 @@ async function load() {
     const res = await jobApi.myApplied({ page: page.value, size: size.value })
     list.value = res.data.records || []
     total.value = res.data.total || 0
+  } catch (e) {
+    // 权限/网络错误由拦截器统一提示，页面保持空态
   } finally {
     loading.value = false
   }

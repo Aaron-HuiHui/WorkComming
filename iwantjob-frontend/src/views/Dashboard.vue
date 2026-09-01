@@ -47,9 +47,16 @@
               <span class="hero-me-role">{{ auth.roleName || '学生' }}</span>
             </div>
             <div class="hero-me-meta">
-              <span>互助积分 {{ auth.points?.balance ?? 0 }}</span>
-              <span class="dot-sep"></span>
-              <span>徽章 {{ myBadgeCount }}/5</span>
+              <template v-if="isHrOnly">
+                <span>在招职位 {{ hrJobTotal }}</span>
+                <span class="dot-sep"></span>
+                <span>收到投递 {{ hrAppTotal }}</span>
+              </template>
+              <template v-else>
+                <span>互助积分 {{ auth.points?.balance ?? 0 }}</span>
+                <span class="dot-sep"></span>
+                <span>徽章 {{ myBadgeCount }}/{{ badgeTotal }}</span>
+              </template>
             </div>
           </div>
         </div>
@@ -140,12 +147,18 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import GlassIcon from '../components/GlassIcon.vue'
 import StudioStack from '../components/StudioStack.vue'
 import { useAuthStore } from '../stores/auth'
-import { userApi, jobApi, simulatorApi } from '../api'
+import { userApi, jobApi, simulatorApi, badgeApi } from '../api'
 
 const auth = useAuthStore()
 const myBadgeCount = ref(0)
+const badgeTotal = ref(0)
 const sessionTotal = ref(0)
 const appliedTotal = ref(0)
+// HR 角色化数据
+const isHrOnly = computed(() => auth.user?.role === 2)
+const hrJobTotal = ref(0)
+const hrAppTotal = ref(0)
+const hrViewTotal = ref(0)
 
 /* ---------- Hero 鼠标视差（相机随鼠标微动） ---------- */
 const heroRef = ref(null)
@@ -167,40 +180,51 @@ function onHeroLeave() {
 }
 onBeforeUnmount(() => cancelAnimationFrame(raf))
 
-const stats = computed(() => [
-  {
-    icon: 'zap',
-    title: '互助积分',
-    value: auth.points?.balance ?? 0,
-    extra: `累计 ${auth.points?.totalEarned ?? 0}`,
-    desc: '答题分享赚取，可兑换权益',
-    theme: 'violet'
-  },
-  {
-    icon: 'medal',
-    title: '我的徽章',
-    value: myBadgeCount.value,
-    extra: '/5',
-    desc: '防篡改链上可验证',
-    theme: 'blue'
-  },
-  {
-    icon: 'gamepad',
-    title: '模拟演练',
-    value: sessionTotal.value,
-    extra: '次',
-    desc: 'AI 软技能评估',
-    theme: 'fuchsia'
-  },
-  {
-    icon: 'send',
-    title: '职位投递',
-    value: appliedTotal.value,
-    extra: '追踪中',
-    desc: '实时跟踪投递状态',
-    theme: 'sky'
+const stats = computed(() => {
+  // HR 角色化数据卡（招聘方视角）
+  if (isHrOnly.value) {
+    return [
+      { icon: 'briefcase', title: '在招职位', value: hrJobTotal.value, extra: '个', desc: '我发布的职位', theme: 'violet' },
+      { icon: 'send', title: '收到投递', value: hrAppTotal.value, extra: '份', desc: '候选人简历', theme: 'blue' },
+      { icon: 'chart', title: '累计浏览', value: hrViewTotal.value, extra: '次', desc: '职位总曝光量', theme: 'fuchsia' },
+      { icon: 'zap', title: '互助积分', value: auth.points?.balance ?? 0, extra: `累计 ${auth.points?.totalEarned ?? 0}`, desc: '平台激励体系', theme: 'sky' }
+    ]
   }
-])
+  return [
+    {
+      icon: 'zap',
+      title: '互助积分',
+      value: auth.points?.balance ?? 0,
+      extra: `累计 ${auth.points?.totalEarned ?? 0}`,
+      desc: '答题分享赚取，可兑换权益',
+      theme: 'violet'
+    },
+    {
+      icon: 'medal',
+      title: '我的徽章',
+      value: myBadgeCount.value,
+      extra: `/${badgeTotal.value}`,
+      desc: '防篡改链上可验证',
+      theme: 'blue'
+    },
+    {
+      icon: 'gamepad',
+      title: '模拟演练',
+      value: sessionTotal.value,
+      extra: '次',
+      desc: 'AI 软技能评估',
+      theme: 'fuchsia'
+    },
+    {
+      icon: 'send',
+      title: '职位投递',
+      value: appliedTotal.value,
+      extra: '追踪中',
+      desc: '实时跟踪投递状态',
+      theme: 'sky'
+    }
+  ]
+})
 
 const features = [
   {
@@ -230,9 +254,22 @@ const features = [
 ]
 
 onMounted(async () => {
+  if (isHrOnly.value) {
+    // HR 视角：招聘方数据（不再调用学生侧接口）
+    jobApi.myPublished({ page: 1, size: 50 }).then(res => {
+      const records = res.data?.records || []
+      hrJobTotal.value = res.data?.total ?? records.length
+      hrAppTotal.value = records.reduce((s, j) => s + (j.applicationCount || 0), 0)
+      hrViewTotal.value = records.reduce((s, j) => s + (j.viewCount || 0), 0)
+    }).catch(() => {})
+    return
+  }
   userApi.myBadges().then(res => {
     const d = res.data
     myBadgeCount.value = Array.isArray(d) ? d.length : (d?.records?.length ?? 0)
+  }).catch(() => {})
+  badgeApi.templates().then(res => {
+    badgeTotal.value = (res.data || []).length
   }).catch(() => {})
   simulatorApi.mySessions({ page: 1, size: 1 }).then(res => {
     sessionTotal.value = res.data?.total ?? 0

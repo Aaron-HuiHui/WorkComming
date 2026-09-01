@@ -920,3 +920,106 @@ _最后更新：team-lead (2026-09-01 13:10 第十四阶段：岗位市场字体
 ---
 
 _最后更新：team-lead (2026-09-01 14:00 第十五阶段：暗黑工作室风格重做完成，毛玻璃保留)_
+---
+
+## 第十六阶段：IDEA 数据库工具离线接入 + MySQL 密码变更确认（team-lead，2026-09-01）
+
+> 用户问题：IDEA Database 面板连不上 MySQL——驱动下载报 `download.jetbrains.com/.../MySQL/9.7/LICENSE.txt` Connect timed out。
+
+### 诊断结论（两个叠加原因）
+
+| # | 原因 | 说明 |
+|---|------|------|
+| 1 | **驱动下载被墙** | IDEA 的 jdbc-drivers.xml 元数据显示：jar 走阿里云 Maven（可通），但 LICENSE.txt 走 download.jetbrains.com（被墙）→ 整个下载流程超时失败 |
+| 2 | **root 密码已非 root** | 实测 CLI/JDBC `root/root` 均报 Access denied；**root/123456 通过**（后端 jar 内配置同为 123456，佐证密码曾被修改——第三阶段记录的 root/root 已过时）|
+
+### 已完成工作
+
+1. **驱动下载**：从阿里云 Maven 镜像下载 IDEA 期望版本 `mysql-connector-j-9.7.0.jar`（2.6MB）→ 存放 `C:\Users\Lenovo\tools\jdbc-drivers\`（无中文路径）
+2. **JDBC 连接实测（Java 22 + 9.7.0 驱动）**：`jdbc:mysql://localhost:3306/iwantjob` root/123456，**249ms 连接成功**；40 表 / 11 用户 / 41 职位 / 15 企业；driver=MySQL Connector/J 9.7.0，server=8.0.29，认证插件 caching_sha2_password
+3. 8.3.0（后端同款）与 9.7.0 驱动均验证（连不上纯因密码，与驱动版本无关）
+
+### IDEA 内接入方式（Custom JAR，免联网）
+
+Database 面板 → + → Data Source → MySQL → Driver 处 "MySQL" → Go to Driver / Drivers 页 → Driver Files 删除远程条目 → + → Custom JARs → 选 `C:\Users\Lenovo\tools\jdbc-drivers\mysql-connector-j-9.7.0.jar` → 回 Data Source 填 root/**123456** → Test Connection。
+数据源参数：Host localhost · Port 3306 · User root · Password 123456 · Database iwantjob
+
+### 环境信息更正（覆盖第三阶段记录）
+
+| 项 | 旧记录 | 现状 |
+|----|--------|------|
+| MySQL root 密码 | root | **123456**（CLI/JDBC/后端 jar 三方验证） |
+
+_最后更新：team-lead (2026-09-01 18:45 第十六阶段：IDEA 离线驱动+密码确认)_
+---
+
+## 第十七阶段：IDEA 驱动离线预置（免下载方案，2026-09-01）
+
+> 第十六阶段的「Custom JARs 手动导入」用户反馈仍卡在下载环节——远程下载在本机根本走不通。
+
+### 依据（idea.log 证据）
+
+本机网络仅阿里云镜像可达：repo.maven.apache.org Connect timed out、download.jetbrains.com Connect timed out、plugins marketplace 超时。**任何依赖 IDEA 远程下载的路径都不可行**。
+
+### 修复内容（全文件级，绕过下载）
+
+| # | 操作 | 说明 |
+|---|------|------|
+| 1 | **驱动预置到 IDEA 缓存目录** | `Roaming\JetBrains\IntelliJIdea2026.2\jdbc-drivers\MySQL ConnectorJ\9.7.0\com\mysql\mysql-connector-j\9.7.0\mysql-connector-j-9.7.0.jar`（目录结构经真实 IDEA 2024.2 崩溃日志中的 classpath 证据确认：`<config>\jdbc-drivers\<artifactId>\<version>\<maven组路径>\<artifact>\<version>\<jar>`） |
+| 2 | LICENSE.txt 就位 | 从 jar 内提取真实 LICENSE 存至 `MySQL ConnectorJ\9.7.0\` 及 maven 路径下 |
+| 3 | databaseDrivers.xml 固定版本 | mysql.8 → MySQL ConnectorJ 9.7.0（schema 参照 GitHub 真实配置样例，已备份 .bak） |
+| 4 | jdbc-drivers.xml 移除 15 个 license 项 | 全部指向被墙的 download.jetbrains.com；移除后 9.7.0 仅剩 maven 项（jar 走阿里云，兜底可下载） |
+
+### 结论
+
+驱动已在缓存中，IDEA 重启后打开 Data Source 对话框即识别为「已就绪」，不再触发下载。
+注意：数据源类型要选 **MySQL**（不是 MySQL Aurora——用户首次误选过 Aurora 类型，其 aws-wrapper jar 未预置）。
+
+_最后更新：team-lead (2026-09-01 19:20 第十七阶段：IDEA 驱动离线预置完成)_
+---
+
+## 第十八阶段：HikariCP 高并发连接池调优（team-lead，2026-09-01）
+
+> 背景：IDEA 数据库连接修复后，用户要求配置 Spring Boot 连接池支持高并发。此前两服务均为 HikariCP 默认配置（池上限仅 10、零调优参数）。
+
+### 环境定容依据
+
+机器 6核12线程 / 32G；MySQL `max_connections=151`、`wait_timeout=28800`(8h)。按 HikariCP 官方公式（连接数≈核数×2），定容：核心服务 20 + 职位服务 15 = 35，留足余量给 IDEA/CLI 连接。
+
+### 配置内容（两服务 application.yml 同步修改）
+
+| 参数 | 值 | 理由 |
+|------|-----|------|
+| pool-name | IwantJobCoreHikari / IwantJobJobHikari | 日志/监控可辨识 |
+| maximum-pool-size | 20 / 15 | 定容见上 |
+| minimum-idle | 5 | 常驻连接兼顾响应与资源 |
+| connection-timeout | 8000ms | 池耗尽快速失败，不拖垮请求线程 |
+| validation-timeout | 3000ms | 连接校验超时 |
+| idle-timeout | 300000ms | 超出 min-idle 部分 5 分钟回收 |
+| max-lifetime | 1740000ms(29min) | 必须 < wait_timeout，防池发放将断连接 |
+| keepalive-time | 60000ms | 空闲连接保活，防中间设备静默断连 |
+| leak-detection-threshold | 60000ms | 借出超时未还打泄漏告警 |
+
+JDBC URL 追加：`cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048`（客户端预编译缓存）+ `rewriteBatchedStatements=true`（批量写优化）+ `connectTimeout=10000&socketTimeout=60000`（网络异常快速失败）。
+MyBatis-Plus：+`default-fetch-size: 100`（流式取数）；核心服务 SQL 日志 StdOutImpl→Slf4jImpl（stdout 逐条打印是高并发吞吐瓶颈）。
+
+### 压测验证（node fetch 压测，脚本 `ft-tmp/load-test.mjs`，四接口混合：jobs 分页/ES检索/user/portfolio）
+
+| 并发 | 总请求 | 成功 | 失败 | 吞吐 | p50 | p95 | p99 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 50 | 300 | 300 | **0** | 112.4 req/s | 351ms | 1170ms | 1420ms |
+| 100 | 600 | 600 | **0** | 217.3 req/s | 412ms | 976ms | 1373ms |
+| 200 | 1000 | 1000 | **0** | 318.1 req/s | 546ms | 1117ms | 1152ms |
+
+压测期间 MySQL `Max_used_connections=48`（两池满载 35 + IDEA 等），远低于 151 上限；Hikari 懒启动行为确认（核心池由前端 30s 轮询首次触发，池名见日志 `IwantJobCoreHikari - Added connection`）。
+
+### 复现命令
+
+```powershell
+# 压测（并发数 总请求数）
+node e:\毕业设计\ft-tmp\load-test.mjs 200 1000
+# 观察池状态
+mysql -uroot -p123456 -e "SHOW STATUS LIKE 'Threads_connected'"
+```
+
+_最后更新：team-lead (2026-09-01 19:10 第十八阶段：连接池高并发调优完成)_

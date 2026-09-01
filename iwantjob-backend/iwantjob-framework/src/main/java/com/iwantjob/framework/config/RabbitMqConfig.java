@@ -32,19 +32,53 @@ public class RabbitMqConfig {
     public static final String RK_BADGE = "event.badge.trigger";
     public static final String RK_POINT = "event.point.change";
 
+    /** 死信交换机与队列（重试耗尽后留存排查，不再丢弃） */
+    public static final String DLX_EXCHANGE = "iwantjob.event.dlx";
+    public static final String QUEUE_BADGE_DLX = "iwantjob.badge.trigger.dlx";
+    public static final String QUEUE_POINT_DLX = "iwantjob.point.change.dlx";
+
     @Bean
     public TopicExchange eventExchange() {
         return ExchangeBuilder.topicExchange(EXCHANGE).durable(true).build();
     }
 
+    /**
+     * 死信交换机（topic，durable）
+     */
+    @Bean
+    public TopicExchange dlxExchange() {
+        return ExchangeBuilder.topicExchange(DLX_EXCHANGE).durable(true).build();
+    }
+
+    /**
+     * 业务队列绑定死信交换机：消息被拒绝(requeue=false)或过期后转发到 DLX。
+     * 注意：队列参数变更后首次启动前需删除旧队列（管理台或 rabbitmqctl delete_queue）。
+     */
     @Bean
     public Queue badgeQueue() {
-        return QueueBuilder.durable(QUEUE_BADGE).build();
+        return QueueBuilder.durable(QUEUE_BADGE)
+                .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", RK_BADGE)
+                .build();
     }
 
     @Bean
     public Queue pointQueue() {
-        return QueueBuilder.durable(QUEUE_POINT).build();
+        return QueueBuilder.durable(QUEUE_POINT)
+                .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", RK_POINT)
+                .build();
+    }
+
+    /** 死信队列（仅留存排查，无消费者） */
+    @Bean
+    public Queue badgeDlxQueue() {
+        return QueueBuilder.durable(QUEUE_BADGE_DLX).build();
+    }
+
+    @Bean
+    public Queue pointDlxQueue() {
+        return QueueBuilder.durable(QUEUE_POINT_DLX).build();
     }
 
     @Bean
@@ -55,6 +89,17 @@ public class RabbitMqConfig {
     @Bean
     public Binding pointBinding() {
         return BindingBuilder.bind(pointQueue()).to(eventExchange()).with(RK_POINT);
+    }
+
+    /** 死信队列绑定到死信交换机（routing key 与原队列一致，便于溯源） */
+    @Bean
+    public Binding badgeDlxBinding() {
+        return BindingBuilder.bind(badgeDlxQueue()).to(dlxExchange()).with(RK_BADGE);
+    }
+
+    @Bean
+    public Binding pointDlxBinding() {
+        return BindingBuilder.bind(pointDlxQueue()).to(dlxExchange()).with(RK_POINT);
     }
 
     /**

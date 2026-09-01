@@ -27,7 +27,12 @@
               <el-tag v-else type="info">进行中</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="statusDesc" label="状态" width="100" />
+          <el-table-column label="状态" width="100">
+            <template #default="{ row }">
+              <el-tag v-if="row.overallScore != null" type="success" size="small">已完成</el-tag>
+              <el-tag v-else type="warning" size="small" effect="plain">进行中</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column prop="startedAt" label="时间" width="180">
             <template #default="{ row }">{{ (row.startedAt || '').replace('T', ' ').slice(0, 16) }}</template>
           </el-table-column>
@@ -141,12 +146,14 @@ const finished = ref(false)
 const report = ref({})
 
 onMounted(async () => {
-  const [s, h] = await Promise.all([
-    simulatorApi.scenarios(),
-    simulatorApi.mySessions({ page: 1, size: 10 })
-  ])
-  scenarios.value = s.data || []
-  history.value = h.data?.records || []
+  try {
+    const [s, h] = await Promise.all([
+      simulatorApi.scenarios(),
+      simulatorApi.mySessions({ page: 1, size: 10 }).catch(() => ({ data: null }))
+    ])
+    scenarios.value = s.data || []
+    history.value = h.data?.records || []
+  } catch (e) { /* 静默 */ }
 })
 
 async function startSession(s) {

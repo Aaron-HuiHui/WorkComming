@@ -19,7 +19,7 @@
             <el-button type="primary" size="large" style="width:100%" :loading="loading" @click="handleLogin">
               登 录
             </el-button>
-            <div class="tip">测试账号：smoketest001 / Abc123456</div>
+            <div class="tip">演示账号：学生 ftetest · HR demo_hr · 管理员 admin（密码均为 Abc123456）</div>
           </el-form>
         </el-tab-pane>
 
@@ -92,19 +92,29 @@ const regRules = {
 }
 
 async function handleLogin() {
-  await loginFormRef.value.validate()
+  try {
+    await loginFormRef.value.validate()
+  } catch (e) {
+    return
+  }
   loading.value = true
   try {
     await authStore.login(loginForm)
     ElMessage.success('登录成功')
     router.push('/dashboard')
+  } catch (e) {
+    // 错误已由 request.js 拦截器统一弹出，这里捕获避免 unhandled rejection
   } finally {
     loading.value = false
   }
 }
 
 async function handleRegister() {
-  await regFormRef.value.validate()
+  try {
+    await regFormRef.value.validate()
+  } catch (e) {
+    return
+  }
   loading.value = true
   try {
     await authApi.register(regForm)
@@ -112,6 +122,8 @@ async function handleRegister() {
     activeTab.value = 'login'
     loginForm.username = regForm.username
     loginForm.password = ''
+  } catch (e) {
+    // 错误已由拦截器统一弹出
   } finally {
     loading.value = false
   }

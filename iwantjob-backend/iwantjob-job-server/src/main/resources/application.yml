@@ -7,10 +7,21 @@ spring:
   application:
     name: iwantjob-job-server
   datasource:
-    url: jdbc:mysql://localhost:3306/iwantjob?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/iwantjob?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048&rewriteBatchedStatements=true&connectTimeout=10000&socketTimeout=60000
     username: root
-    password: root
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # ===== HikariCP 高并发连接池 =====
+    hikari:
+      pool-name: IwantJobJobHikari         # 池名（日志/监控可辨识）
+      maximum-pool-size: 15                # 池上限：与核心服务(20)合计 35 < MySQL max_connections(151)
+      minimum-idle: 5                      # 常驻空闲连接
+      connection-timeout: 8000             # 池耗尽时最多等 8s，快速失败
+      validation-timeout: 3000             # 连接有效性校验超时 3s
+      idle-timeout: 300000                 # 超出 min-idle 的空闲连接 5 分钟后回收
+      max-lifetime: 1740000               # 连接最长存活 29 分钟（< MySQL wait_timeout 8h）
+      keepalive-time: 60000                # 空闲连接每 60s 保活探测
+      leak-detection-threshold: 60000      # 连接泄漏告警阈值 60s
   data:
     redis:
       host: localhost
@@ -38,6 +49,7 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+    default-fetch-size: 100              # 流式取数批大小
   global-config:
     db-config:
       logic-delete-field: isDeleted

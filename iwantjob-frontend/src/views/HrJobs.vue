@@ -24,7 +24,7 @@
         <div class="h-stat fuchsia">
           <div class="hs-icon">🔥</div>
           <div>
-            <div class="hs-value">{{ inProgressCount }}</div>
+            <div class="hs-value">{{ pendingCount }}</div>
             <div class="hs-label">待处理投递</div>
           </div>
         </div>
@@ -52,11 +52,9 @@
         <el-table-column label="浏览量" width="80" prop="viewCount" />
         <el-table-column label="投递数" width="90">
           <template #default="{ row }">
-            <el-badge :value="row.applicationCount" :hidden="!row.applicationCount" type="danger">
-              <el-tag effect="plain" :type="row.applicationCount > 0 ? 'danger' : 'info'" size="small">
-                {{ row.applicationCount }} 人
-              </el-tag>
-            </el-badge>
+            <el-tag effect="plain" :type="row.applicationCount > 0 ? 'danger' : 'info'" size="small">
+              {{ row.applicationCount }} 人
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="110" fixed="right">
@@ -68,9 +66,9 @@
     </el-card>
 
     <!-- 候选人抽屉 -->
-    <el-drawer v-model="candDrawer" :title="`候选人管理 · ${activeJob?.title || ''}`" size="820px">
+    <el-drawer v-model="candDrawer" :title="`候选人管理 · ${activeJob?.title || ''}`" size="min(820px, 95vw)">
       <!-- 候选人列表 -->
-      <div v-if="!viewingCandidate">
+      <div v-if="!viewingCandidate" v-loading="candLoading">
         <div class="cand-tip">
           <el-icon><InfoFilled /></el-icon>
           点击候选人行查看完整档案（基本资料 + 徽章背书 + 投递简历）
@@ -216,7 +214,11 @@
               v-for="s in statusFlow"
               :key="s.value"
               class="flow-step"
-              :class="{ active: detail.status === s.value, done: detail.status > s.value }"
+              :class="{
+                active: detail.status === s.value && detail.status !== 4,
+                rejected: detail.status === 4 && s.value === 4,
+                done: detail.status > s.value && detail.status !== 4 && s.value !== 4
+              }"
               @click="updateStatus(s.value)"
             >
               <div class="fs-dot">{{ ['投递', '初筛', '面试', '录用', '拒绝'][s.value] }}</div>
@@ -240,7 +242,18 @@
           <el-input v-model="pubForm.title" placeholder="如：Java 后端开发工程师" />
         </el-form-item>
         <el-form-item label="公司名称" required>
-          <el-input v-model="pubForm.companyName" placeholder="如：示例科技有限公司" />
+          <el-select
+            v-model="pubForm.companyId"
+            filterable allow-create default-first-option
+            placeholder="选择已入驻企业，或输入新公司名"
+            style="width:100%"
+            @change="onCompanyPick"
+          >
+            <el-option v-for="c in companyOptions" :key="c.id" :value="c.id" :label="c.name" />
+          </el-select>
+          <div v-if="pubForm.companyName && !pubForm.companyId" class="pub-company-hint">
+            「{{ pubForm.companyName }}」未入驻企业主页，发布后可在企业主页申请认领
+          </div>
         </el-form-item>
         <el-row>
           <el-col :span="12">
@@ -280,7 +293,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { InfoFilled } from '@element-plus/icons-vue'
-import { jobApi } from '../api'
+import { jobApi, companyApi } from '../api'
 
 const jobs = ref([])
 const publishedTotal = ref(0)
@@ -289,18 +302,20 @@ const activeJob = ref(null)
 const candidates = ref([])
 const candTotal = ref(0)
 const candPage = ref(1)
+const candLoading = ref(false)
 const viewingCandidate = ref(null)
 const detail = ref({})
 const remark = ref('')
 const showPublish = ref(false)
 const publishing = ref(false)
+const companyOptions = ref([])
+const pendingCount = ref(0)
 const pubForm = ref({
-  title: '', companyName: '', jobType: 1, salaryRange: '', location: '',
+  title: '', companyName: '', companyId: null, jobType: 1, salaryRange: '', location: '',
   description: '', requirements: ''
 })
 
 const totalApplications = computed(() => jobs.value.reduce((s, j) => s + (j.applicationCount || 0), 0))
-const inProgressCount = computed(() => candidates.value.filter(c => c.status === 0).length)
 
 const statusFlow = [
   { value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }
@@ -325,15 +340,53 @@ const parsedResume = computed(() => {
   }
 })
 
-onMounted(loadJobs)
+onMounted(() => {
+  loadJobs()
+  loadCompanies()
+})
 
 async function loadJobs() {
   try {
     const res = await jobApi.myPublished({ page: 1, size: 50 })
     jobs.value = res.data?.records || []
     publishedTotal.value = res.data?.total ?? 0
+    await refreshPendingCount()
   } catch (e) {
     ElMessage.error('职位加载失败')
+  }
+}
+
+// 真实统计「待处理投递」：并行拉取各职位候选人，按 status=0 汇总（不随抽屉操作漂移）
+async function refreshPendingCount() {
+  const withApps = jobs.value.filter(j => j.applicationCount > 0)
+  if (!withApps.length) {
+    pendingCount.value = 0
+    return
+  }
+  const results = await Promise.all(
+    withApps.map(j => jobApi.jobApplications(j.id, { page: 1, size: 100 }).catch(() => null))
+  )
+  pendingCount.value = results.reduce(
+    (s, r) => s + (r?.data?.records || []).filter(c => c.status === 0).length, 0
+  )
+}
+
+async function loadCompanies() {
+  try {
+    const res = await companyApi.list()
+    companyOptions.value = res.data || []
+  } catch (e) { /* 静默：企业下拉非关键路径 */ }
+}
+
+// 选择已有企业 → 同步 companyName；手输新公司名（allow-create）→ companyId 置空
+function onCompanyPick(val) {
+  if (val == null) return
+  if (typeof val === 'number') {
+    const c = companyOptions.value.find(x => x.id === val)
+    if (c) pubForm.value.companyName = c.name
+  } else {
+    pubForm.value.companyName = val
+    pubForm.value.companyId = null
   }
 }
 
@@ -347,12 +400,15 @@ async function openCandidates(job) {
 
 async function loadCandidates() {
   if (!activeJob.value) return
+  candLoading.value = true
   try {
     const res = await jobApi.jobApplications(activeJob.value.id, { page: candPage.value, size: 10 })
     candidates.value = res.data?.records || []
     candTotal.value = res.data?.total ?? 0
   } catch (e) {
     ElMessage.error('候选人加载失败')
+  } finally {
+    candLoading.value = false
   }
 }
 
@@ -387,8 +443,9 @@ async function updateStatus(status) {
     })
     ElMessage.success(`已${labels[status]}`)
     detail.value.status = status
-    // 同步刷新列表
+    // 同步刷新列表与统计
     loadCandidates()
+    refreshPendingCount()
   } catch (e) {
     ElMessage.error('状态更新失败')
   }
@@ -402,9 +459,9 @@ async function publish() {
   publishing.value = true
   try {
     await jobApi.publish(pubForm.value)
-    ElMessage.success('发布成功')
+    ElMessage.success(pubForm.value.companyId ? '发布成功，已同步至企业主页' : '发布成功')
     showPublish.value = false
-    pubForm.value = { title: '', companyName: '', jobType: 1, salaryRange: '', location: '', description: '', requirements: '' }
+    pubForm.value = { title: '', companyName: '', companyId: null, jobType: 1, salaryRange: '', location: '', description: '', requirements: '' }
     loadJobs()
   } catch (e) {
     ElMessage.error('发布失败：' + (e.message || ''))
@@ -497,4 +554,6 @@ async function publish() {
 .flow-step:hover { border-color: #a78bfa; color: #7c3aed; }
 .flow-step.active { background: #ede9fe; border-color: #7c3aed; color: #6d28d9; font-weight: 700; }
 .flow-step.done { background: #f0fdf4; border-color: #86efac; color: #16a34a; }
+.flow-step.rejected { background: #fef2f2; border-color: #f87171; color: #dc2626; font-weight: 700; }
+.pub-company-hint { font-size: 12px; color: #909399; margin-top: 4px; line-height: 1.5; }
 </style>

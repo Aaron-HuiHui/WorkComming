@@ -11,6 +11,12 @@
       </el-col>
     </el-row>
 
+    <!-- 刷新工具条 -->
+    <div class="toolbar">
+      <span class="updated-at" v-if="updatedAt">数据更新于 {{ updatedAt }}</span>
+      <el-button size="small" :icon="Refresh" :loading="loading" @click="load">刷新</el-button>
+    </div>
+
     <!-- 图表 -->
     <el-row :gutter="16">
       <el-col :md="8" :sm="24" style="margin-bottom:16px">
@@ -35,11 +41,13 @@
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import * as echarts from 'echarts'
+import { Refresh } from '@element-plus/icons-vue'
 import { adminApi } from '../api'
 
 const data = ref({})
 const loading = ref(false)
 const charts = []
+const updatedAt = ref('')
 
 const cards = [
   { key: 'totalUsers', label: '注册用户', icon: '👥' },
@@ -70,20 +78,35 @@ function pie(el, rows, colors) {
   })
 }
 
+// 近 7 天注册趋势：后端只返回有数据的日期，前端补全 7 天（缺数补 0），避免趋势误读
+function fillReg7d(rows) {
+  const map = new Map((rows || []).map(r => [r.name, r.value]))
+  const days = []
+  const today = new Date()
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today)
+    d.setDate(today.getDate() - i)
+    const key = `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    days.push({ name: key, value: map.get(key) ?? 0 })
+  }
+  return days
+}
+
 function initCharts(d) {
   const palette = ['#4b3fe3', '#67c23a', '#e6a23c', '#f56c6c', '#409eff', '#909399']
   pie(roleChart.value, d.userRoleDist, palette)
   pie(statusChart.value, d.applicationStatusDist, palette)
   pie(batchChart.value, d.batchDist, ['#909399', '#67c23a', '#e6a23c', '#409eff'])
 
+  const regRows = fillReg7d(d.reg7d)
   const reg = echarts.init(regChart.value)
   charts.push(reg)
   reg.setOption({
     tooltip: { trigger: 'axis' },
     grid: { left: 40, right: 20, top: 20, bottom: 30 },
-    xAxis: { type: 'category', data: (d.reg7d || []).map(r => r.name) },
+    xAxis: { type: 'category', data: regRows.map(r => r.name) },
     yAxis: { type: 'value', minInterval: 1 },
-    series: [{ type: 'line', smooth: true, areaStyle: { opacity: .15 }, itemStyle: { color: '#4b3fe3' }, data: (d.reg7d || []).map(r => r.value) }]
+    series: [{ type: 'line', smooth: true, areaStyle: { opacity: .15 }, itemStyle: { color: '#4b3fe3' }, data: regRows.map(r => r.value) }]
   })
 
   const hot = echarts.init(hotChart.value)
@@ -103,9 +126,12 @@ async function load() {
   try {
     const res = await adminApi.overview()
     data.value = res.data || {}
+    updatedAt.value = new Date().toLocaleTimeString('zh-CN', { hour12: false })
+    charts.forEach(c => c.dispose())
+    charts.length = 0
     await nextTick()
     initCharts(data.value)
-  } finally { loading.value = false }
+  } catch (e) { /* 静默 */ } finally { loading.value = false }
 }
 
 function resize() { charts.forEach(c => c.resize()) }
@@ -122,6 +148,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-bottom: 12px; }
+.updated-at { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
 .stat-card { text-align: center; margin-bottom: 12px; }
 .stat-icon { font-size: 28px; }
 .stat-value { font-size: 26px; font-weight: 700; color: #1f2337; margin: 6px 0 2px; }

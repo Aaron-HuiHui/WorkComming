@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -145,6 +146,28 @@ public class JobController {
             @Valid @RequestBody ApplicationStatusDTO dto) {
         Long hrUserId = SecurityUtils.requireCurrentUserId();
         jobApplicationService.updateApplicationStatus(hrUserId, appId, dto);
+        return Result.success();
+    }
+
+    // ==================== 职位下架/删除（同步删 ES 索引） ====================
+
+    @PutMapping("/{id}/offline")
+    @Operation(summary = "下架职位（status→0，同步删除ES索引，仅发布者/管理员）")
+    @PreAuthorize("hasAnyRole('1','2','9')")  // [A]校友 [H]HR [Admin]管理员
+    @Idempotent(prefix = "job:offline", expireSeconds = 5)
+    public Result<Void> offline(@PathVariable Long id) {
+        Long operatorId = SecurityUtils.requireCurrentUserId();
+        jobService.offlineJob(operatorId, id);
+        return Result.success();
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "删除职位（软删除，同步删除ES索引，仅发布者/管理员）")
+    @PreAuthorize("hasAnyRole('1','2','9')")  // [A]校友 [H]HR [Admin]管理员
+    @Idempotent(prefix = "job:delete", expireSeconds = 5)
+    public Result<Void> delete(@PathVariable Long id) {
+        Long operatorId = SecurityUtils.requireCurrentUserId();
+        jobService.deleteJob(operatorId, id);
         return Result.success();
     }
 }

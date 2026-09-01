@@ -257,4 +257,71 @@ public class JobServiceImpl implements JobService {
         BeanUtils.copyProperties(job, vo);
         return vo;
     }
+
+    // ==================== 职位下架/删除（同步删 ES） ====================
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void offlineJob(Long operatorId, Long jobId) {
+        Job job = jobMapper.selectById(jobId);
+        if (job == null) {
+            throw new BusinessException(ErrorCode.JOB_NOT_FOUND);
+        }
+        requireJobOwner(operatorId, job);
+        // status → 0 下架
+        Job update = new Job();
+        update.setId(jobId);
+        update.setStatus(0);
+        jobMapper.updateById(update);
+        log.info("职位下架: jobId={}, operatorId={}", jobId, operatorId);
+        // 同步删除 ES 索引（下架后不再可搜）
+        removeFromEngineAfterCommit(jobId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteJob(Long operatorId, Long jobId) {
+        Job job = jobMapper.selectById(jobId);
+        if (job == null) {
+            throw new BusinessException(ErrorCode.JOB_NOT_FOUND);
+        }
+        requireJobOwner(operatorId, job);
+        // 软删除（MyBatis-Plus @TableLogic 自动置 is_deleted=1）
+        jobMapper.deleteById(jobId);
+        log.info("职位删除(软删): jobId={}, operatorId={}", jobId, operatorId);
+        // 同步删除 ES 索引
+        removeFromEngineAfterCommit(jobId);
+    }
+
+    /**
+     * 校验操作者为职位发布者（管理员由 Controller 层跳过校验直接传 null operatorId 或另行放行）
+     */
+    private void requireJobOwner(Long operatorId, Job job) {
+        if (operatorId == null) {
+            return; // 管理员放行
+        }
+        if (job.getPosterId() == null || !job.getPosterId().equals(operatorId)) {
+            throw new BusinessException(ErrorCode.NOT_JOB_OWNER);
+        }
+    }
+
+    /**
+     * 事务提交后从 ES 删除索引，避免回滚后 ES 残留；删除失败仅记日志
+     */
+    private void removeFromEngineAfterCommit(Long jobId) {
+        JobSearchEngine engine = searchEngineProvider.getIfAvailable();
+        if (engine == null) {
+            return;
+        }
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                try {
+                    engine.remove(jobId);
+                } catch (Exception e) {
+                    log.warn("ES 索引删除失败(下架/删除职位): jobId={}, err={}", jobId, e.getMessage());
+                }
+            }
+        });
+    }
 }

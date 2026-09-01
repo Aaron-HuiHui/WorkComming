@@ -78,7 +78,7 @@
                 :total="total"
                 :page-size="size"
                 :current-page="page"
-                @current-change="p => { page = p; loadQuestions() }"
+                @current-change="p => { page = p; applyLocalFilter() }"
               />
             </div>
           </template>
@@ -146,14 +146,13 @@ function countByCat(v) {
   return allQuestions.value.filter(q => q.category === v).length
 }
 
-async function loadQuestions() {
+// 单次请求全量（题库量级小），前端本地分页 + 分类过滤
+async function loadAllForCount() {
   loading.value = true
   try {
-    const params = { page: page.value, size: size.value }
-    if (activeCategory.value !== null) params.category = activeCategory.value
-    const res = await interviewApi.questions(params)
-    questions.value = res.data?.records || []
-    total.value = res.data?.total ?? 0
+    const res = await interviewApi.questions({ page: 1, size: 200 })
+    allQuestions.value = res.data?.records || []
+    applyLocalFilter()
   } catch (e) {
     ElMessage.error('题目加载失败')
   } finally {
@@ -161,17 +160,18 @@ async function loadQuestions() {
   }
 }
 
-async function loadAllForCount() {
-  try {
-    const res = await interviewApi.questions({ page: 1, size: 200 })
-    allQuestions.value = res.data?.records || []
-  } catch (e) { /* 静默 */ }
+function applyLocalFilter() {
+  const filtered = activeCategory.value === null
+    ? allQuestions.value
+    : allQuestions.value.filter(q => q.category === activeCategory.value)
+  total.value = filtered.length
+  questions.value = filtered.slice((page.value - 1) * size.value, page.value * size.value)
 }
 
 function switchCategory(v) {
   activeCategory.value = v
   page.value = 1
-  loadQuestions()
+  applyLocalFilter()
 }
 
 async function showDetail(q) {
@@ -191,7 +191,6 @@ async function startMockInterview() {
 }
 
 onMounted(() => {
-  loadQuestions()
   loadAllForCount()
 })
 </script>

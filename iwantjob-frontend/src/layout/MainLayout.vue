@@ -45,7 +45,7 @@
     <el-container>
       <el-header class="header">
         <div class="header-left">
-          <el-tag v-if="isHr" type="danger" effect="dark" size="small" style="margin-right:10px">HR 工作台</el-tag>
+          <el-tag v-if="isHr && !isAdmin" type="danger" effect="dark" size="small" style="margin-right:10px">HR 工作台</el-tag>
           <el-tag v-if="isAdmin" type="warning" effect="dark" size="small" style="margin-right:10px">管理员</el-tag>
           {{ route.meta.title || '' }}
         </div>

@@ -117,5 +117,18 @@ export const notifyApi = {
 
 // ==================== 管理员运营看板 ====================
 export const adminApi = {
-  overview: () => request.get('/admin/overview')
+  overview: () => request.get('/admin/overview'),
+  // ===== 薪资审核 =====
+  salaryPending: params => request.get('/admin/salary/pending', { params }),
+  salaryReview: (id, data) => request.put(`/admin/salary/${id}/review`, data, {
+    headers: { 'X-Idempotency-Key': crypto.randomUUID() }
+  }),
+  generateWhitepaper: () => request.post('/admin/whitepaper/generate', null, {
+    headers: { 'X-Idempotency-Key': crypto.randomUUID() }
+  }),
+  // ===== 徽章模板管理 =====
+  badgeTemplates: () => request.get('/admin/badges/templates'),
+  createBadgeTemplate: data => request.post('/admin/badges/templates', data, {
+    headers: { 'X-Idempotency-Key': crypto.randomUUID() }
+  })
 }
