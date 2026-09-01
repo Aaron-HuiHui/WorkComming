@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>薪资白皮书 - 我要工作</title>
+    <style id="theme-vars">
+/* iWantJob · Business Blue Style — 求职平台专业商务蓝 */
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ===== Brand primary scale (blue) ===== */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6;
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+
+  /* ===== Neutral scale (slate, cool gray) ===== */
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-300: #cbd5e1;
+  --neutral-400: #94a3b8;
+  --neutral-500: #64748b;
+  --neutral-600: #475569;
+  --neutral-700: #334155;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a;
+
+  /* ===== State colors ===== */
+  --state-success: #16a34a;
+  --state-warning: #d97706;
+  --state-error: #dc2626;
+  --state-info: #2563eb;
+
+  /* ===== Semantic tokens ===== */
+  --background: var(--neutral-50);
+  --foreground: var(--neutral-900);
+  --card: #ffffff;
+  --card-foreground: var(--neutral-900);
+  --popover: #ffffff;
+  --popover-foreground: var(--neutral-900);
+  --primary: var(--brand-600);
+  --primary-foreground: #ffffff;
+  --muted: var(--neutral-100);
+  --muted-foreground: var(--neutral-500);
+  --border: var(--neutral-200);
+  --input: var(--neutral-200);
+  --ring: var(--brand-600);
+
+  /* Sidebar — dark navy sidebar */
+  --sidebar: var(--neutral-800);
+  --sidebar-foreground: var(--neutral-300);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--neutral-700);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-ring: var(--brand-400);
+
+  /* Chart */
+  --chart-1: var(--brand-500);
+  --chart-2: var(--neutral-400);
+  --chart-3: var(--brand-300);
+  --chart-4: var(--neutral-500);
+  --chart-5: var(--brand-700);
+
+  /* ===== Non-color tokens ===== */
+  --font-sans: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-serif: Georgia, ui-serif, serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --spacing: 0.25rem;
+
+  /* Shadow — static surfaces border-led, floating only deeper */
+  --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.03);
+  --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
+  --shadow-xl: 0 8px 16px -4px rgba(0,0,0,0.1);
+  --shadow-2xl: 0 12px 24px -6px rgba(0,0,0,0.12);
+
+  /* ===== Brand prefix aliases (for apply-html-head-contract.mjs) ===== */
+  --iw-background: var(--background);
+  --iw-foreground: var(--foreground);
+  --iw-card: var(--card);
+  --iw-card-foreground: var(--card-foreground);
+  --iw-popover: var(--popover);
+  --iw-popover-foreground: var(--popover-foreground);
+  --iw-primary: var(--primary);
+  --iw-primary-foreground: var(--primary-foreground);
+  --iw-muted: var(--muted);
+  --iw-muted-foreground: var(--muted-foreground);
+  --iw-border: var(--border);
+  --iw-input: var(--input);
+  --iw-ring: var(--ring);
+  --iw-sidebar: var(--sidebar);
+  --iw-sidebar-foreground: var(--sidebar-foreground);
+  --iw-sidebar-primary: var(--sidebar-primary);
+  --iw-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --iw-sidebar-accent: var(--sidebar-accent);
+  --iw-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --iw-sidebar-border: var(--sidebar-border);
+  --iw-sidebar-ring: var(--sidebar-ring);
+  --iw-radius-small: var(--radius-sm);
+  --iw-radius-medium: var(--radius-md);
+  --iw-radius-large: var(--radius-lg);
+}
+
+/* ===== @theme inline — Tailwind token mapping ===== */
+@theme inline {
+  --color-background: var(--iw-background);
+  --color-foreground: var(--iw-foreground);
+  --color-card: var(--iw-card);
+  --color-card-foreground: var(--iw-card-foreground);
+  --color-popover: var(--iw-popover);
+  --color-popover-foreground: var(--iw-popover-foreground);
+  --color-primary: var(--iw-primary);
+  --color-primary-foreground: var(--iw-primary-foreground);
+  --color-muted: var(--iw-muted);
+  --color-muted-foreground: var(--iw-muted-foreground);
+  --color-border: var(--iw-border);
+  --color-input: var(--iw-input);
+  --color-ring: var(--iw-ring);
+  --color-sidebar: var(--iw-sidebar);
+  --color-sidebar-foreground: var(--iw-sidebar-foreground);
+  --color-sidebar-primary: var(--iw-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--iw-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+  --color-sidebar-border: var(--iw-sidebar-border);
+  --color-sidebar-ring: var(--iw-sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --radius-sm: var(--iw-radius-small);
+  --radius-md: var(--iw-radius-medium);
+  --radius-lg: var(--iw-radius-large);
+  --radius-full: var(--radius-full);
+}
+
+/* ===== Base layer ===== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--iw-background);
+    --color-foreground: var(--iw-foreground);
+    --color-card: var(--iw-card);
+    --color-card-foreground: var(--iw-card-foreground);
+    --color-popover: var(--iw-popover);
+    --color-popover-foreground: var(--iw-popover-foreground);
+    --color-primary: var(--iw-primary);
+    --color-primary-foreground: var(--iw-primary-foreground);
+    --color-muted: var(--iw-muted);
+    --color-muted-foreground: var(--iw-muted-foreground);
+    --color-border: var(--iw-border);
+    --color-input: var(--iw-input);
+    --color-ring: var(--iw-ring);
+    --color-sidebar: var(--iw-sidebar);
+    --color-sidebar-foreground: var(--iw-sidebar-foreground);
+    --color-sidebar-primary: var(--iw-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--iw-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+    --color-sidebar-border: var(--iw-sidebar-border);
+    --color-sidebar-ring: var(--iw-sidebar-ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --radius-sm: var(--iw-radius-small);
+    --radius-md: var(--iw-radius-medium);
+    --radius-lg: var(--iw-radius-large);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--iw-background); color: var(--iw-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--iw-background); }
+      .text-background { color: var(--iw-background); }
+      .border-background { border-color: var(--iw-background); }
+      .ring-background { --tw-ring-color: var(--iw-background); }
+      .bg-foreground { background-color: var(--iw-foreground); }
+      .text-foreground { color: var(--iw-foreground); }
+      .border-foreground { border-color: var(--iw-foreground); }
+      .ring-foreground { --tw-ring-color: var(--iw-foreground); }
+      .bg-card { background-color: var(--iw-card); }
+      .text-card { color: var(--iw-card); }
+      .border-card { border-color: var(--iw-card); }
+      .ring-card { --tw-ring-color: var(--iw-card); }
+      .bg-card-foreground { background-color: var(--iw-card-foreground); }
+      .text-card-foreground { color: var(--iw-card-foreground); }
+      .border-card-foreground { border-color: var(--iw-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--iw-card-foreground); }
+      .bg-popover { background-color: var(--iw-popover); }
+      .text-popover { color: var(--iw-popover); }
+      .border-popover { border-color: var(--iw-popover); }
+      .ring-popover { --tw-ring-color: var(--iw-popover); }
+      .bg-popover-foreground { background-color: var(--iw-popover-foreground); }
+      .text-popover-foreground { color: var(--iw-popover-foreground); }
+      .border-popover-foreground { border-color: var(--iw-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--iw-popover-foreground); }
+      .bg-primary { background-color: var(--iw-primary); }
+      .text-primary { color: var(--iw-primary); }
+      .border-primary { border-color: var(--iw-primary); }
+      .ring-primary { --tw-ring-color: var(--iw-primary); }
+      .bg-primary-foreground { background-color: var(--iw-primary-foreground); }
+      .text-primary-foreground { color: var(--iw-primary-foreground); }
+      .border-primary-foreground { border-color: var(--iw-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--iw-primary-foreground); }
+      .bg-muted { background-color: var(--iw-muted); }
+      .text-muted { color: var(--iw-muted); }
+      .border-muted { border-color: var(--iw-muted); }
+      .ring-muted { --tw-ring-color: var(--iw-muted); }
+      .bg-muted-foreground { background-color: var(--iw-muted-foreground); }
+      .text-muted-foreground { color: var(--iw-muted-foreground); }
+      .border-muted-foreground { border-color: var(--iw-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--iw-muted-foreground); }
+      .bg-border { background-color: var(--iw-border); }
+      .text-border { color: var(--iw-border); }
+      .border-border { border-color: var(--iw-border); }
+      .ring-border { --tw-ring-color: var(--iw-border); }
+      .bg-input { background-color: var(--iw-input); }
+      .text-input { color: var(--iw-input); }
+      .border-input { border-color: var(--iw-input); }
+      .ring-input { --tw-ring-color: var(--iw-input); }
+      .bg-ring { background-color: var(--iw-ring); }
+      .text-ring { color: var(--iw-ring); }
+      .border-ring { border-color: var(--iw-ring); }
+      .ring-ring { --tw-ring-color: var(--iw-ring); }
+      .bg-sidebar { background-color: var(--iw-sidebar); }
+      .text-sidebar { color: var(--iw-sidebar); }
+      .border-sidebar { border-color: var(--iw-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--iw-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--iw-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--iw-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--iw-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--iw-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--iw-sidebar-primary); }
+      .text-sidebar-primary { color: var(--iw-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--iw-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--iw-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--iw-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--iw-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--iw-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--iw-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--iw-sidebar-accent); }
+      .text-sidebar-accent { color: var(--iw-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--iw-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--iw-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--iw-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--iw-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--iw-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--iw-sidebar-accent-foreground); }
+      .bg-sidebar-border { background-color: var(--iw-sidebar-border); }
+      .text-sidebar-border { color: var(--iw-sidebar-border); }
+      .border-sidebar-border { border-color: var(--iw-sidebar-border); }
+      .ring-sidebar-border { --tw-ring-color: var(--iw-sidebar-border); }
+      .bg-sidebar-ring { background-color: var(--iw-sidebar-ring); }
+      .text-sidebar-ring { color: var(--iw-sidebar-ring); }
+      .border-sidebar-ring { border-color: var(--iw-sidebar-ring); }
+      .ring-sidebar-ring { --tw-ring-color: var(--iw-sidebar-ring); }
+      .bg-chart-1 { background-color: var(--chart-1); }
+      .text-chart-1 { color: var(--chart-1); }
+      .border-chart-1 { border-color: var(--chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--chart-1); }
+      .bg-chart-2 { background-color: var(--chart-2); }
+      .text-chart-2 { color: var(--chart-2); }
+      .border-chart-2 { border-color: var(--chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--chart-2); }
+      .bg-chart-3 { background-color: var(--chart-3); }
+      .text-chart-3 { color: var(--chart-3); }
+      .border-chart-3 { border-color: var(--chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--chart-3); }
+      .bg-chart-4 { background-color: var(--chart-4); }
+      .text-chart-4 { color: var(--chart-4); }
+      .border-chart-4 { border-color: var(--chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--chart-4); }
+      .bg-chart-5 { background-color: var(--chart-5); }
+      .text-chart-5 { color: var(--chart-5); }
+      .border-chart-5 { border-color: var(--chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--chart-5); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <!-- Sidebar -->
+      <aside class="fixed left-0 top-0 w-60 h-screen bg-[#1e293b] flex flex-col z-50">
+        <div class="h-15 flex items-center justify-center border-b border-white/8">
+          <span class="text-white font-bold text-lg">💼 我要工作</span>
+        </div>
+        <nav class="flex-1 py-4 px-3 space-y-1">
+          <a data-dom-id="nav-dashboard" href="biz-dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="home" class="w-4 h-4"></i> 首页
+          </a>
+          <a data-dom-id="nav-jobs" href="biz-job-list.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="briefcase" class="w-4 h-4"></i> 职位广场
+          </a>
+          <a data-dom-id="nav-applications" href="biz-applications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="file-text" class="w-4 h-4"></i> 我的投递
+          </a>
+          <a data-dom-id="nav-simulator" href="biz-simulator.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="monitor" class="w-4 h-4"></i> AI模拟舱
+          </a>
+          <a data-dom-id="nav-salary" href="biz-salary.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-[#2563eb]/20 border-l-2 border-[#2563eb] text-sm font-medium">
+            <i data-lucide="trending-up" class="w-4 h-4"></i> 薪资白皮书
+          </a>
+          <a data-dom-id="nav-badges" href="biz-badges.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="trophy" class="w-4 h-4"></i> 我的徽章
+          </a>
+        </nav>
+        <div class="border-t border-white/8 p-3">
+          <a href="biz-profile.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="user-circle" class="w-4 h-4"></i> 个人中心
+          </a>
+        </div>
+      </aside>
+
+      <!-- Top header -->
+      <header class="fixed top-0 right-0 left-60 h-15 bg-white shadow-sm flex items-center justify-between px-6 z-40 border-b border-[#e2e8f0]">
+        <h1 class="text-lg font-semibold text-[#0f172a]">薪资白皮书</h1>
+        <div class="flex items-center gap-4">
+          <span class="bg-amber-50 text-amber-700 rounded px-3 py-1 text-sm font-medium flex items-center gap-1">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i> 互助积分: 120
+          </span>
+          <div class="flex items-center gap-2 cursor-pointer">
+            <div class="w-9 h-9 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-sm font-medium">张</div>
+            <span class="text-sm text-[#475569] font-medium">张三</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#94a3b8]"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <div class="ml-60 pt-15 min-h-screen bg-[#f8fafc]">
+        <div class="p-6 min-w-[1024px]">
+          <!-- Filter bar -->
+          <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-4 mb-4">
+            <div class="grid grid-cols-4 gap-4 items-end">
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">行业</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option selected>互联网/IT</option>
+                  <option>金融</option>
+                  <option>教育</option>
+                  <option>制造业</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">职位</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option>全部职位</option>
+                  <option selected>前端开发</option>
+                  <option>后端开发</option>
+                  <option>产品经理</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">城市</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option>全部城市</option>
+                  <option selected>北京</option>
+                  <option>上海</option>
+                  <option>深圳</option>
+                </select>
+              </div>
+              <button data-dom-id="contribute-salary" onclick="window.location.href='biz-salary-contribute.html'" class="bg-[#2563eb] text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#1d4ed8] transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i> 贡献薪资数据
+              </button>
+            </div>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-[#64748b]">行业平均</span>
+                <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+                  <i data-lucide="bar-chart-3" class="w-5 h-5 text-[#2563eb]"></i>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-[#0f172a]">16K<span class="text-sm font-normal text-[#94a3b8]">/月</span></div>
+              <div class="text-xs text-[#94a3b8] mt-1">互联网行业</div>
+            </div>
+            <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-[#64748b]">同岗位平均</span>
+                <div class="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center">
+                  <i data-lucide="briefcase" class="w-5 h-5 text-green-600"></i>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-[#0f172a]">18K<span class="text-sm font-normal text-[#94a3b8]">/月</span></div>
+              <div class="text-xs text-[#94a3b8] mt-1">前端开发</div>
+            </div>
+            <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-[#64748b]">你高于平均</span>
+                <div class="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center">
+                  <i data-lucide="trending-up" class="w-5 h-5 text-green-600"></i>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-green-600">+2K</div>
+              <div class="text-xs text-[#94a3b8] mt-1">较同岗位</div>
+            </div>
+            <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-[#64748b]">数据来源</span>
+                <div class="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center">
+                  <i data-lucide="database" class="w-5 h-5 text-purple-600"></i>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-[#0f172a]">1,234<span class="text-sm font-normal text-[#94a3b8]"> 条</span></div>
+              <div class="text-xs text-[#94a3b8] mt-1">真实贡献数据</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4">
+            <!-- Salary bar chart -->
+            <div class="col-span-2 bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5">
+              <div class="flex items-center justify-between mb-6">
+                <h3 class="text-base font-semibold text-[#0f172a]">各岗位平均薪资对比</h3>
+                <span class="text-xs text-[#94a3b8]">单位：K/月</span>
+              </div>
+              <div class="flex items-end justify-around gap-4 h-64">
+                <!-- 前端 18K -->
+                <div class="flex-1 flex flex-col items-center gap-2">
+                  <div class="text-sm font-bold text-[#2563eb]">18K</div>
+                  <div class="w-full bg-[#2563eb] rounded-t-lg" style="height: 72%"></div>
+                  <span class="text-xs text-[#64748b]">前端</span>
+                </div>
+                <!-- 后端 20K -->
+                <div class="flex-1 flex flex-col items-center gap-2">
+                  <div class="text-sm font-bold text-[#2563eb]">20K</div>
+                  <div class="w-full bg-[#2563eb] rounded-t-lg" style="height: 80%"></div>
+                  <span class="text-xs text-[#64748b]">后端</span>
+                </div>
+                <!-- 产品 15K -->
+                <div class="flex-1 flex flex-col items-center gap-2">
+                  <div class="text-sm font-bold text-[#3b82f6]">15K</div>
+                  <div class="w-full bg-[#3b82f6] rounded-t-lg" style="height: 60%"></div>
+                  <span class="text-xs text-[#64748b]">产品</span>
+                </div>
+                <!-- 设计 14K -->
+                <div class="flex-1 flex flex-col items-center gap-2">
+                  <div class="text-sm font-bold text-[#60a5fa]">14K</div>
+                  <div class="w-full bg-[#60a5fa] rounded-t-lg" style="height: 56%"></div>
+                  <span class="text-xs text-[#64748b]">设计</span>
+                </div>
+                <!-- 测试 13K -->
+                <div class="flex-1 flex flex-col items-center gap-2">
+                  <div class="text-sm font-bold text-[#93c5fd]">13K</div>
+                  <div class="w-full bg-[#93c5fd] rounded-t-lg" style="height: 52%"></div>
+                  <span class="text-xs text-[#64748b]">测试</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Latest whitepaper -->
+            <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5">
+              <div class="flex items-center gap-2 mb-3">
+                <i data-lucide="file-bar-chart" class="w-5 h-5 text-[#2563eb]"></i>
+                <h3 class="text-base font-semibold text-[#0f172a]">最新白皮书</h3>
+              </div>
+              <div class="border border-[#e2e8f0] rounded-lg p-4 bg-gradient-to-br from-[#eff6ff] to-white">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="bg-[#2563eb] text-white text-xs rounded px-2 py-0.5 font-medium">最新</span>
+                  <span class="text-xs text-[#94a3b8]">2026-08-28</span>
+                </div>
+                <h4 class="text-sm font-bold text-[#0f172a] mb-2">2026 Q3 互联网行业薪资报告</h4>
+                <p class="text-xs text-[#64748b] mb-3 leading-relaxed">基于1,234条真实薪资数据，覆盖北京、上海、深圳等10个城市，涵盖15个主流岗位的薪资分布与趋势分析。</p>
+                <button class="w-full bg-[#2563eb] text-white rounded-lg py-2 text-sm font-medium hover:bg-[#1d4ed8] transition-colors flex items-center justify-center gap-1">
+                  查看详情 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+              <div class="mt-3 space-y-2">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-[#64748b]">Q2 2026报告</span>
+                  <button class="text-[#2563eb] text-xs hover:underline">查看</button>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-[#64748b]">Q1 2026报告</span>
+                  <button class="text-[#2563eb] text-xs hover:underline">查看</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Salary distribution table -->
+          <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 mt-4">
+            <h3 class="text-base font-semibold text-[#0f172a] mb-4">薪资分位值</h3>
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-[#e2e8f0]">
+                  <th class="text-left py-2 text-xs font-medium text-[#64748b]">岗位</th>
+                  <th class="text-right py-2 text-xs font-medium text-[#64748b]">10分位</th>
+                  <th class="text-right py-2 text-xs font-medium text-[#64748b]">25分位</th>
+                  <th class="text-right py-2 text-xs font-medium text-[#64748b]">中位数</th>
+                  <th class="text-right py-2 text-xs font-medium text-[#64748b]">75分位</th>
+                  <th class="text-right py-2 text-xs font-medium text-[#64748b]">90分位</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#e2e8f0]">
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2.5 text-sm font-medium text-[#0f172a]">前端开发</td>
+                  <td class="text-right text-sm text-[#64748b]">10K</td>
+                  <td class="text-right text-sm text-[#64748b]">14K</td>
+                  <td class="text-right text-sm text-[#2563eb] font-medium">18K</td>
+                  <td class="text-right text-sm text-[#64748b]">25K</td>
+                  <td class="text-right text-sm text-[#64748b]">35K</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2.5 text-sm font-medium text-[#0f172a]">后端开发</td>
+                  <td class="text-right text-sm text-[#64748b]">12K</td>
+                  <td class="text-right text-sm text-[#64748b]">15K</td>
+                  <td class="text-right text-sm text-[#2563eb] font-medium">20K</td>
+                  <td class="text-right text-sm text-[#64748b]">28K</td>
+                  <td class="text-right text-sm text-[#64748b]">40K</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2.5 text-sm font-medium text-[#0f172a]">产品经理</td>
+                  <td class="text-right text-sm text-[#64748b]">8K</td>
+                  <td class="text-right text-sm text-[#64748b]">12K</td>
+                  <td class="text-right text-sm text-[#2563eb] font-medium">15K</td>
+                  <td class="text-right text-sm text-[#64748b]">22K</td>
+                  <td class="text-right text-sm text-[#64748b]">32K</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

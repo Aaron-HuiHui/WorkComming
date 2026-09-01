@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我要工作 - 首页</title>
+    <style id="theme-vars">
+/* iWantJob · Tech Dark Home — 夜晚深色沉浸式(Home 专用) */
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ===== Brand primary scale (indigo) ===== */
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-200: #c7d2fe;
+  --brand-300: #a5b4fc;
+  --brand-400: #818cf8;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+  --brand-800: #3730a3;
+  --brand-900: #312e81;
+
+  /* ===== Neutral scale (slate dark) ===== */
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #1e293b;
+  --neutral-300: #334155;
+  --neutral-400: #475569;
+  --neutral-500: #64748b;
+  --neutral-600: #94a3b8;
+  --neutral-700: #cbd5e1;
+  --neutral-800: #e2e8f0;
+  --neutral-900: #f1f5f9;
+
+  /* ===== State colors ===== */
+  --state-success: #22c55e;
+  --state-warning: #f59e0b;
+  --state-error: #ef4444;
+  --state-info: #818cf8;
+
+  /* ===== Semantic tokens (dark home native) ===== */
+  --background: #0a0a0f;
+  --foreground: #f1f5f9;
+  --card: rgba(30,41,59,0.6);
+  --card-foreground: #f1f5f9;
+  --popover: rgba(30,41,59,0.6);
+  --popover-foreground: #f1f5f9;
+  --primary: #818cf8;
+  --primary-foreground: #0f172a;
+  --muted: rgba(51,65,85,0.5);
+  --muted-foreground: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --input: rgba(255,255,255,0.1);
+  --ring: #818cf8;
+
+  /* Sidebar — same dark, top nav style */
+  --sidebar: #0a0a0f;
+  --sidebar-foreground: #94a3b8;
+  --sidebar-primary: #818cf8;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-ring: #818cf8;
+
+  /* Chart */
+  --chart-1: #818cf8;
+  --chart-2: #6366f1;
+  --chart-3: #a5b4fc;
+  --chart-4: #4f46e5;
+  --chart-5: #c7d2fe;
+
+  /* ===== Non-color tokens ===== */
+  --font-sans: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-serif: Georgia, ui-serif, serif;
+
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --spacing: 0.25rem;
+
+  /* Shadow — glow effects for floating layers only */
+  --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.3);
+  --shadow: 0 2px 8px 0 rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px 0 rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 24px 0 rgba(0,0,0,0.4);
+  --shadow-xl: 0 12px 32px 0 rgba(0,0,0,0.45);
+  --shadow-2xl: 0 16px 48px 0 rgba(129,140,248,0.15);
+
+  /* ===== Brand prefix aliases ===== */
+  --iw-background: var(--background);
+  --iw-foreground: var(--foreground);
+  --iw-card: var(--card);
+  --iw-card-foreground: var(--card-foreground);
+  --iw-popover: var(--popover);
+  --iw-popover-foreground: var(--popover-foreground);
+  --iw-primary: var(--primary);
+  --iw-primary-foreground: var(--primary-foreground);
+  --iw-muted: var(--muted);
+  --iw-muted-foreground: var(--muted-foreground);
+  --iw-border: var(--border);
+  --iw-input: var(--input);
+  --iw-ring: var(--ring);
+  --iw-sidebar: var(--sidebar);
+  --iw-sidebar-foreground: var(--sidebar-foreground);
+  --iw-sidebar-primary: var(--sidebar-primary);
+  --iw-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --iw-sidebar-accent: var(--sidebar-accent);
+  --iw-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --iw-sidebar-border: var(--sidebar-border);
+  --iw-sidebar-ring: var(--sidebar-ring);
+  --iw-radius-small: var(--radius-sm);
+  --iw-radius-medium: var(--radius-md);
+  --iw-radius-large: var(--radius-lg);
+}
+
+/* ===== @theme inline ===== */
+@theme inline {
+  --color-background: var(--iw-background);
+  --color-foreground: var(--iw-foreground);
+  --color-card: var(--iw-card);
+  --color-card-foreground: var(--iw-card-foreground);
+  --color-popover: var(--iw-popover);
+  --color-popover-foreground: var(--iw-popover-foreground);
+  --color-primary: var(--iw-primary);
+  --color-primary-foreground: var(--iw-primary-foreground);
+  --color-muted: var(--iw-muted);
+  --color-muted-foreground: var(--iw-muted-foreground);
+  --color-border: var(--iw-border);
+  --color-input: var(--iw-input);
+  --color-ring: var(--iw-ring);
+  --color-sidebar: var(--iw-sidebar);
+  --color-sidebar-foreground: var(--iw-sidebar-foreground);
+  --color-sidebar-primary: var(--iw-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--iw-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+  --color-sidebar-border: var(--iw-sidebar-border);
+  --color-sidebar-ring: var(--iw-sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --radius-sm: var(--iw-radius-small);
+  --radius-md: var(--iw-radius-medium);
+  --radius-lg: var(--iw-radius-large);
+  --radius-full: var(--radius-full);
+}
+
+/* ===== Base layer ===== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--iw-background);
+    --color-foreground: var(--iw-foreground);
+    --color-card: var(--iw-card);
+    --color-card-foreground: var(--iw-card-foreground);
+    --color-popover: var(--iw-popover);
+    --color-popover-foreground: var(--iw-popover-foreground);
+    --color-primary: var(--iw-primary);
+    --color-primary-foreground: var(--iw-primary-foreground);
+    --color-muted: var(--iw-muted);
+    --color-muted-foreground: var(--iw-muted-foreground);
+    --color-border: var(--iw-border);
+    --color-input: var(--iw-input);
+    --color-ring: var(--iw-ring);
+    --color-sidebar: var(--iw-sidebar);
+    --color-sidebar-foreground: var(--iw-sidebar-foreground);
+    --color-sidebar-primary: var(--iw-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--iw-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+    --color-sidebar-border: var(--iw-sidebar-border);
+    --color-sidebar-ring: var(--iw-sidebar-ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-brand-400: var(--brand-400);
+    --color-brand-500: var(--brand-500);
+    --color-brand-600: var(--brand-600);
+    --radius-sm: var(--iw-radius-small);
+    --radius-md: var(--iw-radius-medium);
+    --radius-lg: var(--iw-radius-large);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--iw-background); color: var(--iw-foreground); }
+  }
+  @layer components {
+    .glass-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .glass-card-hover {
+      transition: all 0.3s ease;
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.08);
+    }
+    .btn-glow {
+      box-shadow: 0 0 24px rgba(129,140,248,0.45), 0 0 60px rgba(129,140,248,0.15);
+    }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--iw-background); }
+      .text-background { color: var(--iw-background); }
+      .bg-foreground { background-color: var(--iw-foreground); }
+      .text-foreground { color: var(--iw-foreground); }
+      .bg-card { background-color: var(--iw-card); }
+      .text-card { color: var(--iw-card); }
+      .border-card { border-color: var(--iw-card); }
+      .bg-card-foreground { background-color: var(--iw-card-foreground); }
+      .text-card-foreground { color: var(--iw-card-foreground); }
+      .bg-popover { background-color: var(--iw-popover); }
+      .bg-primary { background-color: var(--iw-primary); }
+      .text-primary { color: var(--iw-primary); }
+      .border-primary { border-color: var(--iw-primary); }
+      .bg-primary-foreground { background-color: var(--iw-primary-foreground); }
+      .text-primary-foreground { color: var(--iw-primary-foreground); }
+      .bg-muted { background-color: var(--iw-muted); }
+      .text-muted { color: var(--iw-muted); }
+      .bg-muted-foreground { background-color: var(--iw-muted-foreground); }
+      .text-muted-foreground { color: var(--iw-muted-foreground); }
+      .bg-border { background-color: var(--iw-border); }
+      .border-border { border-color: var(--iw-border); }
+      .bg-input { background-color: var(--iw-input); }
+      .bg-ring { background-color: var(--iw-ring); }
+      .text-ring { color: var(--iw-ring); }
+      .bg-brand-400 { background-color: var(--brand-400); }
+      .text-brand-400 { color: var(--brand-400); }
+      .bg-brand-500 { background-color: var(--brand-500); }
+      .text-brand-500 { color: var(--brand-500); }
+      .bg-brand-600 { background-color: var(--brand-600); }
+      .text-brand-600 { color: var(--brand-600); }
+    </style>
+    <style>
+      /* WebGL 全屏背景画布 */
+      #bg-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        display: block;
+      }
+      .content-layer { position: relative; z-index: 10; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background:#0a0a0f;">
+    <!-- WebGL 动态背景画布 -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- 页面内容层(在 canvas 之上) -->
+    <div class="content-layer">
+      <!-- 导航栏 -->
+      <nav class="fixed top-0 left-0 right-0 z-50 h-16 bg-white/5 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6">
+        <div class="flex items-center gap-8">
+          <a href="dark-home.html" class="text-white font-bold text-xl flex items-center gap-1.5" style="text-shadow:0 0 20px rgba(129,140,248,0.4);">
+            <i data-lucide="sparkles" class="w-5 h-5 text-[#818cf8]"></i>我要工作
+          </a>
+          <div class="flex items-center gap-1">
+            <a href="dark-home.html" class="flex items-center gap-1.5 text-white bg-white/10 rounded-lg px-3 py-1.5 text-sm font-medium transition">
+              <i data-lucide="home" class="w-4 h-4"></i>首页
+            </a>
+            <a data-dom-id="nav-jobs" href="dark-job-list.html" class="flex items-center gap-1.5 text-white/70 hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+              <i data-lucide="briefcase" class="w-4 h-4"></i>职位
+            </a>
+            <a data-dom-id="nav-simulator" href="dark-simulator.html" class="flex items-center gap-1.5 text-white/70 hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+              <i data-lucide="swords" class="w-4 h-4"></i>模拟面试
+            </a>
+            <a data-dom-id="nav-salary" href="dark-salary.html" class="flex items-center gap-1.5 text-white/70 hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+              <i data-lucide="trending-up" class="w-4 h-4"></i>薪资
+            </a>
+            <a data-dom-id="nav-badges" href="dark-badges.html" class="flex items-center gap-1.5 text-white/70 hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+              <i data-lucide="trophy" class="w-4 h-4"></i>徽章
+            </a>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <a data-dom-id="theme-toggle" href="biz-home.html" class="w-9 h-9 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg flex items-center justify-center transition" title="切换到日间模式">
+            <i data-lucide="sun" class="w-4 h-4 text-white/70"></i>
+          </a>
+          <a data-dom-id="login-btn" href="dark-login.html" class="text-white/80 hover:text-white text-sm font-medium px-4 py-1.5 rounded-lg hover:bg-white/5 transition">登录</a>
+          <a data-dom-id="register-btn" href="dark-register.html" class="bg-[#818cf8] text-[#0f172a] text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-[#6366f1] transition btn-glow">注册</a>
+        </div>
+      </nav>
+
+      <!-- Hero 区 -->
+      <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-16 text-center">
+        <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur border border-white/10 rounded-full px-4 py-1.5 mb-8 text-sm text-white/70">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#818cf8]"></i>
+          AI 驱动的求职全流程平台
+        </div>
+        <h1 class="text-white font-bold text-5xl md:text-6xl mb-6 leading-tight" style="text-shadow:0 0 40px rgba(129,140,248,0.3);">
+          找到你的下一份理想工作
+        </h1>
+        <p class="text-white/70 text-lg md:text-xl mb-10 max-w-2xl">
+          AI 驱动的求职平台,从简历优化到模拟面试,全程陪你拿 offer
+        </p>
+
+        <!-- 搜索栏 -->
+        <div class="w-full max-w-2xl mb-6">
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full p-1.5 pl-6 transition focus-within:border-[#818cf8]/50">
+            <i data-lucide="search" class="w-5 h-5 text-white/50 flex-shrink-0"></i>
+            <input type="text" placeholder="搜索职位、公司或技能关键词…" class="flex-1 bg-transparent text-white placeholder-white/40 text-sm focus:outline-none py-2" />
+            <button data-dom-id="search-btn" onclick="window.location.href='dark-job-list.html'" class="bg-[#818cf8] text-[#0f172a] font-semibold rounded-full px-6 py-2.5 text-sm hover:bg-[#6366f1] transition btn-glow flex items-center gap-1.5 flex-shrink-0">
+              搜索
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 热门标签 -->
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <span class="text-white/50 text-sm">热门搜索:</span>
+          <a href="dark-job-list.html" class="bg-white/5 border border-white/10 text-white/70 hover:text-white hover:border-[#818cf8]/40 hover:bg-[#818cf8]/10 rounded-full px-3 py-1 text-xs transition">前端工程师</a>
+          <a href="dark-job-list.html" class="bg-white/5 border border-white/10 text-white/70 hover:text-white hover:border-[#818cf8]/40 hover:bg-[#818cf8]/10 rounded-full px-3 py-1 text-xs transition">Java开发</a>
+          <a href="dark-job-list.html" class="bg-white/5 border border-white/10 text-white/70 hover:text-white hover:border-[#818cf8]/40 hover:bg-[#818cf8]/10 rounded-full px-3 py-1 text-xs transition">产品经理</a>
+          <a href="dark-job-list.html" class="bg-white/5 border border-white/10 text-white/70 hover:text-white hover:border-[#818cf8]/40 hover:bg-[#818cf8]/10 rounded-full px-3 py-1 text-xs transition">UI设计师</a>
+          <a href="dark-job-list.html" class="bg-white/5 border border-white/10 text-white/70 hover:text-white hover:border-[#818cf8]/40 hover:bg-[#818cf8]/10 rounded-full px-3 py-1 text-xs transition">数据分析师</a>
+        </div>
+
+        <!-- 向下滚动提示 -->
+        <div class="mt-16 text-white/40 flex flex-col items-center gap-1 animate-pulse">
+          <span class="text-xs">向下探索</span>
+          <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        </div>
+      </section>
+
+      <!-- 快捷入口卡片 -->
+      <section class="px-6 py-16 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- 模拟面试 -->
+          <a data-dom-id="quick-simulator" href="dark-simulator.html" class="glass-card glass-card-hover rounded-2xl p-6 group block">
+            <div class="w-12 h-12 bg-[#818cf8]/15 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#818cf8]/25 transition">
+              <i data-lucide="swords" class="w-6 h-6 text-[#818cf8]"></i>
+            </div>
+            <h3 class="text-white font-semibold text-lg mb-1.5">模拟面试</h3>
+            <p class="text-white/50 text-sm leading-relaxed mb-3">AI 实时模拟真实面试场景,智能点评你的每一次回答,告别紧张。</p>
+            <span class="text-[#818cf8] text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">开始面试 <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+          </a>
+          <!-- 薪资洞察 -->
+          <a data-dom-id="quick-salary" href="dark-salary.html" class="glass-card glass-card-hover rounded-2xl p-6 group block">
+            <div class="w-12 h-12 bg-[#818cf8]/15 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#818cf8]/25 transition">
+              <i data-lucide="trending-up" class="w-6 h-6 text-[#818cf8]"></i>
+            </div>
+            <h3 class="text-white font-semibold text-lg mb-1.5">薪资洞察</h3>
+            <p class="text-white/50 text-sm leading-relaxed mb-3">行业真实薪资数据白皮书,帮你精准定位自己的市场价值。</p>
+            <span class="text-[#818cf8] text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">查看薪资 <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+          </a>
+          <!-- 简历优化 -->
+          <a data-dom-id="quick-resume" href="dark-resume.html" class="glass-card glass-card-hover rounded-2xl p-6 group block">
+            <div class="w-12 h-12 bg-[#818cf8]/15 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#818cf8]/25 transition">
+              <i data-lucide="file-text" class="w-6 h-6 text-[#818cf8]"></i>
+            </div>
+            <h3 class="text-white font-semibold text-lg mb-1.5">简历优化</h3>
+            <p class="text-white/50 text-sm leading-relaxed mb-3">AI 一键诊断简历短板,智能润色经历描述,让 HR 眼前一亮。</p>
+            <span class="text-[#818cf8] text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">优化简历 <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 统计数据条 -->
+      <section class="px-6 py-12">
+        <div class="max-w-5xl mx-auto glass-card rounded-2xl px-8 py-10">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+              <p class="text-white font-bold text-3xl md:text-4xl mb-1" style="text-shadow:0 0 24px rgba(129,140,248,0.3);">12,000+</p>
+              <p class="text-white/50 text-sm">热门职位</p>
+            </div>
+            <div>
+              <p class="text-white font-bold text-3xl md:text-4xl mb-1" style="text-shadow:0 0 24px rgba(129,140,248,0.3);">3,500+</p>
+              <p class="text-white/50 text-sm">合作企业</p>
+            </div>
+            <div>
+              <p class="text-white font-bold text-3xl md:text-4xl mb-1" style="text-shadow:0 0 24px rgba(129,140,248,0.3);">98%</p>
+              <p class="text-white/50 text-sm">面试通过率</p>
+            </div>
+            <div>
+              <p class="text-white font-bold text-3xl md:text-4xl mb-1" style="text-shadow:0 0 24px rgba(129,140,248,0.3);">50万+</p>
+              <p class="text-white/50 text-sm">求职者</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 推荐职位区 -->
+      <section class="px-6 py-12 pb-24 max-w-6xl mx-auto">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-white font-bold text-2xl flex items-center gap-2">
+            <i data-lucide="flame" class="w-6 h-6 text-[#818cf8]"></i>热门职位
+          </h2>
+          <a href="dark-job-list.html" class="text-white/60 hover:text-white text-sm flex items-center gap-1 transition">查看全部 <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- 职位卡片 1 -->
+          <a data-dom-id="job-1" href="dark-job-detail.html" class="glass-card glass-card-hover rounded-2xl p-5 block">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-[#818cf8]/15 rounded-xl flex items-center justify-center font-bold text-[#818cf8]">字</div>
+                <div>
+                  <h3 class="text-white font-semibold mb-0.5">高级前端开发工程师</h3>
+                  <p class="text-white/50 text-xs">字节跳动</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-[#818cf8] font-bold text-lg mb-3">25-40K</p>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">React</span>
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">TypeScript</span>
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">3-5年</span>
+            </div>
+            <div class="flex items-center gap-3 text-white/50 text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>北京·海淀</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>2天前</span>
+            </div>
+          </a>
+          <!-- 职位卡片 2 -->
+          <a data-dom-id="job-2" href="dark-job-detail.html" class="glass-card glass-card-hover rounded-2xl p-5 block">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-[#818cf8]/15 rounded-xl flex items-center justify-center font-bold text-[#818cf8]">腾</div>
+                <div>
+                  <h3 class="text-white font-semibold mb-0.5">Java 后端开发工程师</h3>
+                  <p class="text-white/50 text-xs">腾讯</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-[#818cf8] font-bold text-lg mb-3">20-35K</p>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">Java</span>
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">Spring</span>
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">3-5年</span>
+            </div>
+            <div class="flex items-center gap-3 text-white/50 text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>深圳·南山</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>1天前</span>
+            </div>
+          </a>
+          <!-- 职位卡片 3 -->
+          <a data-dom-id="job-3" href="dark-job-detail.html" class="glass-card glass-card-hover rounded-2xl p-5 block">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-[#818cf8]/15 rounded-xl flex items-center justify-center font-bold text-[#818cf8]">美</div>
+                <div>
+                  <h3 class="text-white font-semibold mb-0.5">产品经理</h3>
+                  <p class="text-white/50 text-xs">美团</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-[#818cf8] font-bold text-lg mb-3">18-30K</p>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">B端产品</span>
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">数据分析</span>
+              <span class="bg-white/5 text-white/60 rounded px-2 py-0.5 text-xs">1-3年</span>
+            </div>
+            <div class="flex items-center gap-3 text-white/50 text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>北京·朝阳</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>3天前</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 页脚 -->
+      <footer class="border-t border-white/5 px-6 py-8 text-center">
+        <p class="text-white/30 text-sm">© 2026 我要工作 · AI 驱动的求职平台 · 让每一份 offer 都触手可及</p>
+      </footer>
+    </div>
+
+    <!-- WebGL Simplex Noise 动态背景 -->
+    <script>
+    (function () {
+      const canvas = document.getElementById('bg-canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) {
+        // WebGL 不可用时退化为纯色背景
+        canvas.style.background = '#0a0a0f';
+        return;
+      }
+
+      // ===== Vertex Shader =====
+      const vertSrc = `
+attribute vec2 position;
+varying vec2 vUv;
+void main() {
+  vUv = position * 0.5 + 0.5;
+  gl_Position = vec4(position, 0.0, 1.0);
+}`;
+
+      // ===== Fragment Shader (Velaris 原版 simplex noise — 一模一样) =====
+      const fragSrc = `
+precision highp float;
+varying vec2 vUv;
+
+uniform vec2  u_resolution;
+uniform float u_time;
+uniform float u_grain;
+uniform vec3  u_colors[4];
+uniform vec3  u_bg;
+
+vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+
+float snoise(vec2 v){
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+           -0.577350269189626, 0.024390243902439);
+  vec2 i  = floor(v + dot(v, C.yy) );
+  vec2 x0 = v -   i + dot(i, C.xx);
+  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+  i = mod(i, 289.0);
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+  + i.x + vec3(0.0, i1.x, 1.0 ));
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy),
+    dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+  vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+void main() {
+  vec2 uv = vUv;
+  float ratio = u_resolution.x / u_resolution.y;
+  vec2 p = uv - 0.5;
+  p.x *= ratio;
+
+  float t = u_time * 0.1;
+
+  float n1 = snoise(p * 0.4 + vec2(t * 0.2, -t * 0.3));
+  float n2 = snoise(p * 0.55 + vec2(-t * 0.15, t * 0.25) + n1 * 0.25);
+  float n3 = snoise(p * 0.75 + vec2(t * 0.1, -t * 0.2) + n2 * 0.2);
+
+  vec3 col = u_bg;
+  
+  float dist = length(p) * 1.5;
+  float vignette = 1.0 - smoothstep(0.3, 1.2, dist);
+  
+  col = mix(col, u_colors[0], smoothstep(-0.2, 0.5, n1) * 0.85);
+  col = mix(col, u_colors[1], smoothstep(-0.1, 0.6, n2) * 0.7);
+  col = mix(col, u_colors[2], smoothstep(-0.3, 0.4, n3) * 0.6);
+  col = mix(col, u_colors[3], smoothstep(0.0, 0.7, n1 * n2) * 0.5);
+
+  float glow = smoothstep(0.8, 0.0, dist) * 0.3;
+  col += u_colors[1] * glow;
+
+  col = mix(col * 0.2, col, vignette);
+
+  float grain = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453 + u_time);
+  col += (grain - 0.5) * u_grain * 0.1;
+
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+      // ===== 编译 Shader =====
+      function compileShader(type, src) {
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+          console.error('Shader compile error:', gl.getShaderInfoLog(sh));
+          gl.deleteShader(sh);
+          return null;
+        }
+        return sh;
+      }
+
+      const vert = compileShader(gl.VERTEX_SHADER, vertSrc);
+      const frag = compileShader(gl.FRAGMENT_SHADER, fragSrc);
+      const program = gl.createProgram();
+      gl.attachShader(program, vert);
+      gl.attachShader(program, frag);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Program link error:', gl.getProgramInfoLog(program));
+        return;
+      }
+      gl.useProgram(program);
+
+      // ===== Full-screen quad (两个三角形) =====
+      const vertices = new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1
+      ]);
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+      const posLoc = gl.getAttribLocation(program, 'position');
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      // ===== Uniform locations =====
+      const uRes = gl.getUniformLocation(program, 'u_resolution');
+      const uTime = gl.getUniformLocation(program, 'u_time');
+      const uGrain = gl.getUniformLocation(program, 'u_grain');
+      const uColors = gl.getUniformLocation(program, 'u_colors');
+      const uBg = gl.getUniformLocation(program, 'u_bg');
+
+      // ===== 颜色参数 (Velaris 原版默认值) =====
+      function hexToRgb(hex) {
+        const h = hex.replace('#', '');
+        const r = parseInt(h.substring(0, 2), 16) / 255;
+        const g = parseInt(h.substring(2, 4), 16) / 255;
+        const b = parseInt(h.substring(4, 6), 16) / 255;
+        return [r, g, b];
+      }
+
+      const speed = 2.0;
+      const bgColor = new Float32Array(hexToRgb('#000000'));
+      const colorHexes = ['#86efac', '#4ade80', '#059669', '#000000'];
+      const colorsFlat = new Float32Array(colorHexes.flatMap(hexToRgb));
+      const grain = 0.3;
+
+      // ===== 尺寸响应 =====
+      function resize() {
+        const parent = canvas.parentElement || document.body;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = Math.max(1, parent.clientWidth);
+        const h = Math.max(1, parent.clientHeight);
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+
+      if (window.ResizeObserver) {
+        const ro = new ResizeObserver(resize);
+        ro.observe(canvas.parentElement || document.body);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // ===== 渲染循环 (Velaris 原版: t * 0.001 * speed) =====
+      function render() {
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, performance.now() * 0.001 * speed);
+        gl.uniform1f(uGrain, grain);
+        gl.uniform3fv(uColors, colorsFlat);
+        gl.uniform3fv(uBg, bgColor);
+
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(render);
+      }
+      render();
+    })();
+    </script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

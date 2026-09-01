@@ -1,0 +1,2966 @@
+{
+  "data": [
+    {
+      "id": "page-biz-login",
+      "title": "登录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 4031,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-f592f2f4",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-login.html",
+        "interactions": [
+          {
+            "domId": "go-register",
+            "targetPageId": "page-biz-register",
+            "hideEdge": false,
+            "transitionLabel": "注册"
+          },
+          {
+            "domId": "login-submit",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "登录成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-register",
+      "title": "注册",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 4404,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-809527a9",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-register.html",
+        "interactions": [
+          {
+            "domId": "go-login",
+            "targetPageId": "page-biz-login",
+            "hideEdge": false,
+            "transitionLabel": "去登录"
+          },
+          {
+            "domId": "register-submit",
+            "targetPageId": "page-biz-login",
+            "hideEdge": true,
+            "transitionLabel": "注册成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-dashboard",
+      "title": "首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 4404,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 955,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-e0e808fb",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-dashboard.html",
+        "interactions": [
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "quick-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": false,
+            "transitionLabel": "浏览职位"
+          },
+          {
+            "domId": "quick-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": false,
+            "transitionLabel": "AI模拟面试"
+          },
+          {
+            "domId": "quick-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": false,
+            "transitionLabel": "贡献薪资"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-job-list",
+      "title": "职位广场",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 4777,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1061,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-b6026f7c",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-job-list.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-card-1",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": false,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-2",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-3",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-4",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-5",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-6",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-7",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-8",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-job-detail",
+      "title": "职位详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 5196,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1138,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-804e7ca2",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-job-detail.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "back-list",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          },
+          {
+            "domId": "apply-job",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": false,
+            "transitionLabel": "投递"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-applications",
+      "title": "我的投递",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 5638,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-fe863660",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-applications.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "go-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": false,
+            "transitionLabel": "浏览职位"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-resume",
+      "title": "简历管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 9783,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-e47da6b4",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-resume.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "create-resume",
+            "targetPageId": "page-biz-resume-edit",
+            "hideEdge": false,
+            "transitionLabel": "创建简历"
+          },
+          {
+            "domId": "edit-resume",
+            "targetPageId": "page-biz-resume-edit",
+            "hideEdge": false,
+            "transitionLabel": "编辑简历"
+          },
+          {
+            "domId": "edit-resume-2",
+            "targetPageId": "page-biz-resume-edit",
+            "hideEdge": true,
+            "transitionLabel": "编辑简历"
+          },
+          {
+            "domId": "edit-resume-3",
+            "targetPageId": "page-biz-resume-edit",
+            "hideEdge": true,
+            "transitionLabel": "编辑简历"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-resume-edit",
+      "title": "简历编辑",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 10156,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1389,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-5aa120a3",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-resume-edit.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "save-resume",
+            "targetPageId": "page-biz-resume",
+            "hideEdge": true,
+            "transitionLabel": "保存"
+          },
+          {
+            "domId": "back-resume",
+            "targetPageId": "page-biz-resume",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-simulator",
+      "title": "AI模拟舱",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 6011,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1017,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-8fa7a2f7",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-simulator.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "view-report",
+            "targetPageId": "page-biz-simulator-report",
+            "hideEdge": false,
+            "transitionLabel": "查看报告"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-simulator-report",
+      "title": "模拟舱报告",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 6418,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1157,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-92e3c47f",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-simulator-report.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "back-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": "返回模拟舱"
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-salary",
+      "title": "薪资白皮书",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 6865,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 968,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-701a5ef8",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-salary.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "contribute-salary",
+            "targetPageId": "page-biz-salary-contribute",
+            "hideEdge": false,
+            "transitionLabel": "贡献薪资"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-salary-contribute",
+      "title": "薪资贡献",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 7257,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 978,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-3b6b1074",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-salary-contribute.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "submit-contribution",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": "提交"
+          },
+          {
+            "domId": "back-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-badges",
+      "title": "我的徽章",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 7652,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-e1bd7d80",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-badges.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-profile",
+      "title": "个人中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 4031,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-profile.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-biz-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "logout",
+            "targetPageId": "page-biz-login",
+            "hideEdge": false,
+            "transitionLabel": "退出登录"
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-biz-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-login",
+      "title": "登录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 0,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-b9d332a0",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-login.html",
+        "interactions": [
+          {
+            "domId": "go-register",
+            "targetPageId": "page-dark-register",
+            "hideEdge": false,
+            "transitionLabel": "注册"
+          },
+          {
+            "domId": "login-submit",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "登录成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-register",
+      "title": "注册",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 373,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-58ff90bf",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-register.html",
+        "interactions": [
+          {
+            "domId": "go-login",
+            "targetPageId": "page-dark-login",
+            "hideEdge": false,
+            "transitionLabel": "去登录"
+          },
+          {
+            "domId": "register-submit",
+            "targetPageId": "page-dark-login",
+            "hideEdge": true,
+            "transitionLabel": "注册成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-dashboard",
+      "title": "首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 373,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 964,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-94f3660e",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-dashboard.html",
+        "interactions": [
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "quick-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": false,
+            "transitionLabel": "浏览职位"
+          },
+          {
+            "domId": "quick-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": false,
+            "transitionLabel": "AI模拟面试"
+          },
+          {
+            "domId": "quick-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": false,
+            "transitionLabel": "贡献薪资"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-job-list",
+      "title": "职位广场",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 746,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 964,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-0a3d4160",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-job-list.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-card-1",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": false,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-2",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-3",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-4",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-5",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-6",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-7",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-8",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-job-detail",
+      "title": "职位详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 1137,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 996,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-532c873a",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-job-detail.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "back-list",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          },
+          {
+            "domId": "apply-job",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": false,
+            "transitionLabel": "投递"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-applications",
+      "title": "我的投递",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 1538,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 964,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-7e2de840",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-applications.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "go-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": false,
+            "transitionLabel": "浏览职位"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-resume",
+      "title": "简历管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 8829,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 964,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-18e341b8",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-resume.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "create-resume",
+            "targetPageId": "page-dark-resume-edit",
+            "hideEdge": false,
+            "transitionLabel": "创建简历"
+          },
+          {
+            "domId": "edit-resume",
+            "targetPageId": "page-dark-resume-edit",
+            "hideEdge": false,
+            "transitionLabel": "编辑简历"
+          },
+          {
+            "domId": "edit-resume-2",
+            "targetPageId": "page-dark-resume-edit",
+            "hideEdge": true,
+            "transitionLabel": "编辑简历"
+          },
+          {
+            "domId": "edit-resume-3",
+            "targetPageId": "page-dark-resume-edit",
+            "hideEdge": true,
+            "transitionLabel": "编辑简历"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-resume-edit",
+      "title": "简历编辑",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 9220,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1552,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-95c3f5bd",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-resume-edit.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "save-resume",
+            "targetPageId": "page-dark-resume",
+            "hideEdge": true,
+            "transitionLabel": "保存"
+          },
+          {
+            "domId": "back-resume",
+            "targetPageId": "page-dark-resume",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-simulator",
+      "title": "AI模拟舱",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 1929,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1169,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-6ec6d2cb",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-simulator.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "view-report",
+            "targetPageId": "page-dark-simulator-report",
+            "hideEdge": false,
+            "transitionLabel": "查看报告"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-simulator-report",
+      "title": "模拟舱报告",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 2380,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1246,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-277f051e",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-simulator-report.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "back-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": "返回模拟舱"
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-salary",
+      "title": "薪资白皮书",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 2853,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 981,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-877228ac",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-salary.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "contribute-salary",
+            "targetPageId": "page-dark-salary-contribute",
+            "hideEdge": false,
+            "transitionLabel": "贡献薪资"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-salary-contribute",
+      "title": "薪资贡献",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 3249,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 964,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-5fd6bf9f",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-salary-contribute.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "submit-contribution",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": "提交"
+          },
+          {
+            "domId": "back-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-badges",
+      "title": "我的徽章",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 3640,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 964,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-d06f61a9",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-badges.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-profile",
+      "title": "个人中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 1
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-profile.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-dark-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "logout",
+            "targetPageId": "page-dark-login",
+            "hideEdge": false,
+            "transitionLabel": "退出登录"
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-dark-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-login",
+      "title": "登录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 10671,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-3681bd3e",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-login.html",
+        "interactions": [
+          {
+            "domId": "go-register",
+            "targetPageId": "page-clean-register",
+            "hideEdge": false,
+            "transitionLabel": "注册"
+          },
+          {
+            "domId": "login-submit",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "登录成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-register",
+      "title": "注册",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 11044,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-81daa2d6",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-register.html",
+        "interactions": [
+          {
+            "domId": "go-login",
+            "targetPageId": "page-clean-login",
+            "hideEdge": false,
+            "transitionLabel": "去登录"
+          },
+          {
+            "domId": "register-submit",
+            "targetPageId": "page-clean-login",
+            "hideEdge": true,
+            "transitionLabel": "注册成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-dashboard",
+      "title": "首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 11044,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-1690841e",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-dashboard.html",
+        "interactions": [
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "quick-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": false,
+            "transitionLabel": "浏览职位"
+          },
+          {
+            "domId": "quick-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": false,
+            "transitionLabel": "AI模拟面试"
+          },
+          {
+            "domId": "quick-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": false,
+            "transitionLabel": "贡献薪资"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-job-list",
+      "title": "职位广场",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 11417,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-f014b7ed",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-job-list.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-card-1",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": false,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-2",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-3",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-4",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-5",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-6",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-7",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          },
+          {
+            "domId": "job-card-8",
+            "targetPageId": "page-clean-job-detail",
+            "hideEdge": true,
+            "transitionLabel": "查看详情"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-job-detail",
+      "title": "职位详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 11790,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-40817c46",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-job-detail.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "back-list",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          },
+          {
+            "domId": "apply-job",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": false,
+            "transitionLabel": "投递"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-applications",
+      "title": "我的投递",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 12163,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-0a38e049",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-applications.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "go-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": false,
+            "transitionLabel": "浏览职位"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-resume",
+      "title": "简历管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 14401,
+        "group": 2
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-resume.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "create-resume",
+            "targetPageId": "page-clean-resume-edit",
+            "hideEdge": false,
+            "transitionLabel": "创建简历"
+          },
+          {
+            "domId": "edit-resume",
+            "targetPageId": "page-clean-resume-edit",
+            "hideEdge": false,
+            "transitionLabel": "编辑简历"
+          },
+          {
+            "domId": "edit-resume-2",
+            "targetPageId": "page-clean-resume-edit",
+            "hideEdge": true,
+            "transitionLabel": "编辑简历"
+          },
+          {
+            "domId": "edit-resume-3",
+            "targetPageId": "page-clean-resume-edit",
+            "hideEdge": true,
+            "transitionLabel": "编辑简历"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-resume-edit",
+      "title": "简历编辑",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 480,
+        "y": 14401,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1221,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-84fd235b",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-resume-edit.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "save-resume",
+            "targetPageId": "page-clean-resume",
+            "hideEdge": true,
+            "transitionLabel": "保存"
+          },
+          {
+            "domId": "back-resume",
+            "targetPageId": "page-clean-resume",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-simulator",
+      "title": "AI模拟舱",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 12536,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-5323cace",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-simulator.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "view-report",
+            "targetPageId": "page-clean-simulator-report",
+            "hideEdge": false,
+            "transitionLabel": "查看报告"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-simulator-report",
+      "title": "模拟舱报告",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 12909,
+        "group": 2
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-simulator-report.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "back-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": "返回模拟舱"
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-salary",
+      "title": "薪资白皮书",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 13282,
+        "group": 2
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-salary.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "contribute-salary",
+            "targetPageId": "page-clean-salary-contribute",
+            "hideEdge": false,
+            "transitionLabel": "贡献薪资"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-salary-contribute",
+      "title": "薪资贡献",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 13655,
+        "group": 2
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-salary-contribute.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "submit-contribution",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": "提交"
+          },
+          {
+            "domId": "back-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": "返回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-badges",
+      "title": "我的徽章",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 14028,
+        "group": 2
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-badges.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-clean-profile",
+      "title": "个人中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788162105372,
+      "canvasData": {
+        "x": 0,
+        "y": 10671,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-42cd84a6",
+          "measuredAt": 1788164073695
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/clean-profile.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-clean-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-applications",
+            "targetPageId": "page-clean-applications",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-clean-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-clean-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-clean-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "logout",
+            "targetPageId": "page-clean-login",
+            "hideEdge": false,
+            "transitionLabel": "退出登录"
+          },
+          {
+            "domId": "go-dashboard",
+            "targetPageId": "page-clean-dashboard",
+            "hideEdge": false,
+            "transitionLabel": "回到首页"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dark-home",
+      "title": "首页(夜)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788165200000,
+      "canvasData": {
+        "x": 0,
+        "y": 8427,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1000,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-darkhome",
+          "measuredAt": 1788165200000
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dark-home.html",
+        "interactions": [
+          {
+            "domId": "theme-toggle",
+            "targetPageId": "page-biz-home",
+            "hideEdge": false,
+            "transitionLabel": "日间模式"
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-dark-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "login-btn",
+            "targetPageId": "page-dark-login",
+            "hideEdge": false,
+            "transitionLabel": "登录"
+          },
+          {
+            "domId": "register-btn",
+            "targetPageId": "page-dark-register",
+            "hideEdge": false,
+            "transitionLabel": "注册"
+          },
+          {
+            "domId": "search-btn",
+            "targetPageId": "page-dark-job-list",
+            "hideEdge": false,
+            "transitionLabel": "搜索"
+          },
+          {
+            "domId": "quick-simulator",
+            "targetPageId": "page-dark-simulator",
+            "hideEdge": false,
+            "transitionLabel": "模拟面试"
+          },
+          {
+            "domId": "quick-salary",
+            "targetPageId": "page-dark-salary",
+            "hideEdge": false,
+            "transitionLabel": "薪资洞察"
+          },
+          {
+            "domId": "quick-resume",
+            "targetPageId": "page-dark-resume",
+            "hideEdge": false,
+            "transitionLabel": "简历优化"
+          },
+          {
+            "domId": "job-1",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-2",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-3",
+            "targetPageId": "page-dark-job-detail",
+            "hideEdge": true,
+            "transitionLabel": ""
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-biz-home",
+      "title": "首页(日)",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1788165200000,
+      "canvasData": {
+        "x": 0,
+        "y": 8025,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1000,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-bizhome",
+          "measuredAt": 1788165200000
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/biz-home.html",
+        "interactions": [
+          {
+            "domId": "theme-toggle",
+            "targetPageId": "page-dark-home",
+            "hideEdge": false,
+            "transitionLabel": "夜间模式"
+          },
+          {
+            "domId": "nav-jobs",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "nav-badges",
+            "targetPageId": "page-biz-badges",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "login-btn",
+            "targetPageId": "page-biz-login",
+            "hideEdge": false,
+            "transitionLabel": "登录"
+          },
+          {
+            "domId": "register-btn",
+            "targetPageId": "page-biz-register",
+            "hideEdge": false,
+            "transitionLabel": "注册"
+          },
+          {
+            "domId": "search-btn",
+            "targetPageId": "page-biz-job-list",
+            "hideEdge": false,
+            "transitionLabel": "搜索"
+          },
+          {
+            "domId": "quick-simulator",
+            "targetPageId": "page-biz-simulator",
+            "hideEdge": false,
+            "transitionLabel": "模拟面试"
+          },
+          {
+            "domId": "quick-salary",
+            "targetPageId": "page-biz-salary",
+            "hideEdge": false,
+            "transitionLabel": "薪资洞察"
+          },
+          {
+            "domId": "quick-resume",
+            "targetPageId": "page-biz-resume",
+            "hideEdge": false,
+            "transitionLabel": "简历优化"
+          },
+          {
+            "domId": "job-1",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-2",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": ""
+          },
+          {
+            "domId": "job-3",
+            "targetPageId": "page-biz-job-detail",
+            "hideEdge": true,
+            "transitionLabel": ""
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "desktop",
+    "projectName": "我要工作 · 前端页面预览"
+  }
+}

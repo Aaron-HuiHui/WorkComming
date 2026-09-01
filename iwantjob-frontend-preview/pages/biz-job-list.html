@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职位广场 - 我要工作</title>
+    <style id="theme-vars">
+/* iWantJob · Business Blue Style — 求职平台专业商务蓝 */
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ===== Brand primary scale (blue) ===== */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6;
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+
+  /* ===== Neutral scale (slate, cool gray) ===== */
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-300: #cbd5e1;
+  --neutral-400: #94a3b8;
+  --neutral-500: #64748b;
+  --neutral-600: #475569;
+  --neutral-700: #334155;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a;
+
+  /* ===== State colors ===== */
+  --state-success: #16a34a;
+  --state-warning: #d97706;
+  --state-error: #dc2626;
+  --state-info: #2563eb;
+
+  /* ===== Semantic tokens ===== */
+  --background: var(--neutral-50);
+  --foreground: var(--neutral-900);
+  --card: #ffffff;
+  --card-foreground: var(--neutral-900);
+  --popover: #ffffff;
+  --popover-foreground: var(--neutral-900);
+  --primary: var(--brand-600);
+  --primary-foreground: #ffffff;
+  --muted: var(--neutral-100);
+  --muted-foreground: var(--neutral-500);
+  --border: var(--neutral-200);
+  --input: var(--neutral-200);
+  --ring: var(--brand-600);
+
+  /* Sidebar — dark navy sidebar */
+  --sidebar: var(--neutral-800);
+  --sidebar-foreground: var(--neutral-300);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--neutral-700);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-ring: var(--brand-400);
+
+  /* Chart */
+  --chart-1: var(--brand-500);
+  --chart-2: var(--neutral-400);
+  --chart-3: var(--brand-300);
+  --chart-4: var(--neutral-500);
+  --chart-5: var(--brand-700);
+
+  /* ===== Non-color tokens ===== */
+  --font-sans: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-serif: Georgia, ui-serif, serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --spacing: 0.25rem;
+
+  /* Shadow — static surfaces border-led, floating only deeper */
+  --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.03);
+  --shadow: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
+  --shadow-xl: 0 8px 16px -4px rgba(0,0,0,0.1);
+  --shadow-2xl: 0 12px 24px -6px rgba(0,0,0,0.12);
+
+  /* ===== Brand prefix aliases (for apply-html-head-contract.mjs) ===== */
+  --iw-background: var(--background);
+  --iw-foreground: var(--foreground);
+  --iw-card: var(--card);
+  --iw-card-foreground: var(--card-foreground);
+  --iw-popover: var(--popover);
+  --iw-popover-foreground: var(--popover-foreground);
+  --iw-primary: var(--primary);
+  --iw-primary-foreground: var(--primary-foreground);
+  --iw-muted: var(--muted);
+  --iw-muted-foreground: var(--muted-foreground);
+  --iw-border: var(--border);
+  --iw-input: var(--input);
+  --iw-ring: var(--ring);
+  --iw-sidebar: var(--sidebar);
+  --iw-sidebar-foreground: var(--sidebar-foreground);
+  --iw-sidebar-primary: var(--sidebar-primary);
+  --iw-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --iw-sidebar-accent: var(--sidebar-accent);
+  --iw-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --iw-sidebar-border: var(--sidebar-border);
+  --iw-sidebar-ring: var(--sidebar-ring);
+  --iw-radius-small: var(--radius-sm);
+  --iw-radius-medium: var(--radius-md);
+  --iw-radius-large: var(--radius-lg);
+}
+
+/* ===== @theme inline — Tailwind token mapping ===== */
+@theme inline {
+  --color-background: var(--iw-background);
+  --color-foreground: var(--iw-foreground);
+  --color-card: var(--iw-card);
+  --color-card-foreground: var(--iw-card-foreground);
+  --color-popover: var(--iw-popover);
+  --color-popover-foreground: var(--iw-popover-foreground);
+  --color-primary: var(--iw-primary);
+  --color-primary-foreground: var(--iw-primary-foreground);
+  --color-muted: var(--iw-muted);
+  --color-muted-foreground: var(--iw-muted-foreground);
+  --color-border: var(--iw-border);
+  --color-input: var(--iw-input);
+  --color-ring: var(--iw-ring);
+  --color-sidebar: var(--iw-sidebar);
+  --color-sidebar-foreground: var(--iw-sidebar-foreground);
+  --color-sidebar-primary: var(--iw-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--iw-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+  --color-sidebar-border: var(--iw-sidebar-border);
+  --color-sidebar-ring: var(--iw-sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --radius-sm: var(--iw-radius-small);
+  --radius-md: var(--iw-radius-medium);
+  --radius-lg: var(--iw-radius-large);
+  --radius-full: var(--radius-full);
+}
+
+/* ===== Base layer ===== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--iw-background);
+    --color-foreground: var(--iw-foreground);
+    --color-card: var(--iw-card);
+    --color-card-foreground: var(--iw-card-foreground);
+    --color-popover: var(--iw-popover);
+    --color-popover-foreground: var(--iw-popover-foreground);
+    --color-primary: var(--iw-primary);
+    --color-primary-foreground: var(--iw-primary-foreground);
+    --color-muted: var(--iw-muted);
+    --color-muted-foreground: var(--iw-muted-foreground);
+    --color-border: var(--iw-border);
+    --color-input: var(--iw-input);
+    --color-ring: var(--iw-ring);
+    --color-sidebar: var(--iw-sidebar);
+    --color-sidebar-foreground: var(--iw-sidebar-foreground);
+    --color-sidebar-primary: var(--iw-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--iw-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+    --color-sidebar-border: var(--iw-sidebar-border);
+    --color-sidebar-ring: var(--iw-sidebar-ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --radius-sm: var(--iw-radius-small);
+    --radius-md: var(--iw-radius-medium);
+    --radius-lg: var(--iw-radius-large);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--iw-background); color: var(--iw-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--iw-background); }
+      .text-background { color: var(--iw-background); }
+      .border-background { border-color: var(--iw-background); }
+      .ring-background { --tw-ring-color: var(--iw-background); }
+      .bg-foreground { background-color: var(--iw-foreground); }
+      .text-foreground { color: var(--iw-foreground); }
+      .border-foreground { border-color: var(--iw-foreground); }
+      .ring-foreground { --tw-ring-color: var(--iw-foreground); }
+      .bg-card { background-color: var(--iw-card); }
+      .text-card { color: var(--iw-card); }
+      .border-card { border-color: var(--iw-card); }
+      .ring-card { --tw-ring-color: var(--iw-card); }
+      .bg-card-foreground { background-color: var(--iw-card-foreground); }
+      .text-card-foreground { color: var(--iw-card-foreground); }
+      .border-card-foreground { border-color: var(--iw-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--iw-card-foreground); }
+      .bg-popover { background-color: var(--iw-popover); }
+      .text-popover { color: var(--iw-popover); }
+      .border-popover { border-color: var(--iw-popover); }
+      .ring-popover { --tw-ring-color: var(--iw-popover); }
+      .bg-popover-foreground { background-color: var(--iw-popover-foreground); }
+      .text-popover-foreground { color: var(--iw-popover-foreground); }
+      .border-popover-foreground { border-color: var(--iw-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--iw-popover-foreground); }
+      .bg-primary { background-color: var(--iw-primary); }
+      .text-primary { color: var(--iw-primary); }
+      .border-primary { border-color: var(--iw-primary); }
+      .ring-primary { --tw-ring-color: var(--iw-primary); }
+      .bg-primary-foreground { background-color: var(--iw-primary-foreground); }
+      .text-primary-foreground { color: var(--iw-primary-foreground); }
+      .border-primary-foreground { border-color: var(--iw-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--iw-primary-foreground); }
+      .bg-muted { background-color: var(--iw-muted); }
+      .text-muted { color: var(--iw-muted); }
+      .border-muted { border-color: var(--iw-muted); }
+      .ring-muted { --tw-ring-color: var(--iw-muted); }
+      .bg-muted-foreground { background-color: var(--iw-muted-foreground); }
+      .text-muted-foreground { color: var(--iw-muted-foreground); }
+      .border-muted-foreground { border-color: var(--iw-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--iw-muted-foreground); }
+      .bg-border { background-color: var(--iw-border); }
+      .text-border { color: var(--iw-border); }
+      .border-border { border-color: var(--iw-border); }
+      .ring-border { --tw-ring-color: var(--iw-border); }
+      .bg-input { background-color: var(--iw-input); }
+      .text-input { color: var(--iw-input); }
+      .border-input { border-color: var(--iw-input); }
+      .ring-input { --tw-ring-color: var(--iw-input); }
+      .bg-ring { background-color: var(--iw-ring); }
+      .text-ring { color: var(--iw-ring); }
+      .border-ring { border-color: var(--iw-ring); }
+      .ring-ring { --tw-ring-color: var(--iw-ring); }
+      .bg-sidebar { background-color: var(--iw-sidebar); }
+      .text-sidebar { color: var(--iw-sidebar); }
+      .border-sidebar { border-color: var(--iw-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--iw-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--iw-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--iw-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--iw-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--iw-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--iw-sidebar-primary); }
+      .text-sidebar-primary { color: var(--iw-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--iw-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--iw-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--iw-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--iw-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--iw-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--iw-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--iw-sidebar-accent); }
+      .text-sidebar-accent { color: var(--iw-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--iw-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--iw-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--iw-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--iw-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--iw-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--iw-sidebar-accent-foreground); }
+      .bg-sidebar-border { background-color: var(--iw-sidebar-border); }
+      .text-sidebar-border { color: var(--iw-sidebar-border); }
+      .border-sidebar-border { border-color: var(--iw-sidebar-border); }
+      .ring-sidebar-border { --tw-ring-color: var(--iw-sidebar-border); }
+      .bg-sidebar-ring { background-color: var(--iw-sidebar-ring); }
+      .text-sidebar-ring { color: var(--iw-sidebar-ring); }
+      .border-sidebar-ring { border-color: var(--iw-sidebar-ring); }
+      .ring-sidebar-ring { --tw-ring-color: var(--iw-sidebar-ring); }
+      .bg-chart-1 { background-color: var(--chart-1); }
+      .text-chart-1 { color: var(--chart-1); }
+      .border-chart-1 { border-color: var(--chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--chart-1); }
+      .bg-chart-2 { background-color: var(--chart-2); }
+      .text-chart-2 { color: var(--chart-2); }
+      .border-chart-2 { border-color: var(--chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--chart-2); }
+      .bg-chart-3 { background-color: var(--chart-3); }
+      .text-chart-3 { color: var(--chart-3); }
+      .border-chart-3 { border-color: var(--chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--chart-3); }
+      .bg-chart-4 { background-color: var(--chart-4); }
+      .text-chart-4 { color: var(--chart-4); }
+      .border-chart-4 { border-color: var(--chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--chart-4); }
+      .bg-chart-5 { background-color: var(--chart-5); }
+      .text-chart-5 { color: var(--chart-5); }
+      .border-chart-5 { border-color: var(--chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--chart-5); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <!-- Sidebar -->
+      <aside class="fixed left-0 top-0 w-60 h-screen bg-[#1e293b] flex flex-col z-50">
+        <div class="h-15 flex items-center justify-center border-b border-white/8">
+          <span class="text-white font-bold text-lg">💼 我要工作</span>
+        </div>
+        <nav class="flex-1 py-4 px-3 space-y-1">
+          <a data-dom-id="nav-dashboard" href="biz-dashboard.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="home" class="w-4 h-4"></i> 首页
+          </a>
+          <a data-dom-id="nav-jobs" href="biz-job-list.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-[#2563eb]/20 border-l-2 border-[#2563eb] text-sm font-medium">
+            <i data-lucide="briefcase" class="w-4 h-4"></i> 职位广场
+          </a>
+          <a data-dom-id="nav-applications" href="biz-applications.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="file-text" class="w-4 h-4"></i> 我的投递
+          </a>
+          <a data-dom-id="nav-simulator" href="biz-simulator.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="monitor" class="w-4 h-4"></i> AI模拟舱
+          </a>
+          <a data-dom-id="nav-salary" href="biz-salary.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="trending-up" class="w-4 h-4"></i> 薪资白皮书
+          </a>
+          <a data-dom-id="nav-badges" href="biz-badges.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="trophy" class="w-4 h-4"></i> 我的徽章
+          </a>
+        </nav>
+        <div class="border-t border-white/8 p-3">
+          <a href="biz-profile.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#a3aabf] hover:text-white hover:bg-white/5 text-sm transition-colors">
+            <i data-lucide="user-circle" class="w-4 h-4"></i> 个人中心
+          </a>
+        </div>
+      </aside>
+
+      <!-- Top header -->
+      <header class="fixed top-0 right-0 left-60 h-15 bg-white shadow-sm flex items-center justify-between px-6 z-40 border-b border-[#e2e8f0]">
+        <h1 class="text-lg font-semibold text-[#0f172a]">职位广场</h1>
+        <div class="flex items-center gap-4">
+          <span class="bg-amber-50 text-amber-700 rounded px-3 py-1 text-sm font-medium flex items-center gap-1">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i> 互助积分: 120
+          </span>
+          <div class="flex items-center gap-2 cursor-pointer">
+            <div class="w-9 h-9 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-sm font-medium">张</div>
+            <span class="text-sm text-[#475569] font-medium">张三</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#94a3b8]"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <div class="ml-60 pt-15 min-h-screen bg-[#f8fafc]">
+        <div class="p-6 min-w-[1024px]">
+          <!-- Search bar -->
+          <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-4 mb-4">
+            <div class="flex gap-3">
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-4 h-4 text-[#94a3b8] absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input type="text" placeholder="搜索职位、公司名称..." class="w-full pl-10 pr-3 py-2.5 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb]" />
+              </div>
+              <button class="bg-[#2563eb] text-white rounded-lg px-6 py-2.5 text-sm font-medium hover:bg-[#1d4ed8] transition-colors flex items-center gap-2">
+                <i data-lucide="search" class="w-4 h-4"></i> 搜索
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter panel -->
+          <div class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-4 mb-4">
+            <div class="grid grid-cols-4 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">城市</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option>全部城市</option>
+                  <option selected>北京</option>
+                  <option>上海</option>
+                  <option>深圳</option>
+                  <option>杭州</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">薪资范围</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option>不限</option>
+                  <option>5-10K</option>
+                  <option selected>10-20K</option>
+                  <option>20K+</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">经验要求</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option>应届</option>
+                  <option selected>1-3年</option>
+                  <option>3-5年</option>
+                  <option>5年+</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-[#64748b] mb-1.5">学历要求</label>
+                <select class="w-full px-3 py-2 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+                  <option>不限</option>
+                  <option selected>本科</option>
+                  <option>硕士</option>
+                  <option>博士</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results count -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-sm text-[#64748b]">共找到 <span class="font-medium text-[#0f172a]">8</span> 个职位</span>
+            <select class="px-3 py-1.5 border border-[#e2e8f0] rounded text-sm focus:outline-none focus:border-[#2563eb] bg-white">
+              <option>综合排序</option>
+              <option>最新发布</option>
+              <option>薪资最高</option>
+            </select>
+          </div>
+
+          <!-- Job cards -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Job 1 -->
+            <a data-dom-id="job-card-1" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">高级前端开发工程师</h3>
+                  <p class="text-sm text-[#64748b]">字节跳动 · 10000+人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">25-40K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">React</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">TypeScript</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Vue</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">3-5年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 北京·海淀区</span>
+                <span>2小时前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 2 -->
+            <a data-dom-id="job-card-2" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">Python后端开发工程师</h3>
+                  <p class="text-sm text-[#64748b]">腾讯 · 10000+人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">20-35K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Python</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Django</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">MySQL</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">1-3年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 深圳·南山区</span>
+                <span>5小时前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 3 -->
+            <a data-dom-id="job-card-3" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">产品经理（B端方向）</h3>
+                  <p class="text-sm text-[#64748b]">美团 · 10000+人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">18-30K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">B端</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Axure</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">数据分析</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">3-5年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 上海·长宁区</span>
+                <span>8小时前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 4 -->
+            <a data-dom-id="job-card-4" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">Java高级开发工程师</h3>
+                  <p class="text-sm text-[#64748b]">阿里巴巴 · 10000+人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">30-50K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Java</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Spring</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">微服务</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">5年+</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 杭州·余杭区</span>
+                <span>1天前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 5 -->
+            <a data-dom-id="job-card-5" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">UI/UX设计师</h3>
+                  <p class="text-sm text-[#64748b]">小红书 · 5000-10000人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">15-25K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Figma</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Sketch</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">交互设计</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">1-3年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 上海·黄浦区</span>
+                <span>1天前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 6 -->
+            <a data-dom-id="job-card-6" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">测试开发工程师</h3>
+                  <p class="text-sm text-[#64748b]">百度 · 10000+人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">16-28K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">自动化测试</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Selenium</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Python</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">1-3年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 北京·海淀区</span>
+                <span>2天前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 7 -->
+            <a data-dom-id="job-card-7" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">数据分析工程师</h3>
+                  <p class="text-sm text-[#64748b]">滴滴出行 · 5000-10000人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">14-22K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">SQL</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Python</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Tableau</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">1-3年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 北京·朝阳区</span>
+                <span>3天前发布</span>
+              </div>
+            </a>
+
+            <!-- Job 8 -->
+            <a data-dom-id="job-card-8" href="biz-job-detail.html" class="bg-white border border-[#e2e8f0] rounded-lg shadow-sm p-5 hover:border-[#2563eb] transition-colors cursor-pointer block">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="text-base font-semibold text-[#0f172a] mb-1">DevOps运维工程师</h3>
+                  <p class="text-sm text-[#64748b]">网易 · 10000+人</p>
+                </div>
+                <span class="text-[#2563eb] font-bold text-base">20-35K</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">Docker</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">K8s</span>
+                <span class="bg-[#eff6ff] text-[#2563eb] text-xs rounded px-2 py-0.5">CI/CD</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">3-5年</span>
+                <span class="bg-[#f1f5f9] text-[#64748b] text-xs rounded px-2 py-0.5">本科</span>
+              </div>
+              <div class="flex items-center justify-between text-xs text-[#94a3b8]">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> 杭州·滨江区</span>
+                <span>3天前发布</span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex items-center justify-center gap-2 mt-6">
+            <button class="px-3 py-1.5 border border-[#e2e8f0] rounded text-sm text-[#64748b] hover:bg-[#f8fafc]">上一页</button>
+            <button class="px-3 py-1.5 bg-[#2563eb] text-white rounded text-sm font-medium">1</button>
+            <button class="px-3 py-1.5 border border-[#e2e8f0] rounded text-sm text-[#475569] hover:bg-[#f8fafc]">2</button>
+            <button class="px-3 py-1.5 border border-[#e2e8f0] rounded text-sm text-[#475569] hover:bg-[#f8fafc]">3</button>
+            <button class="px-3 py-1.5 border border-[#e2e8f0] rounded text-sm text-[#64748b] hover:bg-[#f8fafc]">下一页</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,828 @@
+{
+  "success": true,
+  "outcome": "passed",
+  "repairable": true,
+  "terminalViolations": [],
+  "terminalBlockingSummary": null,
+  "skillProvenance": {
+    "name": "solo-design",
+    "version": "2026.08.06.19.15.08",
+    "version_source": "skill-release-manifest.json",
+    "runtime_skill_dir": "c:\\Users\\Lenovo\\.trae-cn\\builtin\\design\\default\\skills\\solo-design",
+    "recorded_at": null,
+    "expected_version": "2026.08.06.19.15.08",
+    "status": "manifest_fallback",
+    "read_status": "ok",
+    "reason": "runtime-orchestration-summary.json missing skillProvenance; used skill-release-manifest.json"
+  },
+  "operatingMode": "free-explore",
+  "renderBlockingErrorCount": 0,
+  "softWarningCount": 66,
+  "renderBlockingErrors": [],
+  "errorSignatures": [],
+  "softWarnings": [
+    "[html-head-style] biz-home.html: found 1 custom <style> block(s) in <head>. The <head> is owned by apply-html-head-contract.mjs; move custom styles before </body> or re-run apply-html-head-contract.mjs <css-path> <html-file> --replace-head to relocate them.",
+    "[html-head-style] dark-home.html: found 1 custom <style> block(s) in <head>. The <head> is owned by apply-html-head-contract.mjs; move custom styles before </body> or re-run apply-html-head-contract.mjs <css-path> <html-file> --replace-head to relocate them.",
+    "[html-quality] biz-applications.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-amber-600, bg-blue-50, bg-green-50, text-green-600, bg-red-50, text-red-600). Use brand CSS variables instead.",
+    "[html-quality] biz-applications.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-badges.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, from-amber-400, to-orange-500, text-amber-500, bg-green-500, from-blue-400, to-blue-600). Use brand CSS variables instead.",
+    "[html-quality] biz-badges.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-dashboard.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-blue-100, text-amber-600, text-green-600, bg-blue-50, bg-purple-50, text-purple-600). Use brand CSS variables instead.",
+    "[html-quality] biz-dashboard.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-home.html: Tailwind named color utilities are forbidden (border-blue-100, bg-blue-600, text-slate-900, text-blue-600, bg-blue-50, text-slate-600, border-blue-200, text-slate-700). Use brand CSS variables instead.",
+    "[html-quality] biz-job-detail.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-red-50, text-red-600, text-green-500, bg-purple-100, text-purple-600). Use brand CSS variables instead.",
+    "[html-quality] biz-job-detail.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-job-list.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700). Use brand CSS variables instead.",
+    "[html-quality] biz-job-list.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-login.html: Tailwind named color utilities are forbidden (text-blue-400, bg-blue-400, text-green-500). Use brand CSS variables instead.",
+    "[html-quality] biz-login.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-profile.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-blue-50, bg-green-50, text-green-700, text-amber-500, text-green-600, bg-purple-50). Use brand CSS variables instead.",
+    "[html-quality] biz-profile.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-register.html: Tailwind named color utilities are forbidden (text-blue-400, bg-blue-400). Use brand CSS variables instead.",
+    "[html-quality] biz-register.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-resume-edit.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700). Use brand CSS variables instead.",
+    "[html-quality] biz-resume-edit.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-resume.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-green-50, text-green-700, bg-purple-100, text-purple-600, text-amber-600, bg-amber-500). Use brand CSS variables instead.",
+    "[html-quality] biz-resume.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-salary-contribute.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-blue-100, bg-blue-50, border-blue-200, bg-green-50, border-green-200, text-green-600). Use brand CSS variables instead.",
+    "[html-quality] biz-salary-contribute.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-salary.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-blue-50, bg-green-50, text-green-600, bg-purple-50, text-purple-600). Use brand CSS variables instead.",
+    "[html-quality] biz-salary.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-simulator-report.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-green-50, text-green-700, bg-green-500, bg-amber-500, bg-blue-50, text-green-600). Use brand CSS variables instead.",
+    "[html-quality] biz-simulator-report.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-simulator.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-blue-100, bg-blue-50, text-amber-600, bg-green-50, text-green-600, bg-red-50). Use brand CSS variables instead.",
+    "[html-quality] biz-simulator.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-applications.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-badges.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-dashboard.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-job-detail.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-job-list.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-login.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-profile.html: Tailwind named color utilities are forbidden (text-red-600). Use brand CSS variables instead.",
+    "[html-quality] clean-profile.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-register.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-resume-edit.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-resume.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-salary-contribute.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-salary.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-simulator-report.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-simulator.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-applications.html: Tailwind named color utilities are forbidden (text-amber-400, text-green-400, text-red-400, bg-amber-500, border-amber-500, bg-red-500, border-red-500, bg-green-500). Use brand CSS variables instead.",
+    "[html-quality] dark-applications.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-badges.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-dashboard.html: Tailwind named color utilities are forbidden (bg-green-500, text-green-400, bg-amber-500, text-amber-400, bg-red-500, text-red-400). Use brand CSS variables instead.",
+    "[html-quality] dark-dashboard.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-home.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-job-detail.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-job-list.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-login.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-profile.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-register.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-resume-edit.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-resume.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-salary-contribute.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-salary.html: Tailwind named color utilities are forbidden (text-green-400). Use brand CSS variables instead.",
+    "[html-quality] dark-salary.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-simulator-report.html: Tailwind named color utilities are forbidden (text-amber-400, text-green-400, bg-green-500). Use brand CSS variables instead.",
+    "[html-quality] dark-simulator-report.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-simulator.html: Tailwind named color utilities are forbidden (text-amber-400, bg-green-400). Use brand CSS variables instead.",
+    "[html-quality] dark-simulator.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference."
+  ],
+  "repairPlanHints": [
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-applications.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-badges.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-dashboard.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-job-detail.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-job-list.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-login.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-profile.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-register.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-resume-edit.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-resume.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-salary-contribute.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-salary.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-simulator-report.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "biz-simulator.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-applications.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-badges.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-dashboard.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-job-detail.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-job-list.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-login.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-profile.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-register.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-resume-edit.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-resume.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-salary-contribute.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-salary.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-simulator-report.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "clean-simulator.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-applications.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-badges.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-dashboard.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-home.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-job-detail.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-job-list.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-login.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-profile.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-register.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-resume-edit.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-resume.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-salary-contribute.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-salary.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-simulator-report.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    },
+    {
+      "errorClass": "hardcoded-color-in-body",
+      "owner": "sub-agent",
+      "repairScope": "targeted-token-replace",
+      "strategy": "targeted_token_replace_once",
+      "affectedFiles": [
+        "dark-simulator.html"
+      ],
+      "repairReportPath": null,
+      "repairAlreadyAttempted": false,
+      "allowSourceRead": "no-full-html-read",
+      "maxValidationRuns": 2
+    }
+  ],
+  "repairActionTable": [],
+  "errorCount": 0,
+  "warningCount": 66,
+  "errors": [],
+  "warnings": [
+    "[html-head-style] biz-home.html: found 1 custom <style> block(s) in <head>. The <head> is owned by apply-html-head-contract.mjs; move custom styles before </body> or re-run apply-html-head-contract.mjs <css-path> <html-file> --replace-head to relocate them.",
+    "[html-head-style] dark-home.html: found 1 custom <style> block(s) in <head>. The <head> is owned by apply-html-head-contract.mjs; move custom styles before </body> or re-run apply-html-head-contract.mjs <css-path> <html-file> --replace-head to relocate them.",
+    "[html-quality] biz-applications.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-amber-600, bg-blue-50, bg-green-50, text-green-600, bg-red-50, text-red-600). Use brand CSS variables instead.",
+    "[html-quality] biz-applications.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-badges.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, from-amber-400, to-orange-500, text-amber-500, bg-green-500, from-blue-400, to-blue-600). Use brand CSS variables instead.",
+    "[html-quality] biz-badges.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-dashboard.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-blue-100, text-amber-600, text-green-600, bg-blue-50, bg-purple-50, text-purple-600). Use brand CSS variables instead.",
+    "[html-quality] biz-dashboard.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-home.html: Tailwind named color utilities are forbidden (border-blue-100, bg-blue-600, text-slate-900, text-blue-600, bg-blue-50, text-slate-600, border-blue-200, text-slate-700). Use brand CSS variables instead.",
+    "[html-quality] biz-job-detail.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-red-50, text-red-600, text-green-500, bg-purple-100, text-purple-600). Use brand CSS variables instead.",
+    "[html-quality] biz-job-detail.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-job-list.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700). Use brand CSS variables instead.",
+    "[html-quality] biz-job-list.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-login.html: Tailwind named color utilities are forbidden (text-blue-400, bg-blue-400, text-green-500). Use brand CSS variables instead.",
+    "[html-quality] biz-login.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-profile.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-blue-50, bg-green-50, text-green-700, text-amber-500, text-green-600, bg-purple-50). Use brand CSS variables instead.",
+    "[html-quality] biz-profile.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-register.html: Tailwind named color utilities are forbidden (text-blue-400, bg-blue-400). Use brand CSS variables instead.",
+    "[html-quality] biz-register.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-resume-edit.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700). Use brand CSS variables instead.",
+    "[html-quality] biz-resume-edit.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-resume.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-green-50, text-green-700, bg-purple-100, text-purple-600, text-amber-600, bg-amber-500). Use brand CSS variables instead.",
+    "[html-quality] biz-resume.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-salary-contribute.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-blue-100, bg-blue-50, border-blue-200, bg-green-50, border-green-200, text-green-600). Use brand CSS variables instead.",
+    "[html-quality] biz-salary-contribute.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-salary.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-blue-50, bg-green-50, text-green-600, bg-purple-50, text-purple-600). Use brand CSS variables instead.",
+    "[html-quality] biz-salary.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-simulator-report.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, bg-green-50, text-green-700, bg-green-500, bg-amber-500, bg-blue-50, text-green-600). Use brand CSS variables instead.",
+    "[html-quality] biz-simulator-report.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] biz-simulator.html: Tailwind named color utilities are forbidden (bg-amber-50, text-amber-700, text-blue-100, bg-blue-50, text-amber-600, bg-green-50, text-green-600, bg-red-50). Use brand CSS variables instead.",
+    "[html-quality] biz-simulator.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-applications.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-badges.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-dashboard.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-job-detail.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-job-list.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-login.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-profile.html: Tailwind named color utilities are forbidden (text-red-600). Use brand CSS variables instead.",
+    "[html-quality] clean-profile.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-register.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-resume-edit.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-resume.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-salary-contribute.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-salary.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-simulator-report.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] clean-simulator.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-applications.html: Tailwind named color utilities are forbidden (text-amber-400, text-green-400, text-red-400, bg-amber-500, border-amber-500, bg-red-500, border-red-500, bg-green-500). Use brand CSS variables instead.",
+    "[html-quality] dark-applications.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-badges.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-dashboard.html: Tailwind named color utilities are forbidden (bg-green-500, text-green-400, bg-amber-500, text-amber-400, bg-red-500, text-red-400). Use brand CSS variables instead.",
+    "[html-quality] dark-dashboard.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-home.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-job-detail.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-job-list.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-login.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-profile.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-register.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-resume-edit.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-resume.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-salary-contribute.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-salary.html: Tailwind named color utilities are forbidden (text-green-400). Use brand CSS variables instead.",
+    "[html-quality] dark-salary.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-simulator-report.html: Tailwind named color utilities are forbidden (text-amber-400, text-green-400, bg-green-500). Use brand CSS variables instead.",
+    "[html-quality] dark-simulator-report.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference.",
+    "[html-quality] dark-simulator.html: Tailwind named color utilities are forbidden (text-amber-400, bg-green-400). Use brand CSS variables instead.",
+    "[html-quality] dark-simulator.html: hardcoded colors are forbidden outside <style id=\"theme-vars\">. Use brand CSS variables from the token reference."
+  ],
+  "validationRunDisciplineStatus": {
+    "declared": false,
+    "restoreMode": false,
+    "maxFullValidationRuns": null,
+    "validationHistoryCount": 0,
+    "repairLedgerCount": 0,
+    "softWarningsTriggerRepair": null,
+    "terminalState": null,
+    "nextAction": null,
+    "violations": [],
+    "success": true
+  },
+  "terminalState": null,
+  "nextCheck": {
+    "type": "finish-readiness",
+    "command": "node \"c:\\Users\\Lenovo\\.trae-cn\\builtin\\design\\default\\skills\\solo-design\\shared-runtime\\deterministic-tooling\\validate-finish-readiness.mjs\" \"e:\\毕业设计\\iwantjob-design\" --check=all",
+    "fullValidationAllowed": false,
+    "reason": "workspace validation passed; run complete finish readiness before final delivery"
+  },
+  "repairBatch": [],
+  "repairContextPacket": {
+    "schema_version": "1.0",
+    "purpose": "small-context repair packet; read this before full validation-report.json",
+    "success": true,
+    "terminalState": null,
+    "skillProvenance": {
+      "name": "solo-design",
+      "version": "2026.08.06.19.15.08",
+      "version_source": "skill-release-manifest.json",
+      "runtime_skill_dir": "c:\\Users\\Lenovo\\.trae-cn\\builtin\\design\\default\\skills\\solo-design",
+      "recorded_at": null,
+      "expected_version": "2026.08.06.19.15.08",
+      "status": "manifest_fallback",
+      "read_status": "ok",
+      "reason": "runtime-orchestration-summary.json missing skillProvenance; used skill-release-manifest.json"
+    },
+    "renderBlockingErrorCount": 0,
+    "softWarningCount": 66,
+    "renderBlockingErrors": [],
+    "repairActionTable": [],
+    "nextCheck": {
+      "type": "finish-readiness",
+      "command": "node \"c:\\Users\\Lenovo\\.trae-cn\\builtin\\design\\default\\skills\\solo-design\\shared-runtime\\deterministic-tooling\\validate-finish-readiness.mjs\" \"e:\\毕业设计\\iwantjob-design\" --check=all",
+      "fullValidationAllowed": false,
+      "reason": "workspace validation passed; run complete finish readiness before final delivery"
+    },
+    "forbidden": [
+      "do not read validator source",
+      "do not rerun full validation when nextCheck.fullValidationAllowed=false",
+      "do not start preview/browser unless user explicitly asks",
+      "do not hand-edit repair ledger fields"
+    ]
+  },
+  "projectFileHashes": {
+    "iwantjob-design.design": "2c43da1d860952a65405fb46dd23dc20699166596c7081c5bcf6109f066e5ef3",
+    "pages/biz-applications.html": "12c1b6606b02aef73d8d243ace8cb4a2d3091e29e0a7e6f19083ab783465ee5c",
+    "pages/biz-badges.html": "598942d91b9a57105871e14372a13bbd9f22640b2033a08dad0475c8de85144e",
+    "pages/biz-dashboard.html": "bcd53db1c5d6d03c689398dfee050d96d174a94cc7a7dcb7625d41a4844c3cb3",
+    "pages/biz-home.html": "aa87cc658dcb936ab971ed6c9e70aecf790a1ff243715d8aaf56d4f1a2ac2000",
+    "pages/biz-job-detail.html": "c96e951e0aab0d888ed7908f0b0c1e12f9779e87b253c6fcd7d7874ac31d54a8",
+    "pages/biz-job-list.html": "d154abf749e2889efde008e28c15a70ec5326c1bfe4d4c6e764075276e4d2f80",
+    "pages/biz-login.html": "7a9b982e240a28ca81a466cc2f79dfebc31b2d6ced756c30452ce1240a467d1d",
+    "pages/biz-profile.html": "ddc5173aaa743207a74c23222bc45a588da7b415073fb7458b7faf9813ffdb0e",
+    "pages/biz-register.html": "2c6d592b4c8e1c0e5537f9caf0202a10877a8f81c1bda31b767385124cb3a8ab",
+    "pages/biz-resume-edit.html": "6a83a5d34d24bef18835364c59e932e902791bcfdb924af8516982e3f1347aac",
+    "pages/biz-resume.html": "ce336c6a7fda62dfe62a9cf6fee026b6b0d83702624a22b463ed23b71fb3ad1f",
+    "pages/biz-salary-contribute.html": "35c48a0506bda4b9dabaeba0c477a6ace367a63c59c409d5e76c43c09b689e5a",
+    "pages/biz-salary.html": "601aa5564a410495843c98dacfdb25d3529571774e54aeb72f9d88249d4a57b2",
+    "pages/biz-simulator-report.html": "30f47d6eeeb8f6f32fb48a24078bde135514f4c599f0a4f3bcfec5b56c6ecd34",
+    "pages/biz-simulator.html": "b24ae9eac4537d092b0f8ca2969d6d8a77c9657227c40b73abed5245f3b88753",
+    "pages/clean-applications.html": "a1d20d408d548afacfbe53e2e1e56185a8c70f0098aceb0e4a2108114ea0076d",
+    "pages/clean-badges.html": "62aae9bbe5d0fef3650b70c521f081eea4712def6c7ae84f76d36abc334b4968",
+    "pages/clean-dashboard.html": "837eb80078cba2a011ee9684a61140842ac8eca98715a07c48ac67fedf9c3196",
+    "pages/clean-job-detail.html": "1ed98d8418194bb1b84b706ec7e7a26a93b9eadcf9ce5e9a71c45783e0e72321",
+    "pages/clean-job-list.html": "82cafc53d3dc1f56823729a5e87e589289f3afe628e686805e02e8b14c908bba",
+    "pages/clean-login.html": "966f7d10173a9dcbfbe7e15b7a836348fb486ca41432e674fc1ec28d2ee7a6c1",
+    "pages/clean-profile.html": "a8f981b468d85b6c304ad8dd31f65072de1f28d0d54dce1efd2275a103feecb5",
+    "pages/clean-register.html": "71530b177a628aef15fa5f8c5ecc3ee40ef7430625347289b20a8d0b48def057",
+    "pages/clean-resume-edit.html": "3976d6af98c61693e62e710fd97879bdcab775ed8fc22f50a81aea32b9222fe6",
+    "pages/clean-resume.html": "3ed07ade9f3a0cf84b680d71ff2bbe8ecd535d59470478e00c216fcc3b087f45",
+    "pages/clean-salary-contribute.html": "03dfd67f15f3832c7d5eda6f2df9405e3898ce135900c78574cf8e3a1e90421b",
+    "pages/clean-salary.html": "5f01de5a08b7d084a34278a80b585eafb156b6ea153b76fa3c68e89758934468",
+    "pages/clean-simulator-report.html": "501f37c79ba47ff656d9e3dec53b76307632c02321976d203f5edd38c2491f6c",
+    "pages/clean-simulator.html": "aeae74f3637d642994cfce09654b009e466ca137c1b65383509d8ce6a6074535",
+    "pages/dark-applications.html": "4ddf2b44b593c6baec335eae6d5c6d64613fbc8abfca4d2c1200bf1dc757200e",
+    "pages/dark-badges.html": "2f26154d9af99f1717d54dc9f0162a08c5444fc9b3291b5b5aadff71027e2cf9",
+    "pages/dark-dashboard.html": "c73c9c604dfff2dc8fdfea4cf4698763904e9d9f3dfd90946bd7fd0b31950cf7",
+    "pages/dark-home.html": "24b857f0ff20ed0d4ffd52342c03481293b25c06e92ef8922e81c9c4af3c1ace",
+    "pages/dark-job-detail.html": "bb6cc469fcceda7a7fd39bf2242add08cb57fed7da749d7b487992dcc277de79",
+    "pages/dark-job-list.html": "12d6acaf448f478d1c7966e1c611cb4039da24bc183d22094346f176d97af65f",
+    "pages/dark-login.html": "f4730663dd228c442b9141dfaab23c3d29c39b2d202de161e09e79b6956e196d",
+    "pages/dark-profile.html": "d07207abe2b8486096f14edfbe59cdea5a6a7aa32f69e75f4c80f321b5329f0f",
+    "pages/dark-register.html": "21b7271886b37f6803eaa4850f5c0e9b46184aa67c0674d37ea12bcd0bb4b5c3",
+    "pages/dark-resume-edit.html": "fb95ce31056d0046d8c3cf3a6f8367f346d5234642cf6dee044879c983fdc3c6",
+    "pages/dark-resume.html": "1c6251be1948d427168492761432c0e31d592ea5ec00743cea07b12f98f84ad8",
+    "pages/dark-salary-contribute.html": "14966a5f537269e4123dd692f80261f397d919132a305360c9e4df37a7137811",
+    "pages/dark-salary.html": "1965eaf3d8549291929b9ddbbb0133f21faaefb9d20c3e92e16ca0e592bfa451",
+    "pages/dark-simulator-report.html": "4126ed42b93bcee15f3881131cec688a9cbc99a5bfb6576161105c6aece9ccd9",
+    "pages/dark-simulator.html": "1a92c1372eaec0f7ea307525afea4f00bd69560edca7964a93de73e54657f99a"
+  },
+  "designDir": "e:\\毕业设计\\iwantjob-design",
+  "expectedPages": null,
+  "requireInteractions": null,
+  "checkedAt": "2026-08-31T08:50:25.268Z"
+}

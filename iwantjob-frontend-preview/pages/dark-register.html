@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我要工作 - 注册</title>
+    <style id="theme-vars">
+/* iWantJob · Tech Dark Style — 科技深色沉浸式 */
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ===== Brand primary scale (indigo) ===== */
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-200: #c7d2fe;
+  --brand-300: #a5b4fc;
+  --brand-400: #818cf8;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+  --brand-800: #3730a3;
+  --brand-900: #312e81;
+
+  /* ===== Neutral scale (slate dark) ===== */
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #1e293b;
+  --neutral-300: #334155;
+  --neutral-400: #475569;
+  --neutral-500: #64748b;
+  --neutral-600: #94a3b8;
+  --neutral-700: #cbd5e1;
+  --neutral-800: #e2e8f0;
+  --neutral-900: #f1f5f9;
+
+  /* ===== State colors ===== */
+  --state-success: #22c55e;
+  --state-warning: #f59e0b;
+  --state-error: #ef4444;
+  --state-info: #818cf8;
+
+  /* ===== Semantic tokens (dark mode native) ===== */
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #818cf8;
+  --primary-foreground: #0f172a;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --input: rgba(255,255,255,0.1);
+  --ring: #818cf8;
+
+  /* Sidebar — same dark, top nav style */
+  --sidebar: #0f172a;
+  --sidebar-foreground: #94a3b8;
+  --sidebar-primary: #818cf8;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-ring: #818cf8;
+
+  /* Chart */
+  --chart-1: #818cf8;
+  --chart-2: #6366f1;
+  --chart-3: #a5b4fc;
+  --chart-4: #4f46e5;
+  --chart-5: #c7d2fe;
+
+  /* ===== Non-color tokens ===== */
+  --font-sans: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-serif: Georgia, ui-serif, serif;
+
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --spacing: 0.25rem;
+
+  /* Shadow — glow effects for floating layers only */
+  --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.3);
+  --shadow: 0 2px 8px 0 rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px 0 rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 24px 0 rgba(0,0,0,0.4);
+  --shadow-xl: 0 12px 32px 0 rgba(0,0,0,0.45);
+  --shadow-2xl: 0 16px 48px 0 rgba(129,140,248,0.15);
+
+  /* ===== Brand prefix aliases ===== */
+  --iw-background: var(--background);
+  --iw-foreground: var(--foreground);
+  --iw-card: var(--card);
+  --iw-card-foreground: var(--card-foreground);
+  --iw-popover: var(--popover);
+  --iw-popover-foreground: var(--popover-foreground);
+  --iw-primary: var(--primary);
+  --iw-primary-foreground: var(--primary-foreground);
+  --iw-muted: var(--muted);
+  --iw-muted-foreground: var(--muted-foreground);
+  --iw-border: var(--border);
+  --iw-input: var(--input);
+  --iw-ring: var(--ring);
+  --iw-sidebar: var(--sidebar);
+  --iw-sidebar-foreground: var(--sidebar-foreground);
+  --iw-sidebar-primary: var(--sidebar-primary);
+  --iw-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --iw-sidebar-accent: var(--sidebar-accent);
+  --iw-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --iw-sidebar-border: var(--sidebar-border);
+  --iw-sidebar-ring: var(--sidebar-ring);
+  --iw-radius-small: var(--radius-sm);
+  --iw-radius-medium: var(--radius-md);
+  --iw-radius-large: var(--radius-lg);
+}
+
+/* ===== @theme inline ===== */
+@theme inline {
+  --color-background: var(--iw-background);
+  --color-foreground: var(--iw-foreground);
+  --color-card: var(--iw-card);
+  --color-card-foreground: var(--iw-card-foreground);
+  --color-popover: var(--iw-popover);
+  --color-popover-foreground: var(--iw-popover-foreground);
+  --color-primary: var(--iw-primary);
+  --color-primary-foreground: var(--iw-primary-foreground);
+  --color-muted: var(--iw-muted);
+  --color-muted-foreground: var(--iw-muted-foreground);
+  --color-border: var(--iw-border);
+  --color-input: var(--iw-input);
+  --color-ring: var(--iw-ring);
+  --color-sidebar: var(--iw-sidebar);
+  --color-sidebar-foreground: var(--iw-sidebar-foreground);
+  --color-sidebar-primary: var(--iw-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--iw-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+  --color-sidebar-border: var(--iw-sidebar-border);
+  --color-sidebar-ring: var(--iw-sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --radius-sm: var(--iw-radius-small);
+  --radius-md: var(--iw-radius-medium);
+  --radius-lg: var(--iw-radius-large);
+  --radius-full: var(--radius-full);
+}
+
+/* ===== Base layer ===== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--iw-background);
+    --color-foreground: var(--iw-foreground);
+    --color-card: var(--iw-card);
+    --color-card-foreground: var(--iw-card-foreground);
+    --color-popover: var(--iw-popover);
+    --color-popover-foreground: var(--iw-popover-foreground);
+    --color-primary: var(--iw-primary);
+    --color-primary-foreground: var(--iw-primary-foreground);
+    --color-muted: var(--iw-muted);
+    --color-muted-foreground: var(--iw-muted-foreground);
+    --color-border: var(--iw-border);
+    --color-input: var(--iw-input);
+    --color-ring: var(--iw-ring);
+    --color-sidebar: var(--iw-sidebar);
+    --color-sidebar-foreground: var(--iw-sidebar-foreground);
+    --color-sidebar-primary: var(--iw-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--iw-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+    --color-sidebar-border: var(--iw-sidebar-border);
+    --color-sidebar-ring: var(--iw-sidebar-ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --radius-sm: var(--iw-radius-small);
+    --radius-md: var(--iw-radius-medium);
+    --radius-lg: var(--iw-radius-large);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--iw-background); color: var(--iw-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--iw-background); }
+      .text-background { color: var(--iw-background); }
+      .border-background { border-color: var(--iw-background); }
+      .ring-background { --tw-ring-color: var(--iw-background); }
+      .bg-foreground { background-color: var(--iw-foreground); }
+      .text-foreground { color: var(--iw-foreground); }
+      .border-foreground { border-color: var(--iw-foreground); }
+      .ring-foreground { --tw-ring-color: var(--iw-foreground); }
+      .bg-card { background-color: var(--iw-card); }
+      .text-card { color: var(--iw-card); }
+      .border-card { border-color: var(--iw-card); }
+      .ring-card { --tw-ring-color: var(--iw-card); }
+      .bg-card-foreground { background-color: var(--iw-card-foreground); }
+      .text-card-foreground { color: var(--iw-card-foreground); }
+      .border-card-foreground { border-color: var(--iw-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--iw-card-foreground); }
+      .bg-popover { background-color: var(--iw-popover); }
+      .text-popover { color: var(--iw-popover); }
+      .border-popover { border-color: var(--iw-popover); }
+      .ring-popover { --tw-ring-color: var(--iw-popover); }
+      .bg-popover-foreground { background-color: var(--iw-popover-foreground); }
+      .text-popover-foreground { color: var(--iw-popover-foreground); }
+      .border-popover-foreground { border-color: var(--iw-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--iw-popover-foreground); }
+      .bg-primary { background-color: var(--iw-primary); }
+      .text-primary { color: var(--iw-primary); }
+      .border-primary { border-color: var(--iw-primary); }
+      .ring-primary { --tw-ring-color: var(--iw-primary); }
+      .bg-primary-foreground { background-color: var(--iw-primary-foreground); }
+      .text-primary-foreground { color: var(--iw-primary-foreground); }
+      .border-primary-foreground { border-color: var(--iw-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--iw-primary-foreground); }
+      .bg-muted { background-color: var(--iw-muted); }
+      .text-muted { color: var(--iw-muted); }
+      .border-muted { border-color: var(--iw-muted); }
+      .ring-muted { --tw-ring-color: var(--iw-muted); }
+      .bg-muted-foreground { background-color: var(--iw-muted-foreground); }
+      .text-muted-foreground { color: var(--iw-muted-foreground); }
+      .border-muted-foreground { border-color: var(--iw-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--iw-muted-foreground); }
+      .bg-border { background-color: var(--iw-border); }
+      .text-border { color: var(--iw-border); }
+      .border-border { border-color: var(--iw-border); }
+      .ring-border { --tw-ring-color: var(--iw-border); }
+      .bg-input { background-color: var(--iw-input); }
+      .text-input { color: var(--iw-input); }
+      .border-input { border-color: var(--iw-input); }
+      .ring-input { --tw-ring-color: var(--iw-input); }
+      .bg-ring { background-color: var(--iw-ring); }
+      .text-ring { color: var(--iw-ring); }
+      .border-ring { border-color: var(--iw-ring); }
+      .ring-ring { --tw-ring-color: var(--iw-ring); }
+      .bg-sidebar { background-color: var(--iw-sidebar); }
+      .text-sidebar { color: var(--iw-sidebar); }
+      .border-sidebar { border-color: var(--iw-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--iw-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--iw-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--iw-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--iw-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--iw-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--iw-sidebar-primary); }
+      .text-sidebar-primary { color: var(--iw-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--iw-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--iw-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--iw-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--iw-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--iw-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--iw-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--iw-sidebar-accent); }
+      .text-sidebar-accent { color: var(--iw-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--iw-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--iw-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--iw-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--iw-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--iw-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--iw-sidebar-accent-foreground); }
+      .bg-sidebar-border { background-color: var(--iw-sidebar-border); }
+      .text-sidebar-border { color: var(--iw-sidebar-border); }
+      .border-sidebar-border { border-color: var(--iw-sidebar-border); }
+      .ring-sidebar-border { --tw-ring-color: var(--iw-sidebar-border); }
+      .bg-sidebar-ring { background-color: var(--iw-sidebar-ring); }
+      .text-sidebar-ring { color: var(--iw-sidebar-ring); }
+      .border-sidebar-ring { border-color: var(--iw-sidebar-ring); }
+      .ring-sidebar-ring { --tw-ring-color: var(--iw-sidebar-ring); }
+      .bg-chart-1 { background-color: var(--chart-1); }
+      .text-chart-1 { color: var(--chart-1); }
+      .border-chart-1 { border-color: var(--chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--chart-1); }
+      .bg-chart-2 { background-color: var(--chart-2); }
+      .text-chart-2 { color: var(--chart-2); }
+      .border-chart-2 { border-color: var(--chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--chart-2); }
+      .bg-chart-3 { background-color: var(--chart-3); }
+      .text-chart-3 { color: var(--chart-3); }
+      .border-chart-3 { border-color: var(--chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--chart-3); }
+      .bg-chart-4 { background-color: var(--chart-4); }
+      .text-chart-4 { color: var(--chart-4); }
+      .border-chart-4 { border-color: var(--chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--chart-4); }
+      .bg-chart-5 { background-color: var(--chart-5); }
+      .text-chart-5 { color: var(--chart-5); }
+      .border-chart-5 { border-color: var(--chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--chart-5); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <div class="min-h-screen flex items-center justify-center px-4 py-8" style="background-color:#0f172a;background-image:radial-gradient(circle at 50% 50%, rgba(129,140,248,0.15) 0%, transparent 50%);">
+        <div class="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8" style="box-shadow:0 0 30px rgba(129,140,248,0.15);">
+          <div class="text-center mb-6">
+            <h1 class="text-white text-2xl font-bold mb-1" style="text-shadow:0 0 20px rgba(129,140,248,0.3);">✦ 我要工作</h1>
+            <p class="text-[#94a3b8] text-sm">创建账号，开启求职新篇章</p>
+          </div>
+          <form class="space-y-4">
+            <div>
+              <label class="text-[#94a3b8] text-sm font-medium mb-1.5 block">用户名</label>
+              <div class="relative">
+                <i data-lucide="user" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]"></i>
+                <input type="text" placeholder="请输入用户名" class="w-full bg-white/5 border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm placeholder-[#475569] focus:outline-none focus:border-[#818cf8] focus:ring-1 focus:ring-[#818cf8] transition-all" />
+              </div>
+            </div>
+            <div>
+              <label class="text-[#94a3b8] text-sm font-medium mb-1.5 block">邮箱</label>
+              <div class="relative">
+                <i data-lucide="mail" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]"></i>
+                <input type="email" placeholder="name@example.com" class="w-full bg-white/5 border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm placeholder-[#475569] focus:outline-none focus:border-[#818cf8] focus:ring-1 focus:ring-[#818cf8] transition-all" />
+              </div>
+            </div>
+            <div>
+              <label class="text-[#94a3b8] text-sm font-medium mb-1.5 block">密码</label>
+              <div class="relative">
+                <i data-lucide="lock" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]"></i>
+                <input type="password" placeholder="至少8位字符" class="w-full bg-white/5 border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm placeholder-[#475569] focus:outline-none focus:border-[#818cf8] focus:ring-1 focus:ring-[#818cf8] transition-all" />
+              </div>
+            </div>
+            <div>
+              <label class="text-[#94a3b8] text-sm font-medium mb-1.5 block">确认密码</label>
+              <div class="relative">
+                <i data-lucide="lock-keyhole" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]"></i>
+                <input type="password" placeholder="再次输入密码" class="w-full bg-white/5 border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm placeholder-[#475569] focus:outline-none focus:border-[#818cf8] focus:ring-1 focus:ring-[#818cf8] transition-all" />
+              </div>
+            </div>
+            <div>
+              <label class="text-[#94a3b8] text-sm font-medium mb-1.5 block">角色</label>
+              <div class="relative">
+                <i data-lucide="users" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]"></i>
+                <select class="w-full bg-white/5 border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:border-[#818cf8] focus:ring-1 focus:ring-[#818cf8] transition-all appearance-none">
+                  <option value="" class="bg-[#1e293b]">请选择角色</option>
+                  <option value="seeker" class="bg-[#1e293b]">求职者</option>
+                  <option value="hr" class="bg-[#1e293b]">HR（招聘方）</option>
+                </select>
+                <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8] pointer-events-none"></i>
+              </div>
+            </div>
+            <button data-dom-id="register-submit" type="button" class="w-full bg-[#818cf8] text-[#0f172a] rounded-xl py-2.5 font-medium hover:bg-[#a5b4fc] transition flex items-center justify-center gap-2" style="box-shadow:0 0 30px rgba(129,140,248,0.15);">
+              <i data-lucide="user-plus" class="w-4 h-4"></i>注册
+            </button>
+          </form>
+          <div class="flex items-center justify-center mt-6 text-sm">
+            <a data-dom-id="go-login" href="#" class="text-[#818cf8] hover:text-[#a5b4fc] transition">已有账号？去登录</a>
+          </div>
+          <div class="flex items-center gap-3 my-6">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <span class="text-[#94a3b8] text-xs">或</span>
+            <div class="h-px bg-white/10 flex-1"></div>
+          </div>
+          <div class="flex gap-3">
+            <button class="flex-1 bg-white/5 border border-white/10 text-[#94a3b8] rounded-lg py-2 text-sm hover:text-white hover:border-white/20 transition flex items-center justify-center gap-2">
+              <i data-lucide="github" class="w-4 h-4"></i>GitHub
+            </button>
+            <button class="flex-1 bg-white/5 border border-white/10 text-[#94a3b8] rounded-lg py-2 text-sm hover:text-white hover:border-white/20 transition flex items-center justify-center gap-2">
+              <i data-lucide="chrome" class="w-4 h-4"></i>Google
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

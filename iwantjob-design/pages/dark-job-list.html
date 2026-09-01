@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我要工作 - 职位广场</title>
+    <style id="theme-vars">
+/* iWantJob · Tech Dark Style — 科技深色沉浸式 */
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ===== Brand primary scale (indigo) ===== */
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-200: #c7d2fe;
+  --brand-300: #a5b4fc;
+  --brand-400: #818cf8;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+  --brand-800: #3730a3;
+  --brand-900: #312e81;
+
+  /* ===== Neutral scale (slate dark) ===== */
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #1e293b;
+  --neutral-300: #334155;
+  --neutral-400: #475569;
+  --neutral-500: #64748b;
+  --neutral-600: #94a3b8;
+  --neutral-700: #cbd5e1;
+  --neutral-800: #e2e8f0;
+  --neutral-900: #f1f5f9;
+
+  /* ===== State colors ===== */
+  --state-success: #22c55e;
+  --state-warning: #f59e0b;
+  --state-error: #ef4444;
+  --state-info: #818cf8;
+
+  /* ===== Semantic tokens (dark mode native) ===== */
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #818cf8;
+  --primary-foreground: #0f172a;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --input: rgba(255,255,255,0.1);
+  --ring: #818cf8;
+
+  /* Sidebar — same dark, top nav style */
+  --sidebar: #0f172a;
+  --sidebar-foreground: #94a3b8;
+  --sidebar-primary: #818cf8;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-ring: #818cf8;
+
+  /* Chart */
+  --chart-1: #818cf8;
+  --chart-2: #6366f1;
+  --chart-3: #a5b4fc;
+  --chart-4: #4f46e5;
+  --chart-5: #c7d2fe;
+
+  /* ===== Non-color tokens ===== */
+  --font-sans: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-serif: Georgia, ui-serif, serif;
+
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --spacing: 0.25rem;
+
+  /* Shadow — glow effects for floating layers only */
+  --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.3);
+  --shadow: 0 2px 8px 0 rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px 0 rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 24px 0 rgba(0,0,0,0.4);
+  --shadow-xl: 0 12px 32px 0 rgba(0,0,0,0.45);
+  --shadow-2xl: 0 16px 48px 0 rgba(129,140,248,0.15);
+
+  /* ===== Brand prefix aliases ===== */
+  --iw-background: var(--background);
+  --iw-foreground: var(--foreground);
+  --iw-card: var(--card);
+  --iw-card-foreground: var(--card-foreground);
+  --iw-popover: var(--popover);
+  --iw-popover-foreground: var(--popover-foreground);
+  --iw-primary: var(--primary);
+  --iw-primary-foreground: var(--primary-foreground);
+  --iw-muted: var(--muted);
+  --iw-muted-foreground: var(--muted-foreground);
+  --iw-border: var(--border);
+  --iw-input: var(--input);
+  --iw-ring: var(--ring);
+  --iw-sidebar: var(--sidebar);
+  --iw-sidebar-foreground: var(--sidebar-foreground);
+  --iw-sidebar-primary: var(--sidebar-primary);
+  --iw-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --iw-sidebar-accent: var(--sidebar-accent);
+  --iw-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --iw-sidebar-border: var(--sidebar-border);
+  --iw-sidebar-ring: var(--sidebar-ring);
+  --iw-radius-small: var(--radius-sm);
+  --iw-radius-medium: var(--radius-md);
+  --iw-radius-large: var(--radius-lg);
+}
+
+/* ===== @theme inline ===== */
+@theme inline {
+  --color-background: var(--iw-background);
+  --color-foreground: var(--iw-foreground);
+  --color-card: var(--iw-card);
+  --color-card-foreground: var(--iw-card-foreground);
+  --color-popover: var(--iw-popover);
+  --color-popover-foreground: var(--iw-popover-foreground);
+  --color-primary: var(--iw-primary);
+  --color-primary-foreground: var(--iw-primary-foreground);
+  --color-muted: var(--iw-muted);
+  --color-muted-foreground: var(--iw-muted-foreground);
+  --color-border: var(--iw-border);
+  --color-input: var(--iw-input);
+  --color-ring: var(--iw-ring);
+  --color-sidebar: var(--iw-sidebar);
+  --color-sidebar-foreground: var(--iw-sidebar-foreground);
+  --color-sidebar-primary: var(--iw-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--iw-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+  --color-sidebar-border: var(--iw-sidebar-border);
+  --color-sidebar-ring: var(--iw-sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --radius-sm: var(--iw-radius-small);
+  --radius-md: var(--iw-radius-medium);
+  --radius-lg: var(--iw-radius-large);
+  --radius-full: var(--radius-full);
+}
+
+/* ===== Base layer ===== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--iw-background);
+    --color-foreground: var(--iw-foreground);
+    --color-card: var(--iw-card);
+    --color-card-foreground: var(--iw-card-foreground);
+    --color-popover: var(--iw-popover);
+    --color-popover-foreground: var(--iw-popover-foreground);
+    --color-primary: var(--iw-primary);
+    --color-primary-foreground: var(--iw-primary-foreground);
+    --color-muted: var(--iw-muted);
+    --color-muted-foreground: var(--iw-muted-foreground);
+    --color-border: var(--iw-border);
+    --color-input: var(--iw-input);
+    --color-ring: var(--iw-ring);
+    --color-sidebar: var(--iw-sidebar);
+    --color-sidebar-foreground: var(--iw-sidebar-foreground);
+    --color-sidebar-primary: var(--iw-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--iw-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--iw-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--iw-sidebar-accent-foreground);
+    --color-sidebar-border: var(--iw-sidebar-border);
+    --color-sidebar-ring: var(--iw-sidebar-ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --radius-sm: var(--iw-radius-small);
+    --radius-md: var(--iw-radius-medium);
+    --radius-lg: var(--iw-radius-large);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--iw-background); color: var(--iw-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--iw-background); }
+      .text-background { color: var(--iw-background); }
+      .border-background { border-color: var(--iw-background); }
+      .ring-background { --tw-ring-color: var(--iw-background); }
+      .bg-foreground { background-color: var(--iw-foreground); }
+      .text-foreground { color: var(--iw-foreground); }
+      .border-foreground { border-color: var(--iw-foreground); }
+      .ring-foreground { --tw-ring-color: var(--iw-foreground); }
+      .bg-card { background-color: var(--iw-card); }
+      .text-card { color: var(--iw-card); }
+      .border-card { border-color: var(--iw-card); }
+      .ring-card { --tw-ring-color: var(--iw-card); }
+      .bg-card-foreground { background-color: var(--iw-card-foreground); }
+      .text-card-foreground { color: var(--iw-card-foreground); }
+      .border-card-foreground { border-color: var(--iw-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--iw-card-foreground); }
+      .bg-popover { background-color: var(--iw-popover); }
+      .text-popover { color: var(--iw-popover); }
+      .border-popover { border-color: var(--iw-popover); }
+      .ring-popover { --tw-ring-color: var(--iw-popover); }
+      .bg-popover-foreground { background-color: var(--iw-popover-foreground); }
+      .text-popover-foreground { color: var(--iw-popover-foreground); }
+      .border-popover-foreground { border-color: var(--iw-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--iw-popover-foreground); }
+      .bg-primary { background-color: var(--iw-primary); }
+      .text-primary { color: var(--iw-primary); }
+      .border-primary { border-color: var(--iw-primary); }
+      .ring-primary { --tw-ring-color: var(--iw-primary); }
+      .bg-primary-foreground { background-color: var(--iw-primary-foreground); }
+      .text-primary-foreground { color: var(--iw-primary-foreground); }
+      .border-primary-foreground { border-color: var(--iw-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--iw-primary-foreground); }
+      .bg-muted { background-color: var(--iw-muted); }
+      .text-muted { color: var(--iw-muted); }
+      .border-muted { border-color: var(--iw-muted); }
+      .ring-muted { --tw-ring-color: var(--iw-muted); }
+      .bg-muted-foreground { background-color: var(--iw-muted-foreground); }
+      .text-muted-foreground { color: var(--iw-muted-foreground); }
+      .border-muted-foreground { border-color: var(--iw-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--iw-muted-foreground); }
+      .bg-border { background-color: var(--iw-border); }
+      .text-border { color: var(--iw-border); }
+      .border-border { border-color: var(--iw-border); }
+      .ring-border { --tw-ring-color: var(--iw-border); }
+      .bg-input { background-color: var(--iw-input); }
+      .text-input { color: var(--iw-input); }
+      .border-input { border-color: var(--iw-input); }
+      .ring-input { --tw-ring-color: var(--iw-input); }
+      .bg-ring { background-color: var(--iw-ring); }
+      .text-ring { color: var(--iw-ring); }
+      .border-ring { border-color: var(--iw-ring); }
+      .ring-ring { --tw-ring-color: var(--iw-ring); }
+      .bg-sidebar { background-color: var(--iw-sidebar); }
+      .text-sidebar { color: var(--iw-sidebar); }
+      .border-sidebar { border-color: var(--iw-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--iw-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--iw-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--iw-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--iw-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--iw-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--iw-sidebar-primary); }
+      .text-sidebar-primary { color: var(--iw-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--iw-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--iw-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--iw-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--iw-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--iw-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--iw-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--iw-sidebar-accent); }
+      .text-sidebar-accent { color: var(--iw-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--iw-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--iw-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--iw-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--iw-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--iw-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--iw-sidebar-accent-foreground); }
+      .bg-sidebar-border { background-color: var(--iw-sidebar-border); }
+      .text-sidebar-border { color: var(--iw-sidebar-border); }
+      .border-sidebar-border { border-color: var(--iw-sidebar-border); }
+      .ring-sidebar-border { --tw-ring-color: var(--iw-sidebar-border); }
+      .bg-sidebar-ring { background-color: var(--iw-sidebar-ring); }
+      .text-sidebar-ring { color: var(--iw-sidebar-ring); }
+      .border-sidebar-ring { border-color: var(--iw-sidebar-ring); }
+      .ring-sidebar-ring { --tw-ring-color: var(--iw-sidebar-ring); }
+      .bg-chart-1 { background-color: var(--chart-1); }
+      .text-chart-1 { color: var(--chart-1); }
+      .border-chart-1 { border-color: var(--chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--chart-1); }
+      .bg-chart-2 { background-color: var(--chart-2); }
+      .text-chart-2 { color: var(--chart-2); }
+      .border-chart-2 { border-color: var(--chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--chart-2); }
+      .bg-chart-3 { background-color: var(--chart-3); }
+      .text-chart-3 { color: var(--chart-3); }
+      .border-chart-3 { border-color: var(--chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--chart-3); }
+      .bg-chart-4 { background-color: var(--chart-4); }
+      .text-chart-4 { color: var(--chart-4); }
+      .border-chart-4 { border-color: var(--chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--chart-4); }
+      .bg-chart-5 { background-color: var(--chart-5); }
+      .text-chart-5 { color: var(--chart-5); }
+      .border-chart-5 { border-color: var(--chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--chart-5); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <!-- Top Nav -->
+      <nav class="sticky top-0 z-50 h-16 bg-[#0f172a]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6">
+        <span class="text-white font-bold text-xl" style="text-shadow:0 0 20px rgba(129,140,248,0.3);">✦ 我要工作</span>
+        <div class="flex items-center gap-2">
+          <a data-dom-id="nav-dashboard" href="#" class="flex items-center gap-1.5 text-[#94a3b8] hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+            <i data-lucide="home" class="w-4 h-4"></i>首页
+          </a>
+          <a data-dom-id="nav-jobs" href="#" class="flex items-center gap-1.5 text-white bg-white/10 rounded-lg px-3 py-1.5 text-sm font-medium transition">
+            <i data-lucide="briefcase" class="w-4 h-4"></i>职位广场
+          </a>
+          <a data-dom-id="nav-applications" href="#" class="flex items-center gap-1.5 text-[#94a3b8] hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+            <i data-lucide="file-text" class="w-4 h-4"></i>我的投递
+          </a>
+          <a data-dom-id="nav-simulator" href="#" class="flex items-center gap-1.5 text-[#94a3b8] hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+            <i data-lucide="monitor" class="w-4 h-4"></i>AI模拟舱
+          </a>
+          <a data-dom-id="nav-salary" href="#" class="flex items-center gap-1.5 text-[#94a3b8] hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+            <i data-lucide="trending-up" class="w-4 h-4"></i>薪资白皮书
+          </a>
+          <a data-dom-id="nav-badges" href="#" class="flex items-center gap-1.5 text-[#94a3b8] hover:text-white hover:bg-white/5 rounded-lg px-3 py-1.5 text-sm transition">
+            <i data-lucide="trophy" class="w-4 h-4"></i>我的徽章
+          </a>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="bg-white/5 text-[#818cf8] rounded-full px-3 py-1 text-sm font-medium flex items-center gap-1">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>120
+          </div>
+          <button class="w-9 h-9 bg-[#818cf8] text-[#0f172a] rounded-full flex items-center justify-center font-bold text-sm">张</button>
+        </div>
+      </nav>
+
+      <!-- Page Content -->
+      <div class="bg-[#0f172a] p-6 min-h-screen">
+        <!-- Search Bar -->
+        <div class="relative mb-4">
+          <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#94a3b8]"></i>
+          <input type="text" placeholder="搜索职位、公司、技能关键词…" class="w-full bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-xl pl-12 pr-4 py-3 text-sm placeholder-[#475569] focus:outline-none focus:border-[#818cf8] focus:ring-1 focus:ring-[#818cf8] transition-all" />
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex items-center gap-2 mb-6 overflow-x-auto no-scrollbar">
+          <span class="text-[#94a3b8] text-sm whitespace-nowrap">已选筛选：</span>
+          <button class="bg-[#818cf8]/10 border border-[#818cf8]/30 text-[#818cf8] rounded-full px-3 py-1 text-xs flex items-center gap-1 whitespace-nowrap hover:bg-[#818cf8]/20 transition">
+            北京 <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+          <button class="bg-[#818cf8]/10 border border-[#818cf8]/30 text-[#818cf8] rounded-full px-3 py-1 text-xs flex items-center gap-1 whitespace-nowrap hover:bg-[#818cf8]/20 transition">
+            10-20K <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+          <button class="bg-[#818cf8]/10 border border-[#818cf8]/30 text-[#818cf8] rounded-full px-3 py-1 text-xs flex items-center gap-1 whitespace-nowrap hover:bg-[#818cf8]/20 transition">
+            1-3年 <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+          <button class="bg-[#818cf8]/10 border border-[#818cf8]/30 text-[#818cf8] rounded-full px-3 py-1 text-xs flex items-center gap-1 whitespace-nowrap hover:bg-[#818cf8]/20 transition">
+            本科 <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+          <button class="text-[#94a3b8] hover:text-white text-sm whitespace-nowrap flex items-center gap-1 transition">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>更多筛选
+          </button>
+        </div>
+
+        <!-- Job Cards Grid -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Job Card 1 -->
+          <div data-dom-id="job-card-1" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">高级前端开发工程师</h3>
+                <p class="text-[#94a3b8] text-sm">字节跳动</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">25-40K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">React</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">TypeScript</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">3-5年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>北京·海淀</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>2天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 2 -->
+          <div data-dom-id="job-card-2" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">Python后端开发工程师</h3>
+                <p class="text-[#94a3b8] text-sm">腾讯</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">20-35K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Python</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Django</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">3-5年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>深圳·南山</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>1天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 3 -->
+          <div data-dom-id="job-card-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">产品经理（用户增长）</h3>
+                <p class="text-[#94a3b8] text-sm">美团</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">18-30K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">产品规划</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">数据分析</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">1-3年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>北京·朝阳</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>3天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 4 -->
+          <div data-dom-id="job-card-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">Java高级开发工程师</h3>
+                <p class="text-[#94a3b8] text-sm">阿里巴巴</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">30-50K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Java</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Spring</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">5-7年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>杭州·余杭</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>4天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 5 -->
+          <div data-dom-id="job-card-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">UI/UX设计师</h3>
+                <p class="text-[#94a3b8] text-sm">小红书</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">15-25K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Figma</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">交互设计</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">1-3年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>上海·徐汇</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>5天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 6 -->
+          <div data-dom-id="job-card-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">数据分析师</h3>
+                <p class="text-[#94a3b8] text-sm">京东</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">16-28K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">SQL</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Python</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">1-3年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>北京·大兴</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>1天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 7 -->
+          <div data-dom-id="job-card-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">DevOps工程师</h3>
+                <p class="text-[#94a3b8] text-sm">华为</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">22-38K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">Kubernetes</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">CI/CD</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">3-5年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>深圳·龙岗</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>6天前发布</span>
+            </div>
+          </div>
+          <!-- Job Card 8 -->
+          <div data-dom-id="job-card-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:border-[#818cf8]/30 transition cursor-pointer">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="text-white font-semibold mb-1">算法工程师（NLP）</h3>
+                <p class="text-[#94a3b8] text-sm">百度</p>
+              </div>
+              <span class="text-[#818cf8] font-bold">28-45K</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">NLP</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">PyTorch</span>
+              <span class="bg-white/5 text-[#94a3b8] rounded px-2 py-0.5 text-xs">3-5年</span>
+            </div>
+            <div class="flex items-center gap-3 text-[#94a3b8] text-xs">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i>北京·海淀</span>
+              <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>3天前发布</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

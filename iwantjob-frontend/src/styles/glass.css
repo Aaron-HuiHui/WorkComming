@@ -1,0 +1,220 @@
+/* ============================================================
+   「我要工作」毛玻璃设计系统（Bento/Glassmorphism，第八阶段 G1）
+   维护者：team-lead；子智能体只读引用，不得修改本文件
+   ============================================================ */
+
+:root {
+  /* ---------- Aurora 背景色板（冷调靛蓝→紫→青→品红） ---------- */
+  --g-bg-base: #070b1f;              /* 最深底色 */
+  --g-aurora-1: rgba(99, 102, 241, 0.55);   /* indigo */
+  --g-aurora-2: rgba(139, 92, 246, 0.45);   /* violet */
+  --g-aurora-3: rgba(56, 189, 248, 0.40);   /* sky */
+  --g-aurora-4: rgba(232, 121, 249, 0.30);  /* fuchsia */
+
+  /* ---------- 玻璃表面 ---------- */
+  --g-glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.04));
+  --g-glass-bg-hover: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07));
+  --g-glass-border: 1px solid rgba(255, 255, 255, 0.16);
+  --g-glass-border-strong: 1px solid rgba(255, 255, 255, 0.26);
+  --g-glass-blur: blur(18px) saturate(1.5);
+  --g-glass-radius: 20px;
+  --g-glass-radius-lg: 26px;
+  --g-glass-shadow: 0 12px 40px rgba(2, 6, 32, 0.45);
+  --g-glass-shadow-hover: 0 20px 60px rgba(2, 6, 32, 0.55);
+  --g-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --g-glass-sheen: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.10) 50%, transparent 60%);
+
+  /* ---------- 文字 ---------- */
+  --g-text-primary: rgba(255, 255, 255, 0.94);
+  --g-text-secondary: rgba(255, 255, 255, 0.64);
+  --g-text-muted: rgba(255, 255, 255, 0.42);
+
+  /* ---------- 主题色 ---------- */
+  --g-accent: #818cf8;
+  --g-accent-2: #a78bfa;
+  --g-violet: #8b5cf6;
+  --g-blue: #60a5fa;
+  --g-sky: #38bdf8;
+  --g-fuchsia: #e879f9;
+  --g-emerald: #34d399;
+  --g-amber: #fbbf24;
+}
+
+/* ---------- 通用毛玻璃卡片 ---------- */
+.glass {
+  position: relative;
+  background: var(--g-glass-bg);
+  border: var(--g-glass-border);
+  border-radius: var(--g-glass-radius);
+  backdrop-filter: var(--g-glass-blur);
+  -webkit-backdrop-filter: var(--g-glass-blur);
+  box-shadow: var(--g-glass-shadow), var(--g-glass-highlight);
+  overflow: hidden;
+}
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--g-glass-sheen);
+  pointer-events: none;
+}
+.glass-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.glass-hover:hover {
+  background: var(--g-glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-4px);
+  box-shadow: var(--g-glass-shadow-hover), var(--g-glass-highlight);
+}
+
+/* ---------- 玻璃徽章 / 药丸 ---------- */
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  color: var(--g-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ---------- 玻璃图标容器（高级图标统一底座） ---------- */
+.glass-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 18px rgba(2, 6, 32, 0.35);
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-icon svg {
+  width: 55%;
+  height: 55%;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+.glass-icon.sm { width: 34px; height: 34px; border-radius: 10px; }
+.glass-icon.lg { width: 60px; height: 60px; border-radius: 18px; }
+
+/* 玻璃图标主题底色 */
+.gi-violet  { background: linear-gradient(135deg, rgba(139, 92, 246, 0.38), rgba(139, 92, 246, 0.12)); color: #ddd6fe; }
+.gi-blue    { background: linear-gradient(135deg, rgba(96, 165, 250, 0.38), rgba(96, 165, 250, 0.12)); color: #dbeafe; }
+.gi-sky     { background: linear-gradient(135deg, rgba(56, 189, 248, 0.38), rgba(56, 189, 248, 0.12)); color: #e0f2fe; }
+.gi-fuchsia { background: linear-gradient(135deg, rgba(232, 121, 249, 0.38), rgba(232, 121, 249, 0.12)); color: #fae8ff; }
+.gi-emerald { background: linear-gradient(135deg, rgba(52, 211, 153, 0.38), rgba(52, 211, 153, 0.12)); color: #d1fae5; }
+.gi-amber   { background: linear-gradient(135deg, rgba(251, 191, 36, 0.38), rgba(251, 191, 36, 0.12)); color: #fef3c7; }
+
+/* ---------- Aurora 页面背景（全局铺底，各页面共享） ---------- */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: var(--g-bg-base);
+  overflow: hidden;
+}
+.aurora-bg::before,
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.8;
+}
+.aurora-bg::before {
+  width: 55vw;
+  height: 55vw;
+  top: -18vh;
+  left: -10vw;
+  background: radial-gradient(circle, var(--g-aurora-1), transparent 65%);
+  animation: aurora-drift 18s ease-in-out infinite alternate;
+}
+.aurora-bg::after {
+  width: 50vw;
+  height: 50vw;
+  bottom: -20vh;
+  right: -8vw;
+  background: radial-gradient(circle, var(--g-aurora-3), transparent 65%);
+  animation: aurora-drift 22s ease-in-out infinite alternate-reverse;
+}
+.aurora-blob {
+  position: absolute;
+  width: 42vw;
+  height: 42vw;
+  top: 22vh;
+  left: 30vw;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.55;
+  background: radial-gradient(circle, var(--g-aurora-2), transparent 62%);
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+}
+.aurora-blob.b2 {
+  width: 34vw;
+  height: 34vw;
+  top: 45vh;
+  left: 8vw;
+  background: radial-gradient(circle, var(--g-aurora-4), transparent 62%);
+  animation-duration: 30s;
+  animation-direction: alternate-reverse;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(6vw, -4vh) scale(1.12); }
+  100% { transform: translate(-5vw, 5vh) scale(0.94); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg::before, .aurora-bg::after, .aurora-blob { animation: none; }
+}
+
+/* ---------- 全局滚动条（深色适配） ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+
+/* ---------- 入场动画 ---------- */
+@keyframes g-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.g-fade-up { animation: g-fade-up 0.6s ease both; }
+
+/* ---------- 滚动叙事（Scrollytelling）：v-reveal 指令 ---------- */
+/* 元素进入视口前隐藏，进入后上浮淡入，形成滚动驱动的连续镜头感 */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(3px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+.rv.rv-in {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+/* 平滑滚动：接近 Lenis 的顺滑观感（纯 CSS 兜底） */
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; filter: none; transition: none; }
+}
