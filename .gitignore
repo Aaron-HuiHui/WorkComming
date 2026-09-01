@@ -27,6 +27,15 @@ application-dev-local.yml
 # Maven
 *.versionsBackup
 
+# 前端依赖与构建产物
+node_modules/
+dist/
+
+# 测试/联调会话临时产物
+ft-tmp/
+ref-frames/
+glass-shots/
+
 # 工作目录元数据（保留 .workbuddy/memory 但忽略其余）
 .workbuddy/*
 !.workbuddy/memory/
