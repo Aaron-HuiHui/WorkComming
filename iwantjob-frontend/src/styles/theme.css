@@ -102,100 +102,100 @@ html.light {
 }
 
 /* ============ Element Plus 变量对齐(第二期前旧页面的兜底) ============ */
-@layer base {
-  html {
-    background: var(--background);
-    color-scheme: dark;
-  }
-  html.light {
-    color-scheme: light;
-  }
-  body {
-    font-family: var(--font-sans);
-    background: var(--background);
-    color: var(--foreground);
-    -webkit-font-smoothing: antialiased;
-  }
 
-  /* EP 组件变量 → 语义 token,EP 组件即随深浅切换 */
-  .el-button {
-    --el-button-bg-color: var(--card-strong);
-    --el-button-border-color: var(--hairline-strong);
-    --el-button-text-color: var(--foreground);
-    --el-button-hover-bg-color: var(--card-hover);
-    --el-button-hover-border-color: var(--hairline-strong);
-    --el-button-hover-text-color: var(--foreground);
-  }
-  .el-button--primary {
-    --el-button-bg-color: var(--primary);
-    --el-button-border-color: var(--primary);
-    --el-button-text-color: var(--primary-foreground);
-    --el-button-hover-bg-color: var(--primary);
-    --el-button-hover-border-color: var(--primary);
-    --el-button-hover-text-color: var(--primary-foreground);
-    --el-button-outline-color: var(--primary-soft);
-  }
-  .el-card {
-    --el-card-bg-color: var(--card);
-    --el-card-border-color: var(--hairline);
-  }
-  .el-table {
-    --el-table-bg-color: transparent;
-    --el-table-tr-bg-color: transparent;
-    --el-table-header-bg-color: var(--background-soft);
-    --el-table-header-text-color: var(--foreground-muted);
-    --el-table-text-color: var(--foreground);
-    --el-table-border-color: var(--hairline);
-    --el-table-row-hover-bg-color: var(--card-hover);
-  }
-  .el-table__inner-wrapper::before { display: none; }
-  .el-drawer {
-    --el-drawer-bg-color: var(--glass);
-    backdrop-filter: blur(28px) saturate(1.6);
-  }
-  .el-input__wrapper,
-  .el-textarea__inner {
-    background: var(--card) !important;
-    box-shadow: 0 0 0 1px var(--hairline) inset !important;
-  }
-  .el-input__inner { color: var(--foreground); }
-  .el-select__wrapper {
-    background: var(--card) !important;
-    box-shadow: 0 0 0 1px var(--hairline) inset !important;
-  }
-  .el-tag {
-    --el-tag-bg-color: var(--card-strong);
-    --el-tag-border-color: var(--hairline);
-    --el-tag-text-color: var(--foreground-muted);
-  }
-  .el-pagination {
-    --el-pagination-bg-color: transparent;
-    --el-pagination-text-color: var(--foreground-muted);
-    --el-pagination-button-bg-color: var(--card);
-    --el-pagination-hover-color: var(--primary);
-  }
-  .el-tabs__item { color: var(--foreground-muted); }
-  .el-tabs__item.is-active { color: var(--foreground); }
-  .el-tabs__nav-wrap::after { background: var(--hairline); }
-  .el-tabs__active-bar { background: var(--primary); }
-  .el-form-item__label { color: var(--foreground-muted); }
-  .el-dropdown__popper,
-  .el-select__popper,
-  .el-picker__popper {
-    background: var(--glass) !important;
-    backdrop-filter: blur(24px) saturate(1.6);
-    border: 1px solid var(--hairline) !important;
-  }
-  .el-dropdown-menu__item,
-  .el-select-dropdown__item { color: var(--foreground); }
-  .el-dropdown-menu__item:not(.is-disabled):hover,
-  .el-select-dropdown__item.hover { background: var(--card-hover); }
-  .el-popper.is-light { background: var(--glass); border: 1px solid var(--hairline); }
-  .el-message-box { background: var(--glass); border: 1px solid var(--hairline); }
-  .el-empty__description p { color: var(--foreground-muted); }
-  .el-loading-mask { background: rgba(0, 0, 0, 0.35); }
-  html.light .el-loading-mask { background: rgba(255, 255, 255, 0.4); }
+html {
+  background: var(--background);
+  color-scheme: dark;
 }
+html.light {
+  color-scheme: light;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* EP 组件变量 → 语义 token,EP 组件即随深浅切换 */
+.el-button {
+  --el-button-bg-color: var(--card-strong);
+  --el-button-border-color: var(--hairline-strong);
+  --el-button-text-color: var(--foreground);
+  --el-button-hover-bg-color: var(--card-hover);
+  --el-button-hover-border-color: var(--hairline-strong);
+  --el-button-hover-text-color: var(--foreground);
+}
+.el-button--primary {
+  --el-button-bg-color: var(--primary);
+  --el-button-border-color: var(--primary);
+  --el-button-text-color: var(--primary-foreground);
+  --el-button-hover-bg-color: var(--primary);
+  --el-button-hover-border-color: var(--primary);
+  --el-button-hover-text-color: var(--primary-foreground);
+  --el-button-outline-color: var(--primary-soft);
+}
+.el-card {
+  --el-card-bg-color: var(--card);
+  --el-card-border-color: var(--hairline);
+}
+.el-table {
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: var(--background-soft);
+  --el-table-header-text-color: var(--foreground-muted);
+  --el-table-text-color: var(--foreground);
+  --el-table-border-color: var(--hairline);
+  --el-table-row-hover-bg-color: var(--card-hover);
+}
+.el-table__inner-wrapper::before { display: none; }
+.el-drawer {
+  --el-drawer-bg-color: var(--glass);
+  backdrop-filter: blur(28px) saturate(1.6);
+}
+.el-input__wrapper,
+.el-textarea__inner {
+  background: var(--card) !important;
+  box-shadow: 0 0 0 1px var(--hairline) inset !important;
+}
+.el-input__inner { color: var(--foreground); }
+.el-select__wrapper {
+  background: var(--card) !important;
+  box-shadow: 0 0 0 1px var(--hairline) inset !important;
+}
+.el-tag {
+  --el-tag-bg-color: var(--card-strong);
+  --el-tag-border-color: var(--hairline);
+  --el-tag-text-color: var(--foreground-muted);
+}
+.el-pagination {
+  --el-pagination-bg-color: transparent;
+  --el-pagination-text-color: var(--foreground-muted);
+  --el-pagination-button-bg-color: var(--card);
+  --el-pagination-hover-color: var(--primary);
+}
+.el-tabs__item { color: var(--foreground-muted); }
+.el-tabs__item.is-active { color: var(--foreground); }
+.el-tabs__nav-wrap::after { background: var(--hairline); }
+.el-tabs__active-bar { background: var(--primary); }
+.el-form-item__label { color: var(--foreground-muted); }
+.el-dropdown__popper,
+.el-select__popper,
+.el-picker__popper {
+  background: var(--glass) !important;
+  backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid var(--hairline) !important;
+}
+.el-dropdown-menu__item,
+.el-select-dropdown__item { color: var(--foreground); }
+.el-dropdown-menu__item:not(.is-disabled):hover,
+.el-select-dropdown__item.hover { background: var(--card-hover); }
+.el-popper.is-light { background: var(--glass); border: 1px solid var(--hairline); }
+.el-message-box { background: var(--glass); border: 1px solid var(--hairline); }
+.el-empty__description p { color: var(--foreground-muted); }
+.el-loading-mask { background: rgba(0, 0, 0, 0.35); }
+html.light .el-loading-mask { background: rgba(255, 255, 255, 0.4); }
+
 
 /* ============ 通用工具类 ============ */
 @layer components {
@@ -306,4 +306,112 @@ html.light {
   z-index: 1;
   border-top: 1px solid var(--hairline);
   background: var(--card);
+}
+
+/* ---------- el-radio-button(Jobs 批次筛选):token 化,修复浅色白字 ---------- */
+.el-radio-button__inner {
+  background: var(--card);
+  border-color: var(--hairline);
+  color: var(--foreground-muted);
+  box-shadow: none;
+}
+.el-radio-button__inner:hover {
+  color: var(--foreground);
+  background: var(--card-hover);
+}
+.el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: none;
+}
+
+/* ============ 浅色兜底:高特异性覆盖旧深色硬编码(html.light 前缀压过变体选择器) ============ */
+html.light .el-tag,
+html.light .el-tag--info,
+html.light .el-tag--success,
+html.light .el-tag--warning,
+html.light .el-tag--danger,
+html.light .el-tag--primary {
+  --el-tag-text-color: var(--foreground-muted);
+  --el-tag-bg-color: var(--card-strong);
+  --el-tag-border-color: var(--hairline);
+}
+html.light .el-tag--info.el-tag--plain,
+html.light .el-tag.el-tag--plain {
+  --el-tag-text-color: var(--foreground-muted);
+  --el-tag-border-color: var(--hairline-strong);
+  --el-tag-bg-color: transparent;
+}
+html.light .el-tag--success,
+html.light .el-tag--success.el-tag--plain { --el-tag-text-color: var(--success); --el-tag-border-color: rgba(5, 150, 105, 0.4); --el-tag-bg-color: rgba(5, 150, 105, 0.08); }
+html.light .el-tag--warning,
+html.light .el-tag--warning.el-tag--plain { --el-tag-text-color: var(--warning); --el-tag-border-color: rgba(217, 119, 6, 0.4); --el-tag-bg-color: rgba(217, 119, 6, 0.08); }
+html.light .el-tag--danger,
+html.light .el-tag--danger.el-tag--plain { --el-tag-text-color: var(--danger); --el-tag-border-color: rgba(220, 38, 38, 0.4); --el-tag-bg-color: rgba(220, 38, 38, 0.08); }
+
+html.light .el-table {
+  --el-table-text-color: var(--foreground);
+  --el-table-header-text-color: var(--foreground-muted);
+  --el-table-border-color: var(--hairline);
+  --el-table-row-hover-bg-color: var(--card-hover);
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: var(--background-soft);
+}
+html.light .el-pagination {
+  --el-pagination-text-color: var(--foreground-muted);
+  --el-pagination-button-color: var(--foreground-muted);
+  --el-pagination-button-bg-color: var(--card);
+  --el-pagination-hover-color: var(--primary);
+}
+html.light .el-pagination button,
+html.light .el-pagination .el-pager li { color: var(--foreground-muted); }
+html.light .el-pagination button:disabled { color: var(--foreground-subtle); }
+html.light .el-pagination .el-pager li.is-active { color: var(--primary); }
+
+html.light .el-descriptions {
+  --el-descriptions-item-bordered-label-background: var(--background-soft);
+  --el-border-color-lighter: var(--hairline);
+}
+html.light .el-descriptions__label { color: var(--foreground-muted); }
+html.light .el-descriptions__content { color: var(--foreground); }
+
+html.light .el-message-box { background: var(--glass); border: 1px solid var(--hairline); }
+html.light .el-message { background: var(--glass); border: 1px solid var(--hairline); }
+html.light .el-message__content { color: var(--foreground); }
+
+html.light .el-drawer { --el-drawer-bg-color: var(--glass); }
+html.light .el-loading-mask { background: rgba(255, 255, 255, 0.5); }
+html.light .el-skeleton__item { background: var(--background-soft); }
+
+/* ---- 浅色表格/下拉/浮层:直接 color 声明的高特异性覆盖 ---- */
+html.light .el-table { color: var(--foreground); }
+html.light .el-table th.el-table__cell {
+  background-color: var(--background-soft);
+  color: var(--foreground-muted);
+}
+html.light .el-table .el-table-fixed-column--left,
+html.light .el-table .el-table-fixed-column--right { background: var(--glass); }
+html.light .el-table__empty-text { color: var(--foreground-muted); }
+html.light .el-table__inner-wrapper::before { background-color: var(--hairline); }
+
+html.light .el-popper.is-light {
+  background: var(--glass);
+  border: 1px solid var(--hairline);
+}
+html.light .el-popper.is-light .el-popper__arrow::before {
+  background: var(--glass);
+  border-color: var(--hairline);
+}
+html.light .el-select-dropdown__item { color: var(--foreground); }
+html.light .el-select-dropdown__item.is-hovering { background: var(--card-hover); }
+html.light .el-select-dropdown__item.is-selected { color: var(--primary); }
+html.light .el-select-dropdown__empty { color: var(--foreground-subtle); }
+html.light .el-dropdown-menu { background: var(--glass); }
+html.light .el-dropdown-menu__item { color: var(--foreground); }
+html.light .el-dropdown-menu__item:not(.is-disabled):hover,
+html.light .el-dropdown-menu__item:not(.is-disabled):focus {
+  background: var(--card-hover);
+  color: var(--foreground);
 }

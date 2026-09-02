@@ -40,6 +40,32 @@
   --g-amber: #fbbf24;
 }
 
+/* ---------- 浅色主题映射(第二阶段:旧 --g-* 变量在浅色下的等价值) ---------- */
+html.light {
+  --g-bg-base: #f5f5f7;
+  --g-glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  --g-glass-bg-hover: linear-gradient(160deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+  --g-glass-border: 1px solid rgba(0, 0, 0, 0.12);
+  --g-glass-border-strong: 1px solid rgba(0, 0, 0, 0.2);
+  --g-glass-blur: blur(18px) saturate(1.4);
+  --g-glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --g-glass-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.12);
+  --g-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --g-glass-sheen: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.5) 50%, transparent 60%);
+  --g-text-primary: #1d1d1f;
+  --g-text-secondary: rgba(29, 29, 31, 0.8);
+  --g-text-muted: rgba(29, 29, 31, 0.55);
+  --g-accent: #5a67d8;
+  --g-accent-2: #7c5cf6;
+  --g-violet: #7c3aed;
+  --g-blue: #2563eb;
+  --g-sky: #0284c7;
+  --g-fuchsia: #d946ef;
+  --g-emerald: #059669;
+  --g-amber: #d97706;
+}
+
+
 /* ---------- 通用毛玻璃卡片 ---------- */
 .glass {
   position: relative;
