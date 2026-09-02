@@ -1,170 +1,134 @@
 <template>
   <div class="dashboard">
-    <!-- ========== Hero 工作室卡：超大排版 + 不对称底栏 + 3D 堆叠视差 ========== -->
-    <section
-      ref="heroRef"
-      class="hero nbg"
-      @mousemove="onHeroMove"
-      @mouseleave="onHeroLeave"
-    >
-      <div class="hero-glow hero-glow-a"></div>
-      <div class="hero-glow hero-glow-b"></div>
+    <!-- 刮刮乐入场(每日首次) -->
+    <ScratchOverlay v-model="scratchShow" @done="onScratchDone" />
 
-      <span class="glass-pill ai-pill">
-        <span class="ai-dot"></span> AI 状态 · 就绪
-      </span>
-
-      <div class="hero-center">
-        <p class="hero-kicker" v-reveal>AI-Powered Career Growth</p>
-        <h1 class="hero-title" v-reveal="90">
-          <span class="hero-line">我要工作</span>
-          <span class="hero-line"><em class="flow">让求职之路流动起来</em></span>
-        </h1>
-      </div>
-
-      <!-- 3D 堆叠玻璃片：随鼠标微倾视差，不遮挡文字 -->
-      <StudioStack :tilt="tilt" class="hero-stack" />
-
-      <!-- 不对称底栏：左行动区 + 右个人简介卡 -->
-      <div class="hero-bottom">
-        <div class="hero-info" v-reveal="190">
-          <p class="hero-sub">
-            你好，{{ auth.user?.username || '同学' }} —— 打破信息差，让每一步努力都被看见
-          </p>
-          <div class="hero-actions">
-            <button class="btn-primary" @click="$router.push('/simulator')">
-              进入 AI 模拟舱
-              <GlassIcon name="arrow-right" :size="15" class="btn-arrow" />
-            </button>
-            <button class="btn-ghost" @click="$router.push('/jobs')">浏览职位广场</button>
-          </div>
+    <!-- ===== Hero ===== -->
+    <section class="hero" ref="heroRef" @mousemove="onHeroMove" @mouseleave="onHeroLeave">
+      <div class="hero-inner" :style="heroStyle">
+        <div class="hero-pill">
+          <span class="pulse-dot"></span>
+          AI 引擎 · 就绪
         </div>
-        <div class="hero-me" v-reveal="300">
-          <span class="hero-me-avatar">{{ (auth.user?.username || 'U')[0].toUpperCase() }}</span>
-          <div class="hero-me-body">
-            <div class="hero-me-name">
-              {{ auth.user?.username || '同学' }}
-              <span class="hero-me-role">{{ auth.roleName || '学生' }}</span>
-            </div>
-            <div class="hero-me-meta">
-              <template v-if="isHrOnly">
-                <span>在招职位 {{ hrJobTotal }}</span>
-                <span class="dot-sep"></span>
-                <span>收到投递 {{ hrAppTotal }}</span>
-              </template>
-              <template v-else>
-                <span>互助积分 {{ auth.points?.balance ?? 0 }}</span>
-                <span class="dot-sep"></span>
-                <span>徽章 {{ myBadgeCount }}/{{ badgeTotal }}</span>
-              </template>
-            </div>
+        <h1 class="hero-title">
+          {{ greeting }},<span class="username">{{ auth.user?.username || '同学' }}</span>
+        </h1>
+        <p class="hero-sub">
+          {{ isHrOnly ? '今天有新的人才在等你,看看候选人进展。' : '今天也要为心仪的 offer 努力,从一次模拟演练开始。' }}
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" @click="router.push(isHrOnly ? '/hr/jobs' : '/simulator')">
+            {{ isHrOnly ? '管理职位' : '进入模拟舱' }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="btn-ghost" @click="router.push(isHrOnly ? '/companies' : '/jobs')">
+            {{ isHrOnly ? '企业主页' : '浏览职位' }}
+          </button>
+        </div>
+      </div>
+      <!-- 日期角标 -->
+      <div class="hero-date">
+        <span class="d-month">{{ dateStr.month }}</span>
+        <span class="d-day">{{ dateStr.day }}</span>
+        <span class="d-week">{{ dateStr.week }}</span>
+      </div>
+    </section>
+
+    <!-- ===== 统计带 ===== -->
+    <section class="stats-band">
+      <div v-for="s in stats" :key="s.title" class="glass-card glass-card-hover stat-card">
+        <div class="stat-top">
+          <div class="stat-icon" :class="s.theme">
+            <GlassIcon :name="s.icon" />
           </div>
+          <span class="stat-extra">{{ s.extra }}</span>
+        </div>
+        <div class="stat-value">{{ s.value }}</div>
+        <div class="stat-title">{{ s.title }}</div>
+        <div class="stat-desc">{{ s.desc }}</div>
+      </div>
+    </section>
+
+    <!-- ===== 三大创新点 ===== -->
+    <section class="features">
+      <div class="section-head">
+        <h2 class="section-title">为大学生就业打造的<span class="text-gradient">三大创新</span></h2>
+        <p class="section-sub">数据驱动 · 情境演练 · 可信履历</p>
+      </div>
+      <div class="feature-grid">
+        <div
+          v-for="f in features"
+          :key="f.title"
+          class="glass-card glass-card-hover feature-card"
+          @click="router.push(f.path)"
+        >
+          <div class="feature-icon" :class="f.theme"><GlassIcon :name="f.icon" /></div>
+          <h3 class="feature-title">{{ f.title }}</h3>
+          <p class="feature-desc">{{ f.desc }}</p>
+          <div class="feature-tag">{{ f.tag }}</div>
+          <span class="feature-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- ========== 数据带：一行 4 张近黑玻璃卡 ========== -->
-    <div class="sec">
-      <div class="sec-head" v-reveal>
-        <h2 class="sec-title">成长数据</h2>
-        <span class="sec-label">Growth Metrics</span>
-      </div>
-      <div class="stats-grid">
-        <section
-          class="nbg nbg-hover stat-card"
-          v-for="(s, i) in stats"
-          :key="s.title"
-          v-reveal="100 + i * 90"
-        >
-          <span class="glass-icon" :class="'gi-' + s.theme">
-            <GlassIcon :name="s.icon" :size="24" />
-          </span>
-          <div class="stat-body">
-            <div class="stat-value">
-              {{ s.value }}<span class="stat-extra" v-if="s.extra">{{ s.extra }}</span>
-            </div>
-            <div class="stat-title">{{ s.title }}</div>
-            <div class="stat-desc">{{ s.desc }}</div>
-          </div>
-        </section>
-      </div>
-    </div>
-
-    <!-- ========== 三大核心能力：精选卡模式 ========== -->
-    <div class="sec">
-      <div class="sec-head" v-reveal>
-        <h2 class="sec-title">三大核心能力</h2>
-        <span class="sec-label">Core Capabilities</span>
-      </div>
-      <div class="feature-grid">
-        <section
-          class="nbg nbg-hover feature-card"
-          :class="'fc-' + f.theme"
-          v-for="(f, i) in features"
-          :key="f.title"
-          v-reveal="i * 110"
-          @click="$router.push(f.path)"
-        >
-          <div class="feature-top">
-            <span class="feature-tag">#0{{ i + 1 }} / {{ f.tag }}</span>
-            <span class="glass-icon" :class="'gi-' + f.theme">
-              <GlassIcon :name="f.icon" :size="24" />
-            </span>
-          </div>
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.desc }}</p>
-          <span class="feature-link">
-            进入
-            <GlassIcon name="arrow-right" :size="14" class="fl-arrow" />
-          </span>
-        </section>
-      </div>
-    </div>
-
-    <!-- ========== 底部两卡：本周提示 + 愿景 ========== -->
-    <div class="bottom-grid">
-      <section class="nbg nbg-hover tip-card" v-reveal>
-        <span class="glass-icon gi-amber"><GlassIcon name="sparkles" :size="24" /></span>
-        <div class="tip-body">
-          <h3>本周提示</h3>
-          <p>完成一次 AI 模拟演练，或为薪资白皮书贡献一条真实 offer 数据，即可赚取互助积分与成长徽章。</p>
-        </div>
-        <span class="glass-pill tip-pill">每日成长</span>
-      </section>
-
-      <section class="nbg quote-card" v-reveal="120">
-        <div class="quote-glow"></div>
-        <GlassIcon name="sparkles" :size="20" class="quote-mark" />
-        <p class="quote-text">打破<em>信息差</em></p>
-        <span class="quote-sub">「我要工作」· 与你同行</span>
-      </section>
-    </div>
+    <!-- ===== 底部愿景 ===== -->
+    <section class="vision glass-card">
+      <p class="vision-quote">「让每一份努力都被看见,让每一次成长都可验证。」</p>
+      <p class="vision-sub">我要工作 · 大学生就业赋能平台</p>
+    </section>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import GlassIcon from '../components/GlassIcon.vue'
-import StudioStack from '../components/StudioStack.vue'
+import ScratchOverlay from '../components/ScratchOverlay.vue'
 import { useAuthStore } from '../stores/auth'
 import { userApi, jobApi, simulatorApi, badgeApi } from '../api'
 
+const router = useRouter()
 const auth = useAuthStore()
-const myBadgeCount = ref(0)
-const badgeTotal = ref(0)
-const sessionTotal = ref(0)
-const appliedTotal = ref(0)
-// HR 角色化数据
-const isHrOnly = computed(() => auth.user?.role === 2)
-const hrJobTotal = ref(0)
-const hrAppTotal = ref(0)
-const hrViewTotal = ref(0)
 
-/* ---------- Hero 鼠标视差（相机随鼠标微动） ---------- */
+// ===== 刮刮乐(每日首次进入触发;刮完或跳过才写标记,中途刷新可再来) =====
+const scratchShow = ref(false)
+onMounted(() => {
+  try {
+    const today = new Date().toISOString().slice(0, 10)
+    if (localStorage.getItem('iwantjob-scratch-date') !== today) {
+      scratchShow.value = true
+    }
+  } catch (e) { /* ignore */ }
+})
+function onScratchDone() {
+  scratchShow.value = false
+  try { localStorage.setItem('iwantjob-scratch-date', new Date().toISOString().slice(0, 10)) } catch (e) { /* ignore */ }
+}
+
+// ===== 问候语 =====
+const greeting = computed(() => {
+  const h = new Date().getHours()
+  if (h < 6) return '夜深了'
+  if (h < 12) return '早上好'
+  if (h < 14) return '中午好'
+  if (h < 18) return '下午好'
+  return '晚上好'
+})
+const dateStr = computed(() => {
+  const d = new Date()
+  return {
+    month: `${d.getMonth() + 1}月`,
+    day: String(d.getDate()).padStart(2, '0'),
+    week: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][d.getDay()]
+  }
+})
+
+// ===== Hero 视差 =====
 const heroRef = ref(null)
 const tilt = ref({ x: 0, y: 0 })
 let raf = 0
-
 function onHeroMove(e) {
   const el = heroRef.value
   if (!el) return
@@ -178,10 +142,22 @@ function onHeroLeave() {
   cancelAnimationFrame(raf)
   tilt.value = { x: 0, y: 0 }
 }
-onBeforeUnmount(() => cancelAnimationFrame(raf))
+const heroStyle = computed(() => ({
+  transform: `perspective(1200px) rotateX(${-tilt.value.y * 1.2}deg) rotateY(${tilt.value.x * 1.6}deg) translateZ(0)`,
+  transition: 'transform 0.25s ease-out'
+}))
+
+// ===== 统计数据(角色化) =====
+const myBadgeCount = ref(0)
+const badgeTotal = ref(0)
+const sessionTotal = ref(0)
+const appliedTotal = ref(0)
+const isHrOnly = computed(() => auth.user?.role === 2)
+const hrJobTotal = ref(0)
+const hrAppTotal = ref(0)
+const hrViewTotal = ref(0)
 
 const stats = computed(() => {
-  // HR 角色化数据卡（招聘方视角）
   if (isHrOnly.value) {
     return [
       { icon: 'briefcase', title: '在招职位', value: hrJobTotal.value, extra: '个', desc: '我发布的职位', theme: 'violet' },
@@ -191,71 +167,22 @@ const stats = computed(() => {
     ]
   }
   return [
-    {
-      icon: 'zap',
-      title: '互助积分',
-      value: auth.points?.balance ?? 0,
-      extra: `累计 ${auth.points?.totalEarned ?? 0}`,
-      desc: '答题分享赚取，可兑换权益',
-      theme: 'violet'
-    },
-    {
-      icon: 'medal',
-      title: '我的徽章',
-      value: myBadgeCount.value,
-      extra: `/${badgeTotal.value}`,
-      desc: '防篡改链上可验证',
-      theme: 'blue'
-    },
-    {
-      icon: 'gamepad',
-      title: '模拟演练',
-      value: sessionTotal.value,
-      extra: '次',
-      desc: 'AI 软技能评估',
-      theme: 'fuchsia'
-    },
-    {
-      icon: 'send',
-      title: '职位投递',
-      value: appliedTotal.value,
-      extra: '追踪中',
-      desc: '实时跟踪投递状态',
-      theme: 'sky'
-    }
+    { icon: 'zap', title: '互助积分', value: auth.points?.balance ?? 0, extra: `累计 ${auth.points?.totalEarned ?? 0}`, desc: '答题分享赚取,可兑换权益', theme: 'violet' },
+    { icon: 'medal', title: '我的徽章', value: myBadgeCount.value, extra: `/${badgeTotal.value}`, desc: '防篡改链上可验证', theme: 'blue' },
+    { icon: 'gamepad', title: '模拟演练', value: sessionTotal.value, extra: '次', desc: 'AI 软技能评估', theme: 'fuchsia' },
+    { icon: 'send', title: '职位投递', value: appliedTotal.value, extra: '追踪中', desc: '实时跟踪投递状态', theme: 'sky' }
   ]
 })
 
 const features = [
-  {
-    icon: 'chart',
-    title: '薪资白皮书',
-    desc: '学长学姐真实 offer 脱敏数据聚合，按城市/岗位/学历生成统计报告，打破信息差',
-    tag: '数据驱动 · 匿名贡献',
-    path: '/salary',
-    theme: 'violet'
-  },
-  {
-    icon: 'rocket',
-    title: 'AI 职业模拟舱',
-    desc: '沉浸式剧情演练职场情境，AI 实时反馈沟通、协作等软技能并生成评估报告',
-    tag: '情境演练 · 智能评估',
-    path: '/simulator',
-    theme: 'blue'
-  },
-  {
-    icon: 'shield-check',
-    title: '防篡改徽章',
-    desc: '成长履历哈希锁定铸造，企业可在线查验，让简历背书真实可信',
-    tag: '哈希锁定 · 在线查验',
-    path: '/badges',
-    theme: 'fuchsia'
-  }
+  { icon: 'chart', title: '薪资白皮书', desc: '学长学姐真实 offer 脱敏数据聚合,按城市/岗位/学历生成统计报告,打破信息差', tag: '数据驱动 · 匿名贡献', path: '/salary', theme: 'violet' },
+  { icon: 'rocket', title: 'AI 职业模拟舱', desc: '沉浸式剧情演练职场情境,AI 实时反馈沟通、协作等软技能并生成评估报告', tag: '情境演练 · 智能评估', path: '/simulator', theme: 'blue' },
+  { icon: 'shield-check', title: '防篡改徽章', desc: '成长履历哈希锁定铸造,企业可在线查验,让简历背书真实可信', tag: '哈希锁定 · 在线查验', path: '/badges', theme: 'fuchsia' }
 ]
 
 onMounted(async () => {
+  if (!auth.user) auth.fetchUserInfo().catch(() => {})
   if (isHrOnly.value) {
-    // HR 视角：招聘方数据（不再调用学生侧接口）
     jobApi.myPublished({ page: 1, size: 50 }).then(res => {
       const records = res.data?.records || []
       hrJobTotal.value = res.data?.total ?? records.length
@@ -282,483 +209,213 @@ onMounted(async () => {
 
 <style scoped>
 .dashboard {
-  max-width: 1440px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 4px 2px 40px;
-  perspective: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 40px;
 }
 
-/* ---------- 近黑玻璃基类（暗黑工作室卡） ---------- */
-.nbg {
-  position: relative;
-  background: rgba(8, 10, 26, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 22px;
-  backdrop-filter: blur(22px) saturate(1.4);
-  -webkit-backdrop-filter: blur(22px) saturate(1.4);
-  box-shadow: 0 24px 70px rgba(2, 6, 32, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  overflow: hidden;
-}
-.nbg-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-}
-.nbg-hover:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.24);
-  background: rgba(10, 13, 32, 0.7);
-  box-shadow: 0 34px 86px rgba(2, 6, 32, 0.68), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* ---------- Hero 工作室大卡 ---------- */
+/* ===== Hero ===== */
 .hero {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 460px;
-  padding: 46px 48px 38px;
+  padding: 72px 8px 56px;
   border-radius: 28px;
-  box-shadow: 0 24px 80px rgba(2, 6, 32, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  overflow: hidden;
 }
-.hero-glow {
-  position: absolute;
+.hero-inner { transform-style: preserve-3d; will-change: transform; }
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  color: var(--foreground-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 26px;
+  backdrop-filter: blur(16px);
+}
+.pulse-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
+  background: var(--success);
+  box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.5);
+  animation: pulse 2.2s infinite;
 }
-.hero-glow-a {
-  width: 360px; height: 360px; top: -150px; left: -100px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.28), transparent 70%);
-}
-.hero-glow-b {
-  width: 320px; height: 320px; bottom: -160px; right: -80px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.45); }
+  70% { box-shadow: 0 0 0 9px rgba(48, 209, 88, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(48, 209, 88, 0); }
 }
 
-/* AI 状态药丸（右上角） */
-.ai-pill {
-  position: absolute;
-  top: 24px; right: 24px;
-  z-index: 3;
-}
-.ai-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--g-emerald);
-  box-shadow: 0 0 8px var(--g-emerald);
-  animation: g-pulse 2s ease-in-out infinite;
-}
-
-/* 超大排版：英文小标签 + 两行大标题 */
-.hero-center {
-  position: relative;
-  z-index: 2;
-  padding: 34px 0 6px;
-  text-align: center;
-}
-.hero-kicker {
-  margin: 0 0 16px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-}
 .hero-title {
-  margin: 0;
-  font-size: 52px;
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  line-height: 1.16;
-  color: var(--g-text-primary);
-  text-shadow: 0 6px 40px rgba(2, 6, 32, 0.55);
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  margin: 0 0 18px;
+  color: var(--foreground);
 }
-.hero-line { display: block; }
-.hero-title em.flow {
-  font-style: normal;
-  background: linear-gradient(120deg, var(--g-violet), var(--g-blue), var(--g-fuchsia));
-  background-size: 200% auto;
+.username {
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: g-shine 4s linear infinite;
+  color: transparent;
 }
 
-/* 3D 堆叠片：居右悬浮，位于文字之后不遮挡阅读 */
-.hero-stack {
-  position: absolute;
-  right: 4%;
-  top: 47%;
-  transform: translateY(-52%);
-  z-index: 1;
-}
-
-/* 不对称底栏：左行动区 + 右个人卡 */
-.hero-bottom {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-top: auto;
-  padding-top: 34px;
-}
-.hero-info { max-width: 540px; }
 .hero-sub {
-  margin: 0 0 18px;
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--g-text-secondary);
-}
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-
-/* 主按钮：白底深字 + 深紫影 + 箭头微动 */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  border-radius: 14px;
-  padding: 13px 26px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #33185e;
-  background: linear-gradient(135deg, #ffffff, #e8eaff);
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.42);
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 42px rgba(139, 92, 246, 0.55);
-}
-.btn-primary .btn-arrow { transition: transform 0.25s ease; }
-.btn-primary:hover .btn-arrow { transform: translateX(4px); }
-
-/* 玻璃描边按钮：hover 背景加深 */
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 14px;
-  padding: 13px 26px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--g-text-primary);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
-}
-.btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.34);
-  transform: translateY(-2px);
+  font-size: 1.06rem;
+  color: var(--foreground-muted);
+  margin: 0 0 34px;
+  max-width: 560px;
+  line-height: 1.7;
 }
 
-/* 右下个人简介小卡（近黑玻璃） */
-.hero-me {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px 14px 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(6, 8, 20, 0.55);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  box-shadow: 0 16px 40px rgba(2, 6, 32, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-.hero-me-avatar {
-  width: 44px; height: 44px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, var(--g-violet), var(--g-blue));
-  flex-shrink: 0;
-}
-.hero-me-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--g-text-primary);
-}
-.hero-me-role {
-  padding: 2px 9px;
-  border-radius: 999px;
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  background: rgba(139, 92, 246, 0.16);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: #c4b5fd;
-}
-.hero-me-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-  font-size: 12px;
-  color: var(--g-text-muted);
-}
-.dot-sep {
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--g-text-muted);
-}
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-actions .btn-primary svg { width: 16px; height: 16px; }
 
-/* ---------- Section 头：中文大标题 + 英文小标签 ---------- */
-.sec { margin-top: 40px; }
-.sec-head {
+.hero-date {
+  position: absolute;
+  right: 32px;
+  top: 40px;
+  text-align: center;
   display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: 18px;
+  flex-direction: column;
+  line-height: 1;
 }
-.sec-title {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--g-text-primary);
-}
-.sec-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* ---------- 数据带 ---------- */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-.stat-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 22px 20px;
-}
-.stat-body { min-width: 0; }
-.stat-value {
-  font-size: 30px;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.5px;
-  color: var(--g-text-primary);
+.d-month { font-size: 0.8rem; color: var(--foreground-subtle); margin-bottom: 6px; letter-spacing: 0.1em; }
+.d-day {
+  font-size: 3.4rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  color: var(--foreground);
   font-variant-numeric: tabular-nums;
 }
-.stat-extra {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--g-text-muted);
-  margin-left: 6px;
-}
-.stat-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--g-text-secondary);
-  margin-top: 5px;
-}
-.stat-desc {
-  font-size: 12px;
-  color: var(--g-text-muted);
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+.d-week { font-size: 0.8rem; color: var(--foreground-subtle); margin-top: 8px; }
 
-/* ---------- 三大核心能力：精选卡 ---------- */
-.feature-grid {
+@media (max-width: 768px) { .hero-date { display: none; } }
+
+/* ===== 统计带 ===== */
+.stats-band {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
 }
-.feature-card {
-  display: flex;
-  flex-direction: column;
-  padding: 26px 24px 22px;
-  cursor: pointer;
-}
-/* 顶部 3px 主题渐变条 */
-.feature-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 3px;
-  opacity: 0.8;
-  transition: opacity 0.3s ease, height 0.3s ease;
-}
-.feature-card.fc-violet::before  { background: linear-gradient(90deg, var(--g-violet), transparent 78%); }
-.feature-card.fc-blue::before    { background: linear-gradient(90deg, var(--g-blue), transparent 78%); }
-.feature-card.fc-fuchsia::before { background: linear-gradient(90deg, var(--g-fuchsia), transparent 78%); }
-.feature-card:hover::before { height: 4px; opacity: 1; }
+@media (max-width: 1024px) { .stats-band { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .stats-band { grid-template-columns: 1fr; } }
 
-.feature-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+.stat-card { padding: 24px; }
+.stat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.stat-extra { font-size: 0.78rem; color: var(--foreground-subtle); }
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+}
+.stat-icon.violet { background: rgba(162, 89, 255, 0.14); color: #a259ff; }
+.stat-icon.blue { background: rgba(41, 151, 255, 0.14); color: #2997ff; }
+.stat-icon.fuchsia { background: rgba(255, 92, 168, 0.14); color: #ff5ca8; }
+.stat-icon.sky { background: rgba(100, 210, 255, 0.14); color: #64d2ff; }
+html.light .stat-icon.violet { color: #7d4fff; }
+html.light .stat-icon.blue { color: #0071e3; }
+html.light .stat-icon.fuchsia { color: #ff4f9a; }
+html.light .stat-icon.sky { color: #0a84c9; }
+
+.stat-value {
+  font-size: 2.3rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.stat-title { font-size: 0.92rem; font-weight: 600; color: var(--foreground); margin: 10px 0 4px; }
+.stat-desc { font-size: 0.8rem; color: var(--foreground-subtle); }
+
+/* ===== 三大创新 ===== */
+.section-head { text-align: center; margin-bottom: 32px; }
+.section-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+  color: var(--foreground);
+}
+.section-sub { color: var(--foreground-subtle); font-size: 0.92rem; margin: 0; letter-spacing: 0.18em; }
+
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 1024px) { .feature-grid { grid-template-columns: 1fr; } }
+
+.feature-card {
+  padding: 30px 26px;
+  cursor: pointer;
+  position: relative;
+}
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
   margin-bottom: 20px;
 }
-.feature-tag {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.42);
-}
-.feature-card:hover .glass-icon { transform: scale(1.08) rotate(-4deg); }
-.feature-card h3 {
-  margin: 0 0 10px;
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  color: var(--g-text-primary);
-}
-.feature-card p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--g-text-secondary);
-  min-height: 68px;
-}
-/* 底部描边按钮式链接 */
-.feature-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 20px;
-  padding: 9px 18px;
-  width: fit-content;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--g-text-primary);
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
-.feature-link .fl-arrow { transition: transform 0.3s ease; }
-.feature-card:hover .feature-link {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.36);
-}
-.feature-card:hover .feature-link .fl-arrow { transform: translateX(3px); }
-.feature-card.fc-violet:hover .fl-arrow  { color: var(--g-violet); }
-.feature-card.fc-blue:hover .fl-arrow    { color: var(--g-blue); }
-.feature-card.fc-fuchsia:hover .fl-arrow { color: var(--g-fuchsia); }
+.feature-icon.violet { background: rgba(162, 89, 255, 0.14); color: #a259ff; }
+.feature-icon.blue { background: rgba(41, 151, 255, 0.14); color: #2997ff; }
+.feature-icon.fuchsia { background: rgba(255, 92, 168, 0.14); color: #ff5ca8; }
+html.light .feature-icon.violet { color: #7d4fff; }
+html.light .feature-icon.blue { color: #0071e3; }
+html.light .feature-icon.fuchsia { color: #ff4f9a; }
 
-/* ---------- 底部两卡 ---------- */
-.bottom-grid {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: 16px;
-  margin-top: 40px;
-}
-.tip-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 24px 26px;
-}
-.tip-body { min-width: 0; }
-.tip-body h3 {
-  margin: 0 0 5px;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--g-text-primary);
-}
-.tip-body p {
-  margin: 0;
-  font-size: 13px;
+.feature-title { font-size: 1.18rem; font-weight: 680; color: var(--foreground); margin: 0 0 10px; letter-spacing: -0.01em; }
+.feature-desc {
+  font-size: 0.88rem;
+  color: var(--foreground-muted);
   line-height: 1.7;
-  color: var(--g-text-secondary);
+  margin: 0 0 18px;
+  min-height: 66px;
 }
-.tip-pill { margin-left: auto; flex-shrink: 0; }
-
-.quote-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 26px;
-  text-align: center;
+.feature-tag {
+  display: inline-block;
+  padding: 5px 13px;
+  border-radius: 9999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
-.quote-glow {
+.feature-arrow {
   position: absolute;
-  width: 240px; height: 240px;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(232, 121, 249, 0.18), transparent 70%);
-  filter: blur(30px);
-  pointer-events: none;
+  right: 22px;
+  bottom: 20px;
+  width: 18px;
+  height: 18px;
+  color: var(--foreground-subtle);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.quote-mark { color: var(--g-amber); position: relative; }
-.quote-text {
-  position: relative;
-  margin: 0;
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--g-text-primary);
-}
-.quote-text em {
-  font-style: normal;
-  background: linear-gradient(120deg, var(--g-sky), var(--g-fuchsia));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: g-shine 4s linear infinite;
-}
-.quote-sub {
-  position: relative;
-  font-size: 12px;
-  color: var(--g-text-muted);
-}
+.feature-card:hover .feature-arrow { opacity: 1; transform: translateX(0); color: var(--primary); }
 
-/* ---------- 动画 ---------- */
-@keyframes g-shine { to { background-position: 200% center; } }
-@keyframes g-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+/* ===== 愿景 ===== */
+.vision { padding: 44px 36px; text-align: center; }
+.vision-quote {
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  margin: 0 0 12px;
 }
-
-/* ---------- 响应式 ---------- */
-@media (max-width: 1100px) {
-  .hero-stack { right: 2%; transform: translateY(-52%) scale(0.85); }
-}
-@media (max-width: 992px) {
-  .hero {
-    min-height: 0;
-    padding: 36px 24px 30px;
-    border-radius: 24px;
-  }
-  .hero-stack { display: none; }
-  .hero-title { font-size: 38px; letter-spacing: -0.8px; }
-  .hero-bottom { flex-direction: column; align-items: stretch; }
-  .hero-info { max-width: none; }
-  .hero-me { justify-content: flex-start; }
-  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .feature-grid { grid-template-columns: 1fr; }
-  .bottom-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 560px) {
-  .stats-grid { grid-template-columns: 1fr; }
-  .hero-title { font-size: 30px; }
-  .hero-kicker { letter-spacing: 2.5px; }
-}
+.vision-sub { color: var(--foreground-subtle); font-size: 0.85rem; letter-spacing: 0.2em; margin: 0; }
 </style>

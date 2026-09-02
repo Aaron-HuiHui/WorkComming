@@ -7,6 +7,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from './App.vue'
 import router from './router'
 import { scrollReveal } from './directives/scroll-reveal'
+import './styles/theme.css'
 import './style.css'
 import './styles/glass.css'
 
