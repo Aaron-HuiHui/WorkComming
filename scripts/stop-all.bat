@@ -29,8 +29,8 @@ for /f "tokens=5" %%a in ('netstat -ano ^| find ":8081 " ^| find "LISTENING"') d
     taskkill /PID %%a /F >nul 2>&1 && echo   已停止 PID %%a
 )
 
-echo [4/9] 停止 网关服务（8000）...
-for /f "tokens=5" %%a in ('netstat -ano ^| find ":8000 " ^| find "LISTENING"') do (
+echo [4/9] 停止 网关服务（8080）...
+for /f "tokens=5" %%a in ('netstat -ano ^| find ":8080 " ^| find "LISTENING"') do (
     taskkill /PID %%a /F >nul 2>&1 && echo   已停止 PID %%a
 )
 

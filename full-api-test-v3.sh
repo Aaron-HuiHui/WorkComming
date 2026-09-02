@@ -1,6 +1,6 @@
 #!/bin/bash
 # 全量功能测试 v3（终版）—— 正确字段名 + Windows 安全路径 + 完整正向链路
-BASE="http://localhost:8000/api"
+BASE="http://localhost:8080/api"
 PASS=0; FAIL=0; FAILED_CASES=""
 T="E:/毕业设计/ft-tmp"; mkdir -p "$T"
 

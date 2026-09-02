@@ -7,9 +7,9 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      // 前端请求 /api/** 代理到网关（8000），由网关路由到核心/职位微服务
+      // 前端请求 /api/** 代理到网关（8080），由网关路由到核心/职位微服务
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://localhost:8080',
         changeOrigin: true
       }
     }

@@ -399,11 +399,11 @@ _最后更新：team-lead (2026-08-31 第六阶段：角色差异化完成)_
 
 | 进程 | 端口 | 模块 | 职责 |
 |------|------|------|------|
-| iwantjob-gateway | 8000 | spring-cloud-gateway | 静态路由：/api/jobs|companies|favorites → 职位服务；其余 /api/** → 核心服务 |
+| iwantjob-gateway | 8080 | spring-cloud-gateway | 静态路由：/api/jobs|companies|favorites → 职位服务；其余 /api/** → 核心服务 |
 | 核心（iwantjob-api） | 8081 | user/badge/resume/community/simulator/interview/salary/**portfolio** | 认证/用户/通知/作品集/徽章/简历/AI 等 |
 | 职位服务（iwantjob-job-server） | 8082 | job 模块 | 职位/投递/候选人/企业/收藏/统计 |
 
-- 网关路由 order：job-service(1) 优先于 core-service(2)；前端 Vite 代理 /api → 8000，前端无感知迁移
+- 网关路由 order：job-service(1) 优先于 core-service(2)；前端 Vite 代理 /api → 8080，前端无感知迁移
 - 跨服务共享表：notification（职位服务写入投递状态变更、核心服务提供读取）；幂等/限流/审计切面双服务均生效
 
 ### 新增数据模型（db/07-phase7.sql、07b、07c）
@@ -461,10 +461,10 @@ _最后更新：team-lead (2026-08-31 第七阶段：微服务化+企业+作品�
 |------|------|----------|
 | MySQL 8.0.29 | 3306 | `C:\Users\Lenovo\tools\mysql\mysql-8.0.29\bin\mysqld.exe --console`（无 Windows 服务，手动起；库 iwantjob 40 表） |
 | Redis 5.0.14.1 | 6379 | `redis-server.exe redis.windows.conf --requirepass iwantjob`（conf 内无密码，必须命令行带） |
-| iwantjob-gateway | 8000 | `java -jar target/*.jar`（用已构建 jar，均晚于源码/配置，无需重编译） |
+| iwantjob-gateway | 8080 | `java -jar target/*.jar`（用已构建 jar，均晚于源码/配置，无需重编译） |
 | iwantjob-api（核心） | 8081 | 同上，启动 16.8s |
 | iwantjob-job-server | 8082 | 同上，启动 14.2s |
-| Vite 前端 | 5173 | `npm run dev`，/api 代理 → 8000 |
+| Vite 前端 | 5173 | `npm run dev`，/api 代理 → 8080 |
 
 冒烟：登录→网关→双服务路由全通（/api/jobs 41 条、/api/companies 15 家、/api/user/me、/api/notify/unread 等 7 接口 200）。
 小瑕疵（未修，记录在案）：`GET /api/jobs/{id}` 收到非数字 id（如 /jobs/search）抛 NumberFormatException → 全局异常包成 500「系统异常」而非 400。
@@ -703,7 +703,7 @@ GET /api/jobs?keyword=...
 | S1 | ES Java Client `Object builders can only be used once`：BoolQuery.Builder 在 count 与分页两次查询各 build 一次 → 第二次抛异常静默回退 MySQL | 先 `new Query.Builder().bool(bool.build()).build()` 构建不可变 Query 复用两次 |
 | S2 | `mvn -pl iwantjob-job-server` 单模块构建找不到 iwantjob-job（clean 清了本地仓库） | 加 `-am` 连依赖模块一起编 |
 | S3 | gateway jar 被运行进程锁定导致 clean 失败 | 停进程后再编（复用第六阶段 M1 经验） |
-| S4 | 浏览器旧 token（后端重启前签发）致页面 403 空列表 | 重新登录+刷新后正常；curl 直连三跳（5173/8000/8082）验证均 200 定位为 token 而非链路问题 |
+| S4 | 浏览器旧 token（后端重启前签发）致页面 403 空列表 | 重新登录+刷新后正常；curl 直连三跳（5173/8080/8082）验证均 200 定位为 token 而非链路问题 |
 
 ### 遗留项
 

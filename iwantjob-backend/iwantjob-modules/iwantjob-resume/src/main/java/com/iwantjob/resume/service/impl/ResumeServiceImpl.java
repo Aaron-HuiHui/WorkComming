@@ -156,9 +156,10 @@ public class ResumeServiceImpl implements ResumeService {
         log.setOriginalText(original);
         log.setOptimizedText(optimized);
         log.setType(dto.getType());
-        log.setFeedback(switch (dto.getType() == null ? "" : dto.getType()) {
-            case "translate" -> "已完成中英双语转换，术语表达已对齐行业惯例，建议投递外企时附上英文版。";
-            case "enhance" -> "已强化量化成果与行动动词表述，突出个人贡献度，建议补充可量化的业务指标。";
+        // type：0-润色,1-翻译,2-强化（ResumeAiGateway 约定）
+        log.setFeedback(switch (dto.getType() == null ? 0 : dto.getType()) {
+            case 1 -> "已完成中英双语转换，术语表达已对齐行业惯例，建议投递外企时附上英文版。";
+            case 2 -> "已强化量化成果与行动动词表述，突出个人贡献度，建议补充可量化的业务指标。";
             default -> "已完成语句润色与表达优化：精简冗余表述、统一专业术语，整体可读性显著提升。";
         });
         optimizationLogMapper.insert(log);

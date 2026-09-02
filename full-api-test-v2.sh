@@ -1,6 +1,6 @@
 #!/bin/bash
 # 全量功能测试 v2 —— 修复期望值/字段名 + 补齐正向链路
-BASE="http://localhost:8000/api"
+BASE="http://localhost:8080/api"
 PASS=0; FAIL=0; FAILED_CASES=""
 TMPDIR=/tmp/ft; mkdir -p $TMPDIR
 

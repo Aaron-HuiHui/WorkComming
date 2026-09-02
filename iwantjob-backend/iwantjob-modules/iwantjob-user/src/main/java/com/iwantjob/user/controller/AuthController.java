@@ -46,7 +46,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    @RateLimit(rate = 2, capacity = 5)
+    @RateLimit(rate = 5, capacity = 10)
     public Result<LoginVO> login(@Valid @RequestBody LoginDTO dto) {
         LoginVO vo = authService.login(dto);
         return Result.success(vo);

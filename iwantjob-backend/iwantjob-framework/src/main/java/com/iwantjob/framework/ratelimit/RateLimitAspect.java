@@ -64,8 +64,18 @@ public class RateLimitAspect {
             return pjp.proceed();
         }
         HttpServletRequest request = attrs.getRequest();
+        // 登录/注册等匿名接口没有 X-User-Id，若统一退化为 "anonymous" 会让所有未登录用户共享一个桶，
+        // 高峰期互相挤兑误伤；匿名场景改按客户端 IP 隔离
         String userId = request.getHeader("X-User-Id");
-        if (userId == null) userId = "anonymous";
+        if (userId == null || userId.isBlank()) {
+            String ip = request.getHeader("X-Forwarded-For");
+            if (ip == null || ip.isBlank()) {
+                ip = request.getRemoteAddr();
+            } else {
+                ip = ip.split(",")[0].trim();
+            }
+            userId = "ip:" + ip;
+        }
         String key = "rate_limit:" + request.getRequestURI() + ":" + userId;
 
         Long allowed = redisTemplate.execute(RATE_LIMIT_SCRIPT,

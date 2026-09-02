@@ -82,8 +82,8 @@ echo [中间件] 等待 MySQL 与 ES 就绪 ...
 timeout /t 8 /nobreak >nul
 
 REM ---------- 6. 网关 ----------
-echo [6/9] 启动 网关服务（端口 8000）...
-netstat -ano | find ":8000 " | find "LISTENING" >nul 2>&1
+echo [6/9] 启动 网关服务（端口 8080）...
+netstat -ano | find ":8080 " | find "LISTENING" >nul 2>&1
 if !errorlevel! == 0 (
     echo   网关已在运行，跳过
 ) else (
@@ -130,7 +130,7 @@ echo   全部启动命令已发出！
 echo.
 echo   访问地址：
 echo     前端:        http://localhost:5173
-echo     网关:        http://localhost:8000
+echo     网关:        http://localhost:8080
 echo     API 文档:    http://localhost:8081/api/doc.html
 echo     ES:          http://localhost:9200
 echo     MinIO 控制台: http://localhost:9001

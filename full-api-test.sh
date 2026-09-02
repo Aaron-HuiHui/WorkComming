@@ -1,7 +1,7 @@
 #!/bin/bash
 # 全量功能测试脚本 —— 「我要工作」第十二阶段
 # 用法: bash full-api-test.sh  (输出 PASS/FAIL 汇总)
-BASE="http://localhost:8000/api"
+BASE="http://localhost:8080/api"
 PASS=0; FAIL=0; FAILED_CASES=""
 
 # ---------- 工具函数 ----------

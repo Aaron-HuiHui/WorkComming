@@ -1,6 +1,6 @@
 #!/bin/bash
 # v3 失败项最终回归（文件body，避免内联中文编码问题）
-BASE="http://localhost:8000/api"
+BASE="http://localhost:8080/api"
 T="E:/毕业设计/ft-tmp"; mkdir -p "$T"
 PASS=0; FAIL=0; FAILED=""
 STU=$(curl -s -X POST "$BASE/auth/login" -H "Content-Type: application/json" -d '{"username":"ftetest","password":"Abc123456"}' | sed -n 's/.*"accessToken":"\([^"]*\)".*/\1/p')
