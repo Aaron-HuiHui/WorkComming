@@ -422,3 +422,19 @@ html.light .el-dropdown-menu__item:not(.is-disabled):focus {
 .el-input__prefix {
   color: var(--foreground-muted);
 }
+
+/* ---------- el-select 选中值/占位符分级(修复深色下选中文字灰暗难读) ---------- */
+.el-select__wrapper {
+  --el-input-text-color: var(--foreground);
+  --el-text-color-regular: var(--foreground);
+}
+.el-select__placeholder {
+  /* 选中值:全对比度前景色(EP 会给选中项也挂 placeholder 类) */
+  color: var(--foreground);
+}
+.el-select__placeholder.is-transparent {
+  /* 空占位:降级为弱化色 */
+  color: var(--foreground-subtle);
+}
+.el-select__wrapper.is-hovering:not(.is-focused) { border-color: var(--hairline-strong) !important; }
+.el-select__wrapper.is-focused { border-color: var(--primary) !important; }

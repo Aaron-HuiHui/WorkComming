@@ -12,6 +12,8 @@ function persist(value) {
 function applyTheme(value) {
   const root = document.documentElement
   root.classList.toggle('light', value === 'light')
+  // EP 暗色变量表挂在 .dark 上,与项目自定义 .light 互斥同步
+  root.classList.toggle('dark', value !== 'light')
 }
 
 function initTheme() {

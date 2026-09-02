@@ -1091,3 +1091,8 @@ _最后更新：team-lead (2026-09-01 21:50 第十九阶段：各阶段遗留项
 - **Salary 白皮书统计卡/分组标题** scoped 白字 token 化。
 - 验证方法:canvas getImageData 采样不透明像素明暗分布——浅色下图表文字为深色(24-30% dark,0% light),切深色后重建为白字(24-26% light),双主题实时切换 ✓;表格公司名/箭头双主题 ✓;build 17.6s ✓。
 - 踩坑:JobMarket 常量改函数时残留旧 const TOOLTIP 声明 + nextTick 重复导入,均由 Vite 编译错误暴露即时修复。
+
+### el-select 选中文字对比度修复(2026-09-03 二报)
+- 根因:EP 内部变量(--el-text-color-regular 等)从未跟随主题——项目没导入 EP 暗色变量表,深色下选中值仍是浅色主题灰 #606266,叠深色毛玻璃对比度不足。
+- 修复:①main.js 引入 element-plus/theme-chalk/dark/css-vars.css;②useTheme 同步切换 html.dark/html.light 两个类(EP 变量表挂 .dark);③theme.css 把 EP 文字/边框/填充/背景系列变量整体映射到语义 token(未分层,双向覆盖);④el-select 选中值=全对比度前景色、空占位=弱化色、hover/focused 边框分级。
+- 回归:dark/light 四页(dashboard/jobs/market/favorites)tag/表格/主按钮扫描全部正常;主按钮渐变底为 style.css 原设计,非缺陷。
