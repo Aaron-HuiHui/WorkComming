@@ -381,7 +381,7 @@ html.light .el-message-box { background: var(--glass); border: 1px solid var(--h
 html.light .el-message { background: var(--glass); border: 1px solid var(--hairline); }
 html.light .el-message__content { color: var(--foreground); }
 
-html.light .el-drawer { --el-drawer-bg-color: var(--glass); }
+html.light .el-drawer { background: var(--glass); }
 html.light .el-loading-mask { background: rgba(255, 255, 255, 0.5); }
 html.light .el-skeleton__item { background: var(--background-soft); }
 
@@ -438,3 +438,12 @@ html.light .el-dropdown-menu__item:not(.is-disabled):focus {
 }
 .el-select__wrapper.is-hovering:not(.is-focused) { border-color: var(--hairline-strong) !important; }
 .el-select__wrapper.is-focused { border-color: var(--primary) !important; }
+
+html.light .el-select-dropdown {
+  background: transparent;
+}
+html.light .el-divider__text {
+  background: var(--background);
+  color: var(--foreground-muted);
+}
+html.light .el-divider { border-color: var(--hairline); }

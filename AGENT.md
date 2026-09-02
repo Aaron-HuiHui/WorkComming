@@ -1096,3 +1096,9 @@ _最后更新：team-lead (2026-09-01 21:50 第十九阶段：各阶段遗留项
 - 根因:EP 内部变量(--el-text-color-regular 等)从未跟随主题——项目没导入 EP 暗色变量表,深色下选中值仍是浅色主题灰 #606266,叠深色毛玻璃对比度不足。
 - 修复:①main.js 引入 element-plus/theme-chalk/dark/css-vars.css;②useTheme 同步切换 html.dark/html.light 两个类(EP 变量表挂 .dark);③theme.css 把 EP 文字/边框/填充/背景系列变量整体映射到语义 token(未分层,双向覆盖);④el-select 选中值=全对比度前景色、空占位=弱化色、hover/focused 边框分级。
 - 回归:dark/light 四页(dashboard/jobs/market/favorites)tag/表格/主按钮扫描全部正常;主按钮渐变底为 style.css 原设计,非缺陷。
+
+### 下拉/抽屉"黑底覆盖"修复(2026-09-03 三报)
+- 根因:style.css 对 .el-select-dropdown 和 .el-drawer 是**直接 background 声明**,此前 html.light 覆盖只改了 CSS 变量(--el-drawer-bg-color)→ 变量被直接声明无视;且脚本去重判断被子串误跳过(el-select-dropdown 是 el-select-dropdown__item 的子串)。
+- 修复:html.light 下 .el-select-dropdown→transparent(露出白色 popper 根)、.el-drawer→直接 background: var(--glass)、.el-divider__text 浅色化。
+- 验证:下拉浮层逐层采样(外层白 0.8/内层透明/hover 白底深字/选中闭环正常)、抽屉浅色白玻璃 0.8/深色深蓝玻璃 0.9 双向正确;build 17.3s。
+- 教训:修 EP 深色覆盖时,**直接 background 声明必须用直接声明反制,只改变量无效**;脚本去重判断要用带花括号的完整选择器串。
