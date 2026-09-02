@@ -5,25 +5,32 @@
 
     <!-- ===== Hero ===== -->
     <section class="hero" ref="heroRef" @mousemove="onHeroMove" @mouseleave="onHeroLeave">
-      <div class="hero-inner" :style="heroStyle">
-        <div class="hero-pill">
-          <span class="pulse-dot"></span>
-          AI 引擎 · 就绪
+      <div class="hero-flex">
+        <div class="hero-inner" :style="heroStyle">
+          <div class="hero-pill">
+            <span class="pulse-dot"></span>
+            AI 引擎 · 就绪
+          </div>
+          <h1 class="hero-title">
+            {{ greeting }},<span class="username">{{ auth.user?.username || '同学' }}</span>
+          </h1>
+          <p class="hero-sub">
+            {{ isHrOnly ? '今天有新的人才在等你,看看候选人进展。' : '今天也要为心仪的 offer 努力,从一次模拟演练开始。' }}
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary" @click="router.push(isHrOnly ? '/hr/jobs' : '/simulator')">
+              {{ isHrOnly ? '管理职位' : '进入模拟舱' }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <button class="btn-ghost" @click="router.push(isHrOnly ? '/companies' : '/jobs')">
+              {{ isHrOnly ? '企业主页' : '浏览职位' }}
+            </button>
+          </div>
         </div>
-        <h1 class="hero-title">
-          {{ greeting }},<span class="username">{{ auth.user?.username || '同学' }}</span>
-        </h1>
-        <p class="hero-sub">
-          {{ isHrOnly ? '今天有新的人才在等你,看看候选人进展。' : '今天也要为心仪的 offer 努力,从一次模拟演练开始。' }}
-        </p>
-        <div class="hero-actions">
-          <button class="btn-primary" @click="router.push(isHrOnly ? '/hr/jobs' : '/simulator')">
-            {{ isHrOnly ? '管理职位' : '进入模拟舱' }}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-          <button class="btn-ghost" @click="router.push(isHrOnly ? '/companies' : '/jobs')">
-            {{ isHrOnly ? '企业主页' : '浏览职位' }}
-          </button>
+
+        <!-- 径向轨道图标区(radial-orbital-timeline 风) -->
+        <div class="hero-orbit">
+          <OrbitIcons :nodes="orbitNodes" :size="390" @select="n => router.push(n.path)" />
         </div>
       </div>
       <!-- 日期角标 -->
@@ -39,7 +46,7 @@
       <div v-for="s in stats" :key="s.title" class="glass-card glass-card-hover stat-card">
         <div class="stat-top">
           <div class="stat-icon" :class="s.theme">
-            <GlassIcon :name="s.icon" />
+            <component :is="statIconMap[s.icon]" :size="20" :stroke-width="2" />
           </div>
           <span class="stat-extra">{{ s.extra }}</span>
         </div>
@@ -62,7 +69,7 @@
           class="glass-card glass-card-hover feature-card"
           @click="router.push(f.path)"
         >
-          <div class="feature-icon" :class="f.theme"><GlassIcon :name="f.icon" /></div>
+          <div class="feature-icon" :class="f.theme"><component :is="featureIconMap[f.icon]" :size="24" :stroke-width="1.9" /></div>
           <h3 class="feature-title">{{ f.title }}</h3>
           <p class="feature-desc">{{ f.desc }}</p>
           <div class="feature-tag">{{ f.tag }}</div>
@@ -84,13 +91,27 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import GlassIcon from '../components/GlassIcon.vue'
+import { Zap, Medal, Gamepad2, Send, Briefcase, BarChart3, Rocket, ShieldCheck, Sparkles } from 'lucide-vue-next'
+import OrbitIcons from '../components/OrbitIcons.vue'
 import ScratchOverlay from '../components/ScratchOverlay.vue'
 import { useAuthStore } from '../stores/auth'
 import { userApi, jobApi, simulatorApi, badgeApi } from '../api'
 
 const router = useRouter()
 const auth = useAuthStore()
+
+// 径向轨道节点:三大创新 + 三个常用入口
+const statIconMap = { zap: Zap, medal: Medal, gamepad: Gamepad2, send: Send, briefcase: Briefcase, chart: BarChart3 }
+const featureIconMap = { chart: BarChart3, rocket: Rocket, "shield-check": ShieldCheck }
+
+const orbitNodes = [
+  { icon: BarChart3, label: '薪资白皮书', path: '/salary' },
+  { icon: Rocket, label: 'AI 模拟舱', path: '/simulator' },
+  { icon: ShieldCheck, label: '防篡改徽章', path: '/badges' },
+  { icon: Briefcase, label: '职位广场', path: '/jobs' },
+  { icon: Send, label: '我的投递', path: '/applied' },
+  { icon: Sparkles, label: '简历助手', path: '/resume-ai' }
+]
 
 // ===== 刮刮乐(每日首次进入触发;刮完或跳过才写标记,中途刷新可再来) =====
 const scratchShow = ref(false)
@@ -224,7 +245,10 @@ onMounted(async () => {
   border-radius: 28px;
   overflow: hidden;
 }
-.hero-inner { transform-style: preserve-3d; will-change: transform; }
+.hero-flex { display: flex; align-items: center; gap: 24px; }
+.hero-inner { flex: 1; transform-style: preserve-3d; will-change: transform; min-width: 0; }
+.hero-orbit { display: grid; place-items: center; flex-shrink: 0; }
+@media (max-width: 1180px) { .hero-orbit { display: none; } }
 
 .hero-pill {
   display: inline-flex;
@@ -323,9 +347,13 @@ onMounted(async () => {
   font-size: 19px;
 }
 .stat-icon.violet { background: rgba(162, 89, 255, 0.14); color: #a259ff; }
+html.light .stat-icon.violet { background: #f1e9ff; color: #7c3aed; }
 .stat-icon.blue { background: rgba(41, 151, 255, 0.14); color: #2997ff; }
+html.light .stat-icon.blue { background: #e7f2ff; color: #0071e3; }
 .stat-icon.fuchsia { background: rgba(255, 92, 168, 0.14); color: #ff5ca8; }
+html.light .stat-icon.fuchsia { background: #ffe9f3; color: #e6337f; }
 .stat-icon.sky { background: rgba(100, 210, 255, 0.14); color: #64d2ff; }
+html.light .stat-icon.sky { background: #e5f7ff; color: #0284b5; }
 html.light .stat-icon.violet { color: #7d4fff; }
 html.light .stat-icon.blue { color: #0071e3; }
 html.light .stat-icon.fuchsia { color: #ff4f9a; }
@@ -371,8 +399,11 @@ html.light .stat-icon.sky { color: #0a84c9; }
   margin-bottom: 20px;
 }
 .feature-icon.violet { background: rgba(162, 89, 255, 0.14); color: #a259ff; }
+html.light .feature-icon.violet { background: #f1e9ff; color: #7c3aed; }
 .feature-icon.blue { background: rgba(41, 151, 255, 0.14); color: #2997ff; }
+html.light .feature-icon.blue { background: #e7f2ff; color: #0071e3; }
 .feature-icon.fuchsia { background: rgba(255, 92, 168, 0.14); color: #ff5ca8; }
+html.light .feature-icon.fuchsia { background: #ffe9f3; color: #e6337f; }
 html.light .feature-icon.violet { color: #7d4fff; }
 html.light .feature-icon.blue { color: #0071e3; }
 html.light .feature-icon.fuchsia { color: #ff4f9a; }

@@ -1,7 +1,13 @@
 <template>
   <div class="app-shell">
     <!-- ===== 侧边栏:hover 展开 ===== -->
-    <aside class="sidebar" :class="{ expanded: sidebarOpen }" @mouseenter="sidebarOpen = true" @mouseleave="sidebarOpen = false">
+    <aside
+      ref="sidebarRef"
+      class="sidebar"
+      :class="{ expanded: sidebarOpen }"
+      @mouseenter="sidebarOpen = true"
+      @mouseleave="sidebarOpen = false"
+    >
      <div class="sb-inner">
       <div class="brand" @click="router.push('/dashboard')">
         <span class="brand-icon">
@@ -15,9 +21,15 @@
         <transition name="fade-text">
           <span v-if="sidebarOpen" class="brand-name">我要工作</span>
         </transition>
+        <transition name="fade-text">
+          <span v-if="sidebarOpen" class="brand-badge">BETA</span>
+        </transition>
       </div>
 
       <nav class="nav-scroll">
+        <!-- 滑动胶囊指示器:跟随激活项移动 -->
+        <span class="nav-indicator" :style="{ transform: `translateY(${indicatorTop}px)` }"></span>
+
         <div v-for="group in groups" :key="group.label" class="nav-group">
           <transition name="fade-text">
             <div v-if="sidebarOpen" class="group-label">{{ group.label }}</div>
@@ -29,7 +41,7 @@
             class="nav-item"
             :class="{ active: isActive(item.path) }"
           >
-            <span class="nav-icon"><el-icon><component :is="item.icon" /></el-icon></span>
+            <span class="nav-icon"><component :is="item.icon" :size="19" :stroke-width="1.9" /></span>
             <transition name="fade-text">
               <span v-if="sidebarOpen" class="nav-text">{{ item.title }}</span>
             </transition>
@@ -37,6 +49,15 @@
           </router-link>
         </div>
       </nav>
+
+      <!-- 积分小卡(展开时可见) -->
+      <transition name="fade-text">
+        <div v-if="sidebarOpen && auth.points" class="points-mini">
+          <span class="pm-zap">⚡</span>
+          <span class="pm-num">{{ auth.points.balance }}</span>
+          <span class="pm-label">互助积分</span>
+        </div>
+      </transition>
 
       <div class="sidebar-foot">
         <el-dropdown @command="onCommand" placement="top-start">
@@ -64,34 +85,44 @@
 
     <!-- ===== 主区 ===== -->
     <div class="main-col">
+      <!-- 悬浮 mini-navbar(aghasisahakyan1 风格:居中悬浮胶囊) -->
       <header class="topbar">
-        <div class="topbar-left">
-          <h1 class="page-title">{{ route.meta.title || '首页' }}</h1>
-        </div>
-        <div class="topbar-right">
-          <button class="theme-toggle" @click="toggleTheme" :title="isDark ? '切换浅色' : '切换深色'">
-            <svg v-if="isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4.2" />
-              <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
-            </svg>
-            <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z" />
-            </svg>
-          </button>
+        <h1 class="page-title">{{ route.meta.title || '首页' }}</h1>
 
+        <div class="topbar-right">
           <el-tag v-if="isHr && !isAdmin" effect="plain" size="small" round>HR 工作台</el-tag>
           <el-tag v-if="isAdmin" effect="plain" size="small" round>管理员</el-tag>
 
-          <button class="bell-btn" @click="openNotify" title="站内通知">
+          <div v-if="auth.points" class="points-pill" title="互助积分">⚡ {{ auth.points.balance }}</div>
+
+          <button class="icon-pill" @click="openNotify" title="站内通知">
             <el-badge :value="unread" :hidden="!unread" :max="99">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8.6a6 6 0 1 0-12 0c0 6.5-2.4 7.9-2.4 7.9h16.8S18 15.1 18 8.6" />
-                <path d="M13.7 20a2 2 0 0 1-3.4 0" />
-              </svg>
+              <Bell :size="17" :stroke-width="1.9" />
             </el-badge>
           </button>
 
-          <div v-if="auth.points" class="points-pill">⚡ {{ auth.points.balance }}</div>
+          <button class="icon-pill" @click="toggleTheme" :title="isDark ? '切换浅色' : '切换深色'">
+            <transition name="icon-flip" mode="out-in">
+              <Moon v-if="isDark" key="m" :size="17" :stroke-width="1.9" />
+              <Sun v-else key="s" :size="17" :stroke-width="1.9" />
+            </transition>
+          </button>
+
+          <el-dropdown @command="onCommand" trigger="click">
+            <button class="user-chip">
+              <span class="uc-avatar">{{ (auth.user?.username || 'U')[0].toUpperCase() }}</span>
+              <span class="uc-name">{{ auth.user?.username }}</span>
+              <el-tag size="small" type="info" effect="plain" round>{{ auth.roleName }}</el-tag>
+            </button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="toggle-theme">
+                  {{ isDark ? '☀️ 切换浅色模式' : '🌙 切换深色模式' }}
+                </el-dropdown-item>
+                <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </header>
 
@@ -141,8 +172,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Bell, Moon, Sun } from 'lucide-vue-next'
 import { useAuthStore } from '../stores/auth'
 import { notifyApi } from '../api'
 import { visibleGroups } from '../config/menu'
@@ -154,7 +186,8 @@ const auth = useAuthStore()
 const { theme, toggle } = useTheme()
 const isDark = computed(() => theme.value === 'dark')
 
-// 侧边栏 hover 展开(Aceternity 风格)
+// 侧边栏 hover 展开
+const sidebarRef = ref(null)
 const sidebarOpen = ref(false)
 
 // 菜单:单一配置源派生
@@ -167,7 +200,20 @@ function isActive(path) {
   return route.path.startsWith(path)
 }
 
-// ===== 通知(逻辑原样平移) =====
+/* ===== 滑动胶囊指示器:激活项的 offsetTop 驱动 ===== */
+const indicatorTop = ref(8)
+function moveIndicator() {
+  nextTick(() => {
+    const root = sidebarRef.value
+    if (!root) return
+    const active = root.querySelector('.nav-item.active')
+    if (active) indicatorTop.value = active.offsetTop + 5
+  })
+}
+watch(() => route.path, () => moveIndicator())
+watch(() => auth.user?.role, () => moveIndicator())
+
+// ===== 通知(逻辑平移) =====
 const unread = ref(0)
 const notifyDrawer = ref(false)
 const notifications = ref([])
@@ -221,6 +267,7 @@ function formatTime(t) {
 onMounted(() => {
   if (!auth.user) auth.fetchUserInfo().catch(() => {})
   refreshUnread()
+  moveIndicator()
   timer = setInterval(refreshUnread, 30000)
 })
 
@@ -292,6 +339,11 @@ function toggleTheme() { toggle() }
   border-radius: 10px;
   padding: 6px;
   flex-shrink: 0;
+  animation: brand-glow 3.2s ease-in-out infinite;
+}
+@keyframes brand-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(41, 151, 255, 0.35); }
+  50% { box-shadow: 0 0 18px 2px rgba(41, 151, 255, 0.4); }
 }
 .brand-icon svg { width: 100%; height: 100%; }
 .brand-name {
@@ -300,14 +352,48 @@ function toggleTheme() { toggle() }
   color: var(--foreground);
   white-space: nowrap;
 }
+.brand-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin-left: auto;
+}
 
 .nav-scroll {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px 0;
+  position: relative;
 }
 .nav-scroll::-webkit-scrollbar { width: 0; }
+
+/* 滑动胶囊指示器:激活项后方一片渐变柔光 */
+.nav-indicator {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+  pointer-events: none;
+  z-index: 0;
+}
+.nav-indicator::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 12px;
+  width: 3px;
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  background: var(--gradient-accent);
+}
 
 .nav-group { margin-bottom: 10px; }
 .group-label {
@@ -335,16 +421,16 @@ function toggleTheme() { toggle() }
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
+  z-index: 1;
 }
 .nav-item:hover { background: var(--card-hover); color: var(--foreground); }
-.nav-item.active { background: var(--primary-soft); color: var(--primary); }
+.nav-item.active { color: var(--primary); font-weight: 600; }
 
 .nav-icon {
   width: 24px;
   height: 24px;
   display: grid;
   place-items: center;
-  font-size: 18px;
   flex-shrink: 0;
 }
 .nav-text { font-size: 0.9rem; font-weight: 500; }
@@ -358,6 +444,23 @@ function toggleTheme() { toggle() }
   background: var(--primary);
   box-shadow: 0 0 8px var(--primary);
 }
+
+/* 积分小卡 */
+.points-mini {
+  margin: 8px 12px 4px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.pm-zap { font-size: 0.95rem; }
+.pm-num { font-size: 1.05rem; font-weight: 720; color: var(--primary); font-variant-numeric: tabular-nums; }
+.pm-label { font-size: 0.72rem; color: var(--foreground-muted); }
 
 .sidebar-foot {
   padding: 10px 0 14px;
@@ -377,7 +480,6 @@ function toggleTheme() { toggle() }
   flex-shrink: 0;
 }
 
-/* 文字淡入淡出 */
 .fade-text-enter-active { transition: opacity 0.3s ease 0.12s; }
 .fade-text-leave-active { transition: opacity 0.1s ease; }
 .fade-text-enter-from, .fade-text-leave-to { opacity: 0; }
@@ -390,33 +492,49 @@ function toggleTheme() { toggle() }
   min-width: 0;
 }
 
+/* 悬浮 mini-navbar:胶囊+圆角全圆+毛玻璃,悬浮于内容之上 */
 .topbar {
-  height: 64px;
+  position: sticky;
+  top: 14px;
+  z-index: 20;
+  margin: 14px 22px 0;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
-  border-bottom: 1px solid var(--hairline);
+  padding: 0 12px 0 24px;
+  border-radius: 9999px;
+  border: 1px solid var(--hairline);
   background: var(--glass);
-  backdrop-filter: blur(28px) saturate(1.6);
-  -webkit-backdrop-filter: blur(28px) saturate(1.6);
-  z-index: 5;
-  flex-shrink: 0;
+  backdrop-filter: blur(28px) saturate(1.7);
+  -webkit-backdrop-filter: blur(28px) saturate(1.7);
+  box-shadow: var(--shadow-card);
 }
 
 .page-title {
-  font-size: 1.12rem;
+  font-size: 1.05rem;
   font-weight: 650;
   color: var(--foreground);
   letter-spacing: -0.01em;
   margin: 0;
+  white-space: nowrap;
 }
 
-.topbar-right { display: flex; align-items: center; gap: 16px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
 
-.theme-toggle {
-  width: 36px;
-  height: 36px;
+.points-pill {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 0.82rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.icon-pill {
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -426,42 +544,46 @@ function toggleTheme() { toggle() }
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.theme-toggle:hover { color: var(--primary); border-color: var(--primary); transform: rotate(18deg); }
-.theme-toggle svg { width: 17px; height: 17px; }
+.icon-pill:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-1px); }
+.icon-pill :deep(.el-badge) { display: grid; place-items: center; }
 
-.bell-btn {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
+/* 主题图标翻转动画 */
+.icon-flip-enter-active, .icon-flip-leave-active { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s; }
+.icon-flip-enter-from { transform: rotateY(90deg); opacity: 0; }
+.icon-flip-leave-to { transform: rotateY(-90deg); opacity: 0; }
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 14px 5px 5px;
+  border-radius: 9999px;
   border: 1px solid var(--hairline);
   background: var(--card);
-  color: var(--foreground-muted);
   cursor: pointer;
   transition: all 0.3s;
 }
-.bell-btn:hover { color: var(--primary); border-color: var(--primary); }
-.bell-btn svg { width: 17px; height: 17px; }
-.bell-btn :deep(.el-badge) { display: grid; place-items: center; }
-
-.points-pill {
-  padding: 5px 14px;
-  border-radius: 9999px;
-  background: var(--primary-soft);
-  color: var(--primary);
-  font-size: 0.82rem;
-  font-weight: 600;
+.user-chip:hover { border-color: var(--hairline-strong); background: var(--card-hover); }
+.uc-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--primary-foreground);
+  background: var(--gradient-accent);
 }
+.uc-name { font-size: 0.86rem; font-weight: 560; color: var(--foreground); }
 
 .page-body {
   flex: 1;
   overflow-y: auto;
   scroll-behavior: smooth;
-  padding: 28px;
+  padding: 18px 22px 28px;
 }
 
-/* 页面切换过渡 */
 .page-fade-enter-active { transition: opacity 0.28s ease, transform 0.28s ease; }
 .page-fade-leave-active { transition: opacity 0.14s ease; }
 .page-fade-enter-from { opacity: 0; transform: translateY(10px); }
@@ -519,12 +641,13 @@ function toggleTheme() { toggle() }
 }
 .notify-pager { display: flex; justify-content: center; margin-top: 12px; }
 
-/* 移动端 */
 @media (max-width: 768px) {
   .sidebar { width: 60px; }
   .sidebar.expanded { width: 190px; }
-  .page-body { padding: 16px; }
-  .topbar { padding: 0 16px; }
-  .points-pill { display: none; }
+  .sb-inner { width: 190px; }
+  .sidebar:not(.expanded) .sb-inner { transform: translateX(-130px); }
+  .page-body { padding: 12px 14px 20px; }
+  .topbar { margin: 10px 14px 0; padding: 0 10px 0 18px; }
+  .points-pill, .uc-name { display: none; }
 }
 </style>

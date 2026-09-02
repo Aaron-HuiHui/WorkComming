@@ -1062,3 +1062,24 @@ _最后更新：team-lead (2026-09-01 19:10 第十八阶段：连接池高并发
 ---
 
 _最后更新：team-lead (2026-09-01 21:50 第十九阶段：各阶段遗留项清零)_
+---
+
+## 第九阶段(前端二轮):参考组件三轮换装(2026-09-02,ZCode)
+
+> 用户指定 4 个 21st.dev 参考:渐进模糊弹窗 / radial-orbital-timeline 图标区 / mini-navbar 顶栏 / 图标 UI 整体升级;另要求浅色文字对比度增强。
+
+### 参考提取方法(复用价值高)
+- 21st.dev 详情页与 registry JSON 均拿不到源码 → **用浏览器直接打开预览 iframe(cdn.21st.dev/*.html),从渲染后 DOM 提取结构/类名/动画参数;canvas 组件用 getImageData 采样主色**。
+- 提取结论:①progressive-blur-modal=面板+内容底部 mask 渐变渐隐+backdrop-blur 渐变模糊带+悬浮圆钮;②radial-orbital-timeline=中心渐变球(pulse)+ping 波纹环+图标节点 JS 算伪 3D 轨道(x/y/z-index/透明度随深度);③mini-navbar=fixed 居中悬浮胶囊(top-6,毛玻璃,LogIn 玻璃钮)。
+
+### 改动清单
+1. **渐进模糊弹窗**(theme.css 末尾未分层规则):el-dialog 24px 圆角+32px 毛玻璃+header 模糊条+body 底部渐隐 mask+::after 渐进模糊带(14px blur×渐变 mask)+footer 玻璃。**踩坑:规则必须移出 @layer base 且 main.js 里 theme.css 必须最后导入,否则被 EP 默认与旧覆盖层(style.css rgba(15,18,48,.9))压住**。
+2. **浅色对比度增强**(用户反馈看不清):--foreground-muted 0.64→0.82、--foreground-subtle 0.4→0.6、--hairline 0.08→0.13、strong 0.14→0.22;统计/特性图标瓦片浅色改实底浅色(#f1e9ff 等)+深色 icon。
+3. **径向轨道图标区**:新组件 OrbitIcons.vue——中心三色渐变球(pulse)+双 ping 波纹环+虚线轨道环+6 个 lucide 图标节点(伪 3D 椭圆轨道 rAF 驱动,x/y/z/透明度/缩放随深度);接入 Dashboard Hero 右侧,节点点击跳转对应页面。
+4. **顶栏 mini-navbar 化**:原通栏 header → 悬浮胶囊(sticky top-14px+圆角全圆+毛玻璃+卡片阴影);内容:页标题+角色 tag+积分 pill+铃铛+主题切换(图标翻转动画)+用户胶囊。
+5. **侧边栏创意升级**:滑动胶囊指示器(渐变柔光片+左侧光条,offsetTop 驱动 0.5s expo 跟随)+品牌 BETA 徽标+品牌呼吸光晕+侧栏内积分小卡。
+6. **图标全面 lucide 化**:引入 lucide-vue-next 0.577,菜单/顶栏/轨道/统计/特性卡全部替换;menu.js 单一配置源直接存 lucide 组件。
+
+### 验证
+- GUI:轨道节点位移采样两次不同(动画在跑)、指示器 translateY 随路由、顶栏 sticky+9999px 圆角、弹窗 24px 圆角+32px 毛玻璃+渐进模糊带+内容渐隐+AI 反馈文案正常、浅色 token 全部生效(muted 0.82/subtle 0.6/hairline 0.13)、浅色图标实底瓦片。
+- npm run build 19.5s 通过。
