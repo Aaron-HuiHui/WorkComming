@@ -1083,3 +1083,11 @@ _最后更新：team-lead (2026-09-01 21:50 第十九阶段：各阶段遗留项
 ### 验证
 - GUI:轨道节点位移采样两次不同(动画在跑)、指示器 translateY 随路由、顶栏 sticky+9999px 圆角、弹窗 24px 圆角+32px 毛玻璃+渐进模糊带+内容渐隐+AI 反馈文案正常、浅色 token 全部生效(muted 0.82/subtle 0.6/hairline 0.13)、浅色图标实底瓦片。
 - npm run build 19.5s 通过。
+
+### 浅色可读性二轮修复(2026-09-03,用户反馈「全部看不清」)
+- **表格白字**(.job-company 等):根因是 style.css 救场段 #app 硬编码 rgba(255,255,255,0.55) → 全部替换为语义 token(--foreground-muted 等),双主题自适应。
+- **echarts 图表白字**(market 4 图/admin 5 图):canvas 不感知 CSS 主题 → 新增 composables/useChartTheme.js(chartPalette() 实时读 CSS 变量 + onChartThemeRebuild 主题切换 dispose 重建);JobMarket 的 TEXT_*/AXIS/TOOLTIP 常量改运行时刷新,AdminDashboard 饼图/折线/条形轴文字、分割线、tooltip、扇区描边全部接入。
+- **el-select 下拉箭头** #A8ABB2 → --el-input-icon-color 指向 token。
+- **Salary 白皮书统计卡/分组标题** scoped 白字 token 化。
+- 验证方法:canvas getImageData 采样不透明像素明暗分布——浅色下图表文字为深色(24-30% dark,0% light),切深色后重建为白字(24-26% light),双主题实时切换 ✓;表格公司名/箭头双主题 ✓;build 17.6s ✓。
+- 踩坑:JobMarket 常量改函数时残留旧 const TOOLTIP 声明 + nextTick 重复导入,均由 Vite 编译错误暴露即时修复。

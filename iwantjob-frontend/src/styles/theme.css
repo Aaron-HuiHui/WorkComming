@@ -415,3 +415,10 @@ html.light .el-dropdown-menu__item:not(.is-disabled):focus {
   background: var(--card-hover);
   color: var(--foreground);
 }
+
+/* 下拉箭头等输入框图标:跟随主题(浅色下不再发灰) */
+.el-select__caret,
+.el-input__suffix,
+.el-input__prefix {
+  color: var(--foreground-muted);
+}

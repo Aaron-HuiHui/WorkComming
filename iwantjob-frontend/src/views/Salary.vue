@@ -368,15 +368,15 @@ onMounted(() => {
 .wp-stats { display: flex; gap: 12px; }
 .wp-stat {
   flex: 1; text-align: center; padding: 14px 8px;
-  border-radius: 12px; background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px; background: var(--card);
+  border: 1px solid var(--hairline);
 }
 .wp-stat.hl { background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.18)); border-color: rgba(139, 92, 246, 0.5); }
-.ws-val { font-size: 22px; font-weight: 800; color: #fff; }
+.ws-val { font-size: 22px; font-weight: 800; color: var(--foreground); }
 .wp-stat.hl .ws-val { font-size: 26px; }
-.ws-label { font-size: 12px; color: rgba(255, 255, 255, 0.55); margin-top: 4px; }
+.ws-label { font-size: 12px; color: var(--foreground-muted); margin-top: 4px; }
 .wp-groups { margin-top: 16px; }
-.wp-sec-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: rgba(255, 255, 255, 0.85); }
-.wp-empty-groups { font-size: 13px; color: rgba(255, 255, 255, 0.45); text-align: center; padding: 18px 0; }
+.wp-sec-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--foreground); }
+.wp-empty-groups { font-size: 13px; color: var(--foreground-subtle); text-align: center; padding: 18px 0; }
 .card-header-flex { display: flex; justify-content: space-between; align-items: center; }
 </style>

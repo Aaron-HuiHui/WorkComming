@@ -43,6 +43,7 @@ import { ref, reactive, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import * as echarts from 'echarts'
 import { Refresh } from '@element-plus/icons-vue'
 import { adminApi } from '../api'
+import { chartPalette, onChartThemeRebuild } from '../composables/useChartTheme'
 
 const data = ref({})
 const loading = ref(false)
@@ -67,12 +68,13 @@ const hotChart = ref(null)
 function pie(el, rows, colors) {
   const c = echarts.init(el)
   charts.push(c)
+  const P = chartPalette()
   c.setOption({
-    tooltip: { trigger: 'item' },
+    tooltip: { trigger: 'item', backgroundColor: P.tooltipBg, borderColor: P.tooltipBorder, textStyle: { color: P.tooltipText } },
     series: [{
       type: 'pie', radius: ['40%', '68%'], center: ['50%', '50%'],
-      itemStyle: { borderRadius: 6, borderColor: '#fff', borderWidth: 2 },
-      label: { formatter: '{b}: {c}' },
+      itemStyle: { borderRadius: 6, borderColor: P.itemBorder, borderWidth: 2 },
+      label: { formatter: '{b}: {c}', color: P.textSecondary },
       data: (rows || []).map((r, i) => ({ ...r, itemStyle: { color: colors?.[i % (colors?.length || 1)] } }))
     }]
   })
@@ -101,25 +103,35 @@ function initCharts(d) {
   const regRows = fillReg7d(d.reg7d)
   const reg = echarts.init(regChart.value)
   charts.push(reg)
+  const P2 = chartPalette()
   reg.setOption({
-    tooltip: { trigger: 'axis' },
+    tooltip: { trigger: 'axis', backgroundColor: P2.tooltipBg, borderColor: P2.tooltipBorder, textStyle: { color: P2.tooltipText } },
     grid: { left: 40, right: 20, top: 20, bottom: 30 },
-    xAxis: { type: 'category', data: regRows.map(r => r.name) },
-    yAxis: { type: 'value', minInterval: 1 },
+    xAxis: { type: 'category', data: regRows.map(r => r.name), axisLabel: { color: P2.textSecondary }, axisLine: { lineStyle: { color: P2.axisLine } } },
+    yAxis: { type: 'value', minInterval: 1, axisLabel: { color: P2.textSecondary }, splitLine: { lineStyle: { color: P2.splitLine } } },
     series: [{ type: 'line', smooth: true, areaStyle: { opacity: .15 }, itemStyle: { color: '#4b3fe3' }, data: regRows.map(r => r.value) }]
   })
 
   const hot = echarts.init(hotChart.value)
   charts.push(hot)
   const hotRows = [...(d.hotJobs || [])].reverse()
+  const P3 = chartPalette()
   hot.setOption({
-    tooltip: { trigger: 'axis' },
+    tooltip: { trigger: 'axis', backgroundColor: P3.tooltipBg, borderColor: P3.tooltipBorder, textStyle: { color: P3.tooltipText } },
     grid: { left: 150, right: 30, top: 10, bottom: 30 },
-    xAxis: { type: 'value' },
-    yAxis: { type: 'category', data: hotRows.map(r => r.name), axisLabel: { width: 140, overflow: 'truncate' } },
+    xAxis: { type: 'value', axisLabel: { color: P3.textSecondary }, splitLine: { lineStyle: { color: P3.splitLine } } },
+    yAxis: { type: 'category', data: hotRows.map(r => r.name), axisLabel: { width: 140, overflow: 'truncate', color: P3.textSecondary }, axisLine: { lineStyle: { color: P3.axisLine } } },
     series: [{ type: 'bar', itemStyle: { color: '#e6a23c', borderRadius: 4 }, barMaxWidth: 18, data: hotRows.map(r => r.value) }]
   })
 }
+
+onChartThemeRebuild(() => {
+  if (data.value && Object.keys(data.value).length) {
+    charts.forEach(ch => ch.dispose())
+    charts.length = 0
+    initCharts(data.value)
+  }
+})
 
 async function load() {
   loading.value = true
@@ -149,7 +161,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-bottom: 12px; }
-.updated-at { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+.updated-at { font-size: 12px; color: var(--foreground-subtle); }
 .stat-card { text-align: center; margin-bottom: 12px; }
 .stat-icon { font-size: 28px; }
 .stat-value { font-size: 26px; font-weight: 700; color: #1f2337; margin: 6px 0 2px; }

@@ -91,14 +91,23 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick, onBeforeUnmount } from 'vue'
 import * as echarts from 'echarts'
 import { ElMessage } from 'element-plus'
 import { jobApi } from '../api'
 import { useRouter } from 'vue-router'
 import GlassIcon from '../components/GlassIcon.vue'
+import { useTheme } from '../composables/useTheme'
 
 const router = useRouter()
+const { theme } = useTheme()
+// 主题切换:销毁全部图表重建(配色实时读取 CSS 变量)
+watch(theme, async () => {
+  charts.forEach(ch => ch.dispose())
+  charts.length = 0
+  await nextTick()
+  renderCharts()
+})
 const stats = ref({})
 const topSalaryJobs = ref([])
 
@@ -114,21 +123,29 @@ const hotTop = computed(() => stats.value.hotJobs?.[0]?.value ?? 0)
 // 统一中文无衬线字体栈：苹方 / 鸿蒙黑 / 微软雅黑，观感一致、渲染清晰
 const FONT =
   "'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif"
-const TEXT_PRIMARY = 'rgba(255, 255, 255, 0.92)'
-const TEXT_SECONDARY = 'rgba(255, 255, 255, 0.62)'
-const TEXT_MUTED = 'rgba(255, 255, 255, 0.4)'
-const AXIS_LINE = 'rgba(255, 255, 255, 0.14)'
+// 图表颜色随主题实时读取 CSS 变量(浅色下自动换深色文字)
+let TEXT_PRIMARY, TEXT_SECONDARY, TEXT_MUTED, AXIS_LINE, SURFACE_SHADOW, LINK_LINE, TOOLTIP
+function refreshChartColors() {
+  const cs = getComputedStyle(document.documentElement)
+  TEXT_PRIMARY = cs.getPropertyValue('--foreground').trim()
+  TEXT_SECONDARY = cs.getPropertyValue('--foreground-muted').trim()
+  TEXT_MUTED = cs.getPropertyValue('--foreground-subtle').trim()
+  AXIS_LINE = cs.getPropertyValue('--hairline').trim()
+  const dark = !document.documentElement.classList.contains('light')
+  SURFACE_SHADOW = dark ? SURFACE_SHADOW : 'rgba(0,0,0,0.04)'
+  LINK_LINE = dark ? LINK_LINE : 'rgba(0, 0, 0, 0.14)'
+  TOOLTIP = {
+    backgroundColor: dark ? 'rgba(13, 16, 42, 0.92)' : 'rgba(255, 255, 255, 0.97)',
+    borderColor: dark ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.12)',
+    borderWidth: 1,
+    padding: [8, 12],
+    textStyle: { color: TEXT_PRIMARY, fontSize: 12, fontFamily: FONT },
+    extraCssText: 'border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.15);'
+  }
+}
 // 极光色板（与全站 --g-* 对齐）
 const PALETTE = ['#8b5cf6', '#60a5fa', '#38bdf8', '#e879f9', '#34d399', '#fbbf24', '#f472b6']
 
-const TOOLTIP = {
-  backgroundColor: 'rgba(13, 16, 42, 0.92)',
-  borderColor: 'rgba(255, 255, 255, 0.14)',
-  borderWidth: 1,
-  padding: [8, 12],
-  textStyle: { color: TEXT_PRIMARY, fontSize: 12, fontFamily: FONT },
-  extraCssText: 'backdrop-filter: blur(12px); border-radius: 10px; box-shadow: 0 8px 28px rgba(2,6,32,.5);'
-}
 
 const overviewCards = computed(() => [
   { icon: 'briefcase', theme: 'violet', value: stats.value.totalJobs ?? 0, label: '在招职位', unit: '个' },
@@ -167,6 +184,7 @@ onMounted(async () => {
 })
 
 function renderCharts() {
+  refreshChartColors()
   const d = stats.value
 
   /* ---------- 职位类型分布：环形图 ---------- */
@@ -235,7 +253,7 @@ function renderCharts() {
         labelLine: {
           length: 12,
           length2: 8,
-          lineStyle: { color: 'rgba(255, 255, 255, 0.22)' }
+          lineStyle: { color: LINK_LINE }
         },
         emphasis: { scaleSize: 6 },
         data
@@ -247,7 +265,7 @@ function renderCharts() {
   if (salaryChartRef.value) {
     const sd = d.salaryDist || []
     initChart(salaryChartRef.value, {
-      tooltip: { ...TOOLTIP, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(255,255,255,0.05)' } } },
+      tooltip: { ...TOOLTIP, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: SURFACE_SHADOW } } },
       grid: { left: 42, right: 16, top: 26, bottom: 32 },
       xAxis: {
         type: 'category',
@@ -260,7 +278,7 @@ function renderCharts() {
         type: 'value',
         minInterval: 1,
         axisLabel: { color: TEXT_MUTED, fontSize: 11, fontFamily: FONT },
-        splitLine: { lineStyle: { color: 'rgba(255,255,255,0.07)' } }
+        splitLine: { lineStyle: { color: AXIS_LINE } }
       },
       series: [{
         type: 'bar',
@@ -288,12 +306,12 @@ function renderCharts() {
   if (hotChartRef.value) {
     const hj = (d.hotJobs || []).slice(0, 8).reverse()
     initChart(hotChartRef.value, {
-      tooltip: { ...TOOLTIP, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(255,255,255,0.05)' } } },
+      tooltip: { ...TOOLTIP, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: SURFACE_SHADOW } } },
       grid: { left: 8, right: 46, top: 8, bottom: 8, containLabel: true },
       xAxis: {
         type: 'value',
         axisLabel: { color: TEXT_MUTED, fontSize: 10.5, fontFamily: FONT },
-        splitLine: { lineStyle: { color: 'rgba(255,255,255,0.06)' } }
+        splitLine: { lineStyle: { color: AXIS_LINE } }
       },
       yAxis: {
         type: 'category',
