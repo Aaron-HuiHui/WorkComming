@@ -41,7 +41,8 @@ function createBeam(width, height) {
     length: height * 2.5,
     angle,
     speed: 0.6 + Math.random() * 1.2,
-    opacity: 0.12 + Math.random() * 0.16,
+    // 官方 demo 的光束明显可见;此前 0.12+0.16 过淡,主页感知不到动效,提到 demo 同级
+    opacity: 0.28 + Math.random() * 0.2,
     hue: hueBase + Math.random() * hueRange,
     pulse: Math.random() * Math.PI * 2,
     pulseSpeed: 0.02 + Math.random() * 0.03
@@ -61,7 +62,7 @@ function resetBeam(beam, index, totalBeams) {
   beam.width = 100 + Math.random() * 100
   beam.speed = 0.5 + Math.random() * 0.4
   beam.hue = hueBase + (index * hueRange) / totalBeams
-  beam.opacity = 0.2 + Math.random() * 0.1
+  beam.opacity = 0.32 + Math.random() * 0.14
   return beam
 }
 
@@ -159,7 +160,7 @@ onBeforeUnmount(() => {
 .beams-canvas {
   position: absolute;
   inset: 0;
-  filter: blur(15px);
+  filter: blur(12px);
   pointer-events: none;
 }
 

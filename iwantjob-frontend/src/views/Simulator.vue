@@ -16,9 +16,9 @@
             AI 职业教练已就绪
           </div>
           <h1 class="hero-title">在情境中演练,<br />在演练中<span class="text-gradient">遇见更好的自己</span></h1>
-          <p class="hero-sub">选择一个职场情境,AI 教练陪你走完每一步,实时反馈你的软技能表现</p>
+          <p class="hero-sub">选择一个职场情境演练,或在上方直接向 AI 教练提问任何问题</p>
 
-          <!-- AI 聊天输入条(hero-1 同款胶囊:p-3 圆角全圆) -->
+          <!-- AI 智能体自由问答输入条:任意问题直连 /agent/ask -->
           <div class="chat-bar">
             <span class="chat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect x="4" y="8" width="16" height="12" rx="2" /><path d="M2 14h2M20 14h2M15 13v2M9 13v2" /></svg>
@@ -27,12 +27,20 @@
               v-model="keyword"
               class="chat-input"
               type="text"
-              placeholder="描述你想演练的情境,如「汇报」「冲突」…"
-              @keyup.enter="startByKeyword"
+              placeholder="问任何问题:如何谈薪资 / 简历怎么写 / 第一天入职注意什么…"
+              @keyup.enter="askAgent"
             />
-            <button class="chat-send" :disabled="!keyword.trim()" @click="startByKeyword" title="开始演练">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4Z" /></svg>
+            <button class="chat-send" :disabled="!keyword.trim() || asking" @click="askAgent" :title="asking ? 'AI 思考中…' : '提问'">
+              <svg v-if="!asking" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4Z" /></svg>
+              <span v-else class="ask-dot-load"><i></i><i></i><i></i></span>
             </button>
+          </div>
+
+          <!-- 自由问答对话区(与智能体多轮对话) -->
+          <div v-if="agentChat.length" class="agent-thread">
+            <div v-for="(m, i) in agentChat" :key="i" class="am" :class="m.role">
+              <div class="am-bubble">{{ m.content }}</div>
+            </div>
           </div>
 
           <!-- 推荐 chips(hero-1 同款建议词) -->
@@ -178,7 +186,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { simulatorApi } from '../api'
+import { simulatorApi, agentApi } from '../api'
 
 const stage = ref('select') // select / playing / report
 const scenarios = ref([])
@@ -209,18 +217,36 @@ onMounted(async () => {
   } catch (e) { /* 静默 */ }
 })
 
-// 输入条:按关键词匹配场景(标题/描述/类型),命中即开始
-function startByKeyword() {
-  const k = keyword.value.trim()
-  if (!k) return
-  const hit = scenarios.value.find(s =>
-    (s.title || '').includes(k) || (s.description || '').includes(k) || (s.typeDesc || '').includes(k)
-  )
-  if (hit) {
-    startSession(hit)
-  } else {
-    ElMessage.info('没找到匹配的情境,试试下方推荐或卡片')
+// ===== AI 智能体自由问答:任意问题,不限场景,多轮对话 =====
+const agentChat = ref([]) // {role:'user'|'assistant', content}
+const asking = ref(false)
+
+async function askAgent() {
+  const q = keyword.value.trim()
+  if (!q || asking.value) return
+  keyword.value = ''
+  agentChat.value.push({ role: 'user', content: q })
+  asking.value = true
+  try {
+    const res = await agentApi.ask({
+      question: q,
+      history: agentChat.value.slice(0, -1) // 之前的轮次作为上下文
+    })
+    agentChat.value.push({ role: 'assistant', content: res.data || 'AI 暂无回复' })
+    scrollAgentThread()
+  } catch (e) {
+    agentChat.value.push({ role: 'assistant', content: 'AI 调用失败,请稍后重试' })
+  } finally {
+    asking.value = false
+    scrollAgentThread()
   }
+}
+
+function scrollAgentThread() {
+  requestAnimationFrame(() => {
+    const t = document.querySelector('.agent-thread')
+    if (t) t.scrollTop = t.scrollHeight
+  })
 }
 
 async function startSession(s) {
@@ -426,6 +452,55 @@ html.light .beam-bar { opacity: 0.24; }
 .chat-send:hover:not(:disabled) { filter: brightness(1.12); transform: scale(1.06); }
 .chat-send:disabled { opacity: 0.45; cursor: not-allowed; }
 .chat-send svg { width: 17px; height: 17px; }
+
+/* ===== AI 智能体自由问答对话区 ===== */
+.agent-thread {
+  width: min(680px, 92%);
+  margin: 18px auto 0;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 6px 4px;
+  text-align: left;
+}
+.agent-thread::-webkit-scrollbar { width: 4px; }
+.agent-thread::-webkit-scrollbar-thumb { background: var(--hairline-strong); border-radius: 2px; }
+.am { display: flex; }
+.am.user { justify-content: flex-end; }
+.am-bubble {
+  max-width: 86%;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.am.user .am-bubble {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.am.assistant .am-bubble {
+  background: var(--card-strong);
+  border: 1px solid var(--hairline);
+  color: var(--foreground);
+  border-bottom-left-radius: 4px;
+}
+.ask-dot-load { display: inline-flex; gap: 4px; align-items: center; }
+.ask-dot-load i {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor;
+  animation: ask-blink 1.2s infinite;
+}
+.ask-dot-load i:nth-child(2) { animation-delay: 0.15s; }
+.ask-dot-load i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes ask-blink {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
 
 /* 推荐 chips */
 .chip-row {

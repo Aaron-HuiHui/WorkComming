@@ -77,6 +77,12 @@ export const simulatorApi = {
   mySessions: params => request.get('/simulator/sessions/me', { params })
 }
 
+// ==================== AI 智能体自由问答 ====================
+export const agentApi = {
+  // DeepSeek 为推理模型,长回答可达 40s+,单独放宽超时(全局默认 15s)
+  ask: data => request.post('/agent/ask', data, { timeout: 120000 })
+}
+
 // ==================== 徽章（创新3） ====================
 export const badgeApi = {
   templates: () => request.get('/badges/templates')
