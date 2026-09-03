@@ -497,6 +497,7 @@ onBeforeUnmount(() => {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
+html.light .salary-text { color: #a16207; }
 
 @keyframes g-shine { to { background-position: 200% center; } }
 

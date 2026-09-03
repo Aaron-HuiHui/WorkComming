@@ -421,7 +421,7 @@ html.light .feature-icon.fuchsia { color: #ff4f9a; }
   padding: 5px 13px;
   border-radius: 9999px;
   background: var(--primary-soft);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;

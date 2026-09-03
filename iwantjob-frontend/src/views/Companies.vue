@@ -220,9 +220,9 @@ onMounted(() => {
 .c-logo { font-size: 34px; }
 .c-name-wrap { flex: 1; overflow: hidden; }
 .c-name { font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.c-sub { font-size: 12px; color: #909399; margin-top: 2px; }
-.c-intro { font-size: 13px; color: #606266; line-height: 1.6; height: 63px; margin-top: 10px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
-.c-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px; color: #909399; }
+.c-sub { font-size: 12px; color: var(--foreground-muted); margin-top: 2px; }
+.c-intro { font-size: 13px; color: var(--foreground-muted); line-height: 1.6; height: 63px; margin-top: 10px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.c-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px; color: var(--foreground-muted); }
 .d-title { font-size: 18px; font-weight: 600; }
-.pre { white-space: pre-wrap; color: #606266; font-size: 13px; line-height: 1.7; }
+.pre { white-space: pre-wrap; color: var(--foreground-muted); font-size: 13px; line-height: 1.7; }
 </style>

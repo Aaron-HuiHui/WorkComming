@@ -192,12 +192,12 @@ onMounted(() => load(1))
 .p-card { cursor: pointer; }
 .p-cover { font-size: 40px; text-align: center; margin: 6px 0 10px; }
 .p-title { font-weight: 600; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.p-author { font-size: 12px; color: #909399; margin: 4px 0 8px; }
+.p-author { font-size: 12px; color: var(--foreground-muted); margin: 4px 0 8px; }
 .p-tags { min-height: 24px; margin-bottom: 8px; }
-.p-desc { font-size: 13px; color: #606266; line-height: 1.6; height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.p-desc { font-size: 13px; color: var(--foreground-muted); line-height: 1.6; height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .p-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-.p-stat { font-size: 13px; color: #909399; }
+.p-stat { font-size: 13px; color: var(--foreground-muted); }
 .p-mine-ops { margin-top: 8px; text-align: right; }
 .d-cover { font-size: 56px; text-align: center; }
-.pre { white-space: pre-wrap; color: #606266; font-size: 13px; line-height: 1.7; }
+.pre { white-space: pre-wrap; color: var(--foreground-muted); font-size: 13px; line-height: 1.7; }
 </style>

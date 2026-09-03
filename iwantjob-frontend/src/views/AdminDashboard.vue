@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
 .updated-at { font-size: 12px; color: var(--foreground-subtle); }
 .stat-card { text-align: center; margin-bottom: 12px; }
 .stat-icon { font-size: 28px; }
-.stat-value { font-size: 26px; font-weight: 700; color: #1f2337; margin: 6px 0 2px; }
-.stat-label { font-size: 13px; color: #909399; }
+.stat-value { font-size: 26px; font-weight: 700; color: var(--foreground); margin: 6px 0 2px; }
+.stat-label { font-size: 13px; color: var(--foreground-muted); }
 .chart { height: 300px; }
 </style>

@@ -471,7 +471,7 @@ html.light .beam-bar { opacity: 0.24; }
 .sc-type {
   font-size: 0.74rem;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--primary-text);
   letter-spacing: 0.05em;
 }
 .sc-title { font-size: 1.04rem; font-weight: 660; color: var(--foreground); margin: 0 0 8px; }

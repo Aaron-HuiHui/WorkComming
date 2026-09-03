@@ -27,7 +27,7 @@
   /* ---------- 文字 ---------- */
   --g-text-primary: rgba(255, 255, 255, 0.94);
   --g-text-secondary: rgba(255, 255, 255, 0.64);
-  --g-text-muted: rgba(255, 255, 255, 0.42);
+  --g-text-muted: rgba(255, 255, 255, 0.60);
 
   /* ---------- 主题色 ---------- */
   --g-accent: #818cf8;
@@ -54,7 +54,7 @@ html.light {
   --g-glass-sheen: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.5) 50%, transparent 60%);
   --g-text-primary: #1d1d1f;
   --g-text-secondary: rgba(29, 29, 31, 0.8);
-  --g-text-muted: rgba(29, 29, 31, 0.55);
+  --g-text-muted: rgba(29, 29, 31, 0.70);
   --g-accent: #5a67d8;
   --g-accent-2: #7c5cf6;
   --g-violet: #7c3aed;

@@ -83,7 +83,8 @@ onMounted(load)
 
 <style scoped>
 .card-header-flex { display: flex; justify-content: space-between; align-items: center; }
-.job-title { color: #409eff; cursor: pointer; font-weight: 500; }
+.job-title { color: #62aaff; cursor: pointer; font-weight: 500; }
+html.light .job-title { color: #1d6fd0; }
 .job-title:hover { text-decoration: underline; }
-.job-company { font-size: 12px; color: #909399; margin-top: 2px; }
+.job-company { font-size: 12px; color: var(--foreground-muted); margin-top: 2px; }
 </style>

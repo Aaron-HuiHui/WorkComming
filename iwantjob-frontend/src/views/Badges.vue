@@ -151,17 +151,20 @@ onMounted(async () => {
 
 <style scoped>
 .badge-card {
-  border: 1px solid #dcdfe6; border-radius: 10px; padding: 18px; text-align: center;
-  transition: transform .2s, box-shadow .2s; background: #fff;
+  border: 1px solid var(--hairline); border-radius: 10px; padding: 18px; text-align: center;
+  transition: transform .2s, box-shadow .2s; background: var(--card-strong);
 }
-.badge-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+.badge-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+html.light .badge-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
 .badge-icon { font-size: 44px; }
 .badge-card h4 { margin: 8px 0 4px; }
-.badge-card p { font-size: 12px; color: #909399; min-height: 36px; line-height: 1.6; }
+.badge-card p { font-size: 12px; color: var(--foreground-muted); min-height: 36px; line-height: 1.6; }
 .badge-meta { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; }
-.finger { font-family: Consolas, monospace; font-size: 11px; color: #c0c4cc; }
-.earned { font-size: 11px; color: #c0c4cc; margin-top: 6px; }
-.r-common { border-color: #dcdfe6; }
-.r-rare { border-color: #e6a23c; background: #fdf6ec; }
-.r-epic { border-color: #f56c6c; background: #fef0f0; }
+.finger { font-family: Consolas, monospace; font-size: 11px; color: var(--foreground-muted); }
+.earned { font-size: 11px; color: var(--foreground-subtle); margin-top: 6px; }
+.r-common { border-color: var(--hairline); }
+.r-rare { border-color: #e6a23c; background: rgba(230, 162, 60, 0.10); }
+html.light .r-rare { background: #fdf6ec; }
+.r-epic { border-color: #f56c6c; background: rgba(245, 108, 108, 0.10); }
+html.light .r-epic { background: #fef0f0; }
 </style>

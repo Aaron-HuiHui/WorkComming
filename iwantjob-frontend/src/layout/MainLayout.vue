@@ -526,7 +526,7 @@ function toggleTheme() { toggle() }
   padding: 6px 14px;
   border-radius: 9999px;
   background: var(--primary-soft);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 0.82rem;
   font-weight: 650;
   font-variant-numeric: tabular-nums;

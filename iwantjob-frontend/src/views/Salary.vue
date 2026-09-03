@@ -45,7 +45,7 @@
             <div class="card-header-flex">
               <span>✍️ 匿名贡献薪资数据</span>
               <el-tooltip content="不收集姓名/身份证/公司全称，审核通过可获得积分与精准匹配优先权">
-                <el-icon color="#909399"><InfoFilled /></el-icon>
+                <el-icon color="var(--foreground-muted)"><InfoFilled /></el-icon>
               </el-tooltip>
             </div>
           </template>
@@ -363,7 +363,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.wp-meta { font-size: 12px; color: #909399; margin: 6px 0 0; }
+.wp-meta { font-size: 12px; color: var(--foreground-muted); margin: 6px 0 0; }
 .wp-body { margin-top: 14px; }
 .wp-stats { display: flex; gap: 12px; }
 .wp-stat {
