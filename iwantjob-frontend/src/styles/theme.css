@@ -222,22 +222,96 @@ html.light .el-loading-mask { background: rgba(255, 255, 255, 0.4); }
     transform: translateY(-2px);
   }
 
-  /* 主 CTA 按钮(苹果官网蓝钮) */
+  /* 主 CTA 按钮 —— jahed/glass-button 同款玻璃质感移植
+     (conic-gradient 旋转亮边描边 + 内凹高光 + backdrop 玻璃底) */
   .btn-primary {
+    --gb-anim: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.75rem;
+    padding: 0.72rem 1.7rem;
+    border: none;
     border-radius: 9999px;
-    background: var(--primary);
-    color: var(--primary-foreground);
+    -webkit-tap-highlight-color: transparent;
+    /* 玻璃底:-75° 渐变白 5%→20%→5%(原组件 background 同款) */
+    background: linear-gradient(-75deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.20),
+      rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    color: var(--foreground);
     font-weight: 500;
     font-size: 0.9375rem;
-    transition: all 0.35s var(--ease-out-expo);
+    cursor: pointer;
+    transition: all var(--gb-anim);
+    /* 内凹高光+底缘暗带+外投影(原组件 inset 阴影组) */
+    box-shadow:
+      inset 0 2px 2px rgba(255, 255, 255, 0.05),
+      inset 0 -2px 2px rgba(0, 0, 0, 0.30),
+      0 4px 2px -2px rgba(0, 0, 0, 0.30);
   }
-  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
-  .btn-primary:active { transform: scale(0.97); }
+  /* 旋转亮边描边:conic-gradient 白 50% 三段 + mask 只留边框环 */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    border-radius: 9999px;
+    background:
+      conic-gradient(from var(--gb-angle, 0deg) at 50% 50%,
+        rgba(255, 255, 255, 0.5) 0%,
+        transparent 5% 40%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 60% 95%,
+        rgba(255, 255, 255, 0.5) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: --gb-angle 0.5s ease;
+    animation: gb-rotate 6s linear infinite;
+  }
+  @keyframes gb-rotate { to { --gb-angle: 360deg; } }
+  @property --gb-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  .btn-primary:hover {
+    backdrop-filter: blur(0.1px);
+    box-shadow:
+      inset 0 2px 2px rgba(255, 255, 255, 0.08),
+      inset 0 -2px 2px rgba(0, 0, 0, 0.5),
+      0 2.4px 0.8px -1.6px rgba(255, 255, 255, 0.25),
+      0 0 8px 4px inset rgba(0, 0, 0, 0.5);
+    transform: scale(0.975);
+  }
+  .btn-primary:active { transform: scale(0.95); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+  /* 浅色模式:白底玻璃改暗描边,文字用前景色保持可读 */
+  html.light .btn-primary {
+    background: linear-gradient(-75deg,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.55));
+    color: var(--foreground);
+    box-shadow:
+      inset 0 2px 2px rgba(255, 255, 255, 0.9),
+      inset 0 -2px 2px rgba(0, 0, 0, 0.08),
+      0 4px 12px rgba(0, 60, 120, 0.12);
+  }
+  html.light .btn-primary::after {
+    background:
+      conic-gradient(from var(--gb-angle, 0deg) at 50% 50%,
+        rgba(0, 40, 90, 0.45) 0%,
+        transparent 5% 40%,
+        rgba(0, 40, 90, 0.45) 50%,
+        transparent 60% 95%,
+        rgba(0, 40, 90, 0.45) 100%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+  }
 
   /* 次级按钮(幽灵) */
   .btn-ghost {
