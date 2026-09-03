@@ -239,11 +239,21 @@ onMounted(async () => {
 }
 
 /* ===== Hero ===== */
+/* 浅色模式:hero 与 stat/feature 卡同款 glass-card 底色,与动态背景隔开
+   保证深色文字可读;深色模式保持透明(裸露在动态背景上,原视觉不变) */
 .hero {
   position: relative;
   padding: 72px 8px 56px;
   border-radius: 28px;
   overflow: hidden;
+}
+html.light .hero {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 28px;
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  padding: 48px 32px 44px;
 }
 .hero-flex { display: flex; align-items: center; gap: 24px; }
 .hero-inner { flex: 1; transform-style: preserve-3d; will-change: transform; min-width: 0; }
