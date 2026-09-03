@@ -116,7 +116,9 @@ html.light {
 }
 body {
   font-family: var(--font-sans);
-  background: var(--background);
+  /* 背景交给 ambience-layer(canvas 动效);body 若铺实色会盖住
+     z-index:-1 的背景层,导致整站看起来纯黑 */
+  background: transparent;
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
 }

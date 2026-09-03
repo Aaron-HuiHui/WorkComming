@@ -295,14 +295,13 @@ function toggleTheme() { toggle() }
 }
 
 /* ===== 侧边栏 ===== */
-/* 玻璃效果挂在静止的 .sidebar 外层;sb-inner 只做内容平移。
-   此前 backdrop-filter 挂在 translateX(-148px) 的 sb-inner 上,移出视口的
-   border-box 被 Chromium 错误采样,收起时右缘产生玻璃残影(重影)。 */
+/* 单一静态面板:宽度 68px↔216px 动画,内容淡入淡出。
+   无 translateX 位移层 —— 不再有任何"双层/重叠"视觉。 */
 .sidebar {
   width: 68px;
   height: 100vh;
   position: relative;
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 10;
   background: var(--glass);
   backdrop-filter: blur(28px) saturate(1.6);
@@ -314,14 +313,10 @@ function toggleTheme() { toggle() }
 .sb-inner {
   position: absolute;
   inset: 0;
-  width: 216px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  transform: translateX(0);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
 }
-.sidebar:not(.expanded) .sb-inner { transform: translateX(-148px); }
 
 .brand {
   height: 64px;
