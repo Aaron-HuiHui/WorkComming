@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * 简历 AI 网关千问真实实现（R1 桥接）。
  * <p>
- * 仅在 ai.qwen.enabled=true 时装配，内部包装 {@link AiChatService}（此时为 QwenAiChatService）。
+ * 仅在 ai.qwen.enabled=true 时装配，内部包装 {@link AiChatService}（此时为 DeepSeekAiChatService）。
  * Mock 模式下由 resume 模块的 DefaultResumeAiGateway 提供。
  */
 @Slf4j

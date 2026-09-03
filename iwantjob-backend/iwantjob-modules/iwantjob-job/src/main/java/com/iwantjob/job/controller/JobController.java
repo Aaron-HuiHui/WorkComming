@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * 职位控制器
  * 权限标记：[S]学生 [A]校友 [H]HR [Admin]管理员
@@ -91,6 +93,14 @@ public class JobController {
         Long userId = SecurityUtils.requireCurrentUserId();
         PageResult<JobApplicationVO> result = jobApplicationService.getMyApplied(userId, page, size);
         return Result.success(result);
+    }
+
+    @GetMapping("/me/applied-ids")
+    @Operation(summary = "我投递过的职位ID集合（前端回显已投递态）")
+    @PreAuthorize("hasAnyRole('0','1')")
+    public Result<List<Long>> myAppliedIds() {
+        Long userId = SecurityUtils.requireCurrentUserId();
+        return Result.success(jobApplicationService.getMyAppliedJobIds(userId));
     }
 
     // ==================== 岗位市场统计（学生可视化） ====================

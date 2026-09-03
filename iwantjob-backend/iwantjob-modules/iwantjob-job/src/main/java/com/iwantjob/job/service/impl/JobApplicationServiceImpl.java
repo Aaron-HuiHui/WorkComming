@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -79,6 +80,15 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         Page<JobApplicationVO> p = new Page<>(page, size);
         IPage<JobApplicationVO> result = jobApplicationMapper.selectMyApplied(p, userId);
         return PageResult.of(result.getRecords(), result.getTotal(), result.getCurrent(), result.getSize());
+    }
+
+    @Override
+    public List<Long> getMyAppliedJobIds(Long userId) {
+        return jobApplicationMapper.selectList(
+                        new LambdaQueryWrapper<JobApplication>()
+                                .select(JobApplication::getJobId)
+                                .eq(JobApplication::getUserId, userId))
+                .stream().map(JobApplication::getJobId).distinct().toList();
     }
 
     // ==================== HR 候选人管理 ====================

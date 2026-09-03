@@ -26,6 +26,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="load(1)">搜索</el-button>
+          <el-button :icon="RefreshRight" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -66,7 +67,9 @@
               :type="favSet.has(row.id) ? 'warning' : 'default'"
               :icon="favSet.has(row.id) ? StarFilled : Star"
               @click="toggleFav(row)" />
-            <el-button size="small" type="primary" @click="openDetail(row)">查看</el-button>
+            <el-button size="small" :type="appliedSet.has(row.id) ? 'success' : 'primary'" @click="openDetail(row)">
+              {{ appliedSet.has(row.id) ? '已投递' : '查看' }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -100,7 +103,10 @@
         <p class="pre">{{ current.requirements || '暂无' }}</p>
 
         <el-divider />
-        <el-form>
+        <template v-if="current && appliedSet.has(current.id)">
+          <el-result icon="success" title="已投递该职位" sub-title="可在「我的投递」查看进度" style="padding:12px 0" />
+        </template>
+        <el-form v-else>
           <el-form-item label="求职信（可选）">
             <el-input v-model="coverLetter" type="textarea" :rows="3" placeholder="向 HR 简短介绍自己" />
           </el-form-item>
@@ -114,22 +120,31 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Search, Star, StarFilled } from '@element-plus/icons-vue'
+import { Search, Star, StarFilled, RefreshRight } from '@element-plus/icons-vue'
 import { jobApi } from '../api'
 import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 const auth = useAuthStore()
-const canFav = computed(() => [0, 1].includes(auth.user?.role))
+// 刷新后 auth.user 由 MainLayout 异步拉取，期间回退 localStorage 缓存，
+// 避免首帧 canFav=false 导致收藏/已投递标记加载被跳过
+function cachedRole() {
+  try {
+    return JSON.parse(localStorage.getItem('userInfo') || 'null')?.role
+  } catch (e) { return undefined }
+}
+const effectiveRole = computed(() => auth.user?.role ?? cachedRole())
+const canFav = computed(() => [0, 1].includes(effectiveRole.value))
 
 const list = ref([])
 const total = ref(0)
 const loading = ref(false)
 const query = reactive({ keyword: '', type: null, city: '', batch: '', page: 1, size: 10 })
 const favSet = ref(new Set())
+const appliedSet = ref(new Set())
 
 const drawer = ref(false)
 const current = ref(null)
@@ -164,6 +179,22 @@ async function loadFavs() {
   } catch (e) { /* HR 无权限时静默 */ }
 }
 
+async function loadAppliedIds() {
+  if (!canFav.value) return
+  try {
+    const res = await jobApi.appliedIds()
+    appliedSet.value = new Set(res.data || [])
+  } catch (e) { /* HR/游客无权限时静默 */ }
+}
+
+function resetQuery() {
+  query.keyword = ''
+  query.type = null
+  query.city = ''
+  query.batch = ''
+  load(1)
+}
+
 async function toggleFav(row) {
   const res = await jobApi.toggleFavorite(row.id)
   if (res.data.favored) { favSet.value.add(row.id); ElMessage.success('已收藏，可在「我的收藏」查看') }
@@ -183,6 +214,7 @@ async function handleApply() {
   applying.value = true
   try {
     await jobApi.apply(current.value.id, { coverLetter: coverLetter.value || null })
+    appliedSet.value.add(current.value.id)
     ElMessage.success('投递成功！可在「我的投递」查看进度')
     drawer.value = false
     coverLetter.value = ''
@@ -196,6 +228,15 @@ async function handleApply() {
 onMounted(() => {
   load(1)
   loadFavs()
+  loadAppliedIds()
+})
+
+// 用户信息异步就绪后（刷新场景 auth.user 从 null 变为实体），补拉收藏与已投递
+watch(() => auth.user, (u) => {
+  if (u && canFav.value) {
+    if (favSet.value.size === 0) loadFavs()
+    if (appliedSet.value.size === 0) loadAppliedIds()
+  }
 })
 </script>
 

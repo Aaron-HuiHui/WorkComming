@@ -7,6 +7,8 @@ import com.iwantjob.job.dto.CandidateVO;
 import com.iwantjob.job.dto.JobApplicationVO;
 import com.iwantjob.job.dto.JobApplyDTO;
 
+import java.util.List;
+
 /**
  * 职位投递服务接口
  */
@@ -21,6 +23,11 @@ public interface JobApplicationService {
      * 我投递的职位列表
      */
     PageResult<JobApplicationVO> getMyApplied(Long userId, long page, long size);
+
+    /**
+     * 我投递过的职位ID集合（轻量，用于前端列表/详情回显已投递态）
+     */
+    List<Long> getMyAppliedJobIds(Long userId);
 
     // ==================== HR 候选人管理 ====================
 

@@ -25,6 +25,7 @@ export const jobApi = {
     headers: { 'X-Idempotency-Key': crypto.randomUUID() }
   }),
   myApplied: params => request.get('/jobs/me/applied', { params }),
+  appliedIds: () => request.get('/jobs/me/applied-ids'),
   // 岗位市场统计（学生可视化）
   stats: () => request.get('/jobs/stats/overview'),
   // ===== 收藏 =====

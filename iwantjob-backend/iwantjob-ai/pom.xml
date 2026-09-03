@@ -11,7 +11,7 @@
 
     <artifactId>iwantjob-ai</artifactId>
     <name>iwantjob-ai</name>
-    <description>AI基础设施：千问SDK封装、鉴权、重试、限流、Mock</description>
+    <description>AI基础设施：OpenAI兼容协议封装、鉴权、重试、限流、Mock</description>
 
     <dependencies>
         <dependency>
@@ -25,10 +25,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dashscope-sdk-java</artifactId>
         </dependency>
     </dependencies>
 </project>
