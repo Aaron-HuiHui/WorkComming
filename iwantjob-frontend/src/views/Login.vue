@@ -1,5 +1,9 @@
 <template>
   <div class="auth-stage">
+    <!-- 主题切换(登录前也能切换深/浅色,与顶栏同款交互) -->
+    <button class="theme-toggle" :title="isDark ? '切换浅色' : '切换深色'" @click="onToggleTheme">
+      {{ isDark ? '☀️' : '🌙' }}
+    </button>
     <!-- ===== 左:表单列(auth-ui 结构:350px 居中,标签在输入框上方) ===== -->
     <div class="auth-left">
       <div class="form-col">
@@ -94,15 +98,20 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { authApi } from '../api'
 import { useAuthStore } from '../stores/auth'
+import { useTheme } from '../composables/useTheme'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const { theme, toggle } = useTheme()
+const isDark = ref(theme.value === 'dark')
+watch(theme, v => { isDark.value = v === 'dark' })
+const onToggleTheme = () => toggle()
 
 const mode = ref('login')
 const loading = ref(false)
@@ -176,6 +185,30 @@ async function handleRegister() {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1.15fr;
+}
+
+/* 主题切换按钮:右上角悬浮,玻璃质感 */
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 20;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline, rgba(128, 128, 128, 0.25));
+  background: var(--glass, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(12px);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.theme-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(64, 158, 255, 0.25);
 }
 @media (max-width: 900px) {
   .auth-stage { grid-template-columns: 1fr; }
